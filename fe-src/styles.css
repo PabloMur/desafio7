@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg-color: #F8F7F9;
+  --dark-bg-color: #2B2D42;
+  --yellow-bg-color: #F7EC59;
+}
+
+body {
+  background-color: var(--dark-bg-color);
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg-color: #f8f7f9;
+  --dark-bg-color: #2b2d42;
+  --yellow-bg-color: #f7ec59;
+}
+
+body {
+  background-color: var(--dark-bg-color);
+  margin: 0;
+  padding: 0;
+}
+
+/*# sourceMappingURL=index.85196d1c.css.map */
