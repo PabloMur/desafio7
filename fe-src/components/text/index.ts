@@ -14,13 +14,13 @@ class CustomText extends HTMLElement {
           .title{
               font-size:30px;
               font-weight: bold;
-              color: #009048;
+              color: black;
               transition: all 3s ease;
             }
             @media (max-width:600px){
               .title{
                 width: 90%;
-                font-size:70px;
+                font-size:40px;
                 margin: 0 auto;
                 text-align: center;
               }
@@ -28,7 +28,7 @@ class CustomText extends HTMLElement {
             .body{
               text-align:center;
               color: black;
-              font-size: 30px;
+              font-size: 25px;
               max-width: 600px;
               margin-bottom: 20px;
           }@media (max-width:600px){

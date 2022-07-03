@@ -16,7 +16,6 @@ class Logo extends HTMLElement {
     const style = document.createElement("style");
     style.innerHTML = `
       .image-container{
-        background:red;
         overflow:hidden;
         height: 100%;
         width:100%;

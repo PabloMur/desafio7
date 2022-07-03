@@ -23,7 +23,7 @@ class Home extends HTMLElement {
     `;
     style.innerHTML = `
       .home-conteiner{
-        background: var(--yellow-bg-color);
+        background: var(--purple);
         height: 80vh;
         width: 90%;
         border-radius: 5px;
@@ -39,6 +39,11 @@ class Home extends HTMLElement {
       .button-container{
         display: flex;
         justify-content: center;
+        align-items:center;
+        background: var(--blue);
+        height: 50%;
+        width: 100%;
+        border-radius: 100% 100% 0 0;
       }
     `;
     this.shadow.appendChild(style);
@@ -46,8 +51,14 @@ class Home extends HTMLElement {
   connectedCallback() {
     this.render();
     const button = this.shadow.querySelector("custom-button");
+    const geolocation = navigator.geolocation;
     button.addEventListener("click", () => {
       Router.go("/around");
+      geolocation.getCurrentPosition((position) => {
+        console.log(position.coords);
+        const { latitude, longitude } = position.coords;
+        console.table({ latitude, longitude });
+      });
     });
   }
 }

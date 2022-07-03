@@ -15,16 +15,19 @@ class Burger extends HTMLElement {
     `;
     style.innerHTML = `
       .lines-container{
-        width:7vh;
-        height: 7vh;
+        width:5vh;
+        height: 5vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        background: var(--blue);
+        padding: 5px;
+        border-radius: 5px;
       }
       .line{
-        height: 20%;
+        height: 15%;
         width: 100%;
-        background: blue;
+        background: var(--main-bg-color);
         border-radius: 4px;
       }
     `;

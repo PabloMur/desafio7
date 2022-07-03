@@ -3,13 +3,16 @@
 }
 
 :root {
-  --main-bg-color: #F8F7F9;
-  --dark-bg-color: #2B2D42;
-  --yellow-bg-color: #F7EC59;
+  --main-bg-color: #FFF0DB;
+    --dark-bg-color: black;
+    --yellow-bg-color: #FFBE0B;
+    --orange: #FB5607;
+    --blue: #3A86FF;
+    --purple: #8338EC;
 }
 
 body {
-  background-color: var(--dark-bg-color);
+  background-color: var(--main-bg-color);
   margin: 0;
   padding: 0;
 }

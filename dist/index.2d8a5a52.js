@@ -2926,7 +2926,7 @@ class Home extends HTMLElement {
     `;
         style.innerHTML = `
       .home-conteiner{
-        background: var(--yellow-bg-color);
+        background: var(--purple);
         height: 80vh;
         width: 90%;
         border-radius: 5px;
@@ -2942,6 +2942,11 @@ class Home extends HTMLElement {
       .button-container{
         display: flex;
         justify-content: center;
+        align-items:center;
+        background: var(--blue);
+        height: 50%;
+        width: 100%;
+        border-radius: 100% 100% 0 0;
       }
     `;
         this.shadow.appendChild(style);
@@ -2949,8 +2954,17 @@ class Home extends HTMLElement {
     connectedCallback() {
         this.render();
         const button = this.shadow.querySelector("custom-button");
+        const geolocation = navigator.geolocation;
         button.addEventListener("click", ()=>{
             (0, _router.Router).go("/around");
+            geolocation.getCurrentPosition((position)=>{
+                console.log(position.coords);
+                const { latitude , longitude  } = position.coords;
+                console.table({
+                    latitude,
+                    longitude
+                });
+            });
         });
     }
 }
@@ -3024,6 +3038,13 @@ class PetsAround extends HTMLElement {
     render() {
         this.shadow.innerHTML = `
             <custom-header></custom-header>
+            <custom-text>Mascotas Perdidas Cerca</custom-text>
+            <div class="cards-container">
+              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
+              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
+              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
+              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
+            </div>
             <p>Mascotas cerca</p>
         `;
     }
@@ -3042,10 +3063,28 @@ class Signup extends HTMLElement {
         });
     }
     render() {
+        const style = document.createElement("style");
         this.shadow.innerHTML = `
             <custom-header></custom-header>
-            <p>Registrate aca</p>
+            <div class="registation-form-container">
+              <custom-registration-form></custom-registration-form>
+            </div>
+            <custom-footer></custom-footer>
         `;
+        style.innerHTML = `
+      .registation-form-container{
+        background:var(--purple);
+        height: 80vh;
+        width: 90%;
+        margin: 0 auto;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    `;
+        this.shadow.appendChild(style);
     }
     connectedCallback() {
         this.render();
@@ -3060,8 +3099,11 @@ var _index2 = require("./components/footer/index");
 var _index3 = require("./components/text/index");
 var _index4 = require("./components/button/index");
 var _index5 = require("./components/burger/index");
+var _index6 = require("./components/menu-list/index");
+var _index7 = require("./components/registration-form/index");
+var _index8 = require("./components/pet-card/index");
 
-},{"./components/header/index":"3uGKI","./components/logo/index":"i49Bf","./components/footer/index":"hClkB","./components/text/index":"hGDq8","./components/button/index":"ecVFK","./components/burger/index":"hA3j0"}],"3uGKI":[function(require,module,exports) {
+},{"./components/header/index":"3uGKI","./components/logo/index":"i49Bf","./components/footer/index":"hClkB","./components/text/index":"hGDq8","./components/button/index":"ecVFK","./components/burger/index":"hA3j0","./components/menu-list/index":"1jywh","./components/registration-form/index":"9jiUc","./components/pet-card/index":"eJvGM"}],"3uGKI":[function(require,module,exports) {
 class Header extends HTMLElement {
     constructor(){
         super();
@@ -3073,13 +3115,13 @@ class Header extends HTMLElement {
         this.shadow.innerHTML = `
           <header>
             <custom-logo></custom-logo>
-            <custom-burger></custom-burger>
+            <custom-burger class="burger"></custom-burger>
           </haeder>
       `;
         const style = document.createElement("style");
         style.innerHTML = `
     header{
-        background: #FF66D8;
+        background: var(--purple);
         height: 11vh;
         width: 85%;
         border-radius: 5px;
@@ -3087,13 +3129,17 @@ class Header extends HTMLElement {
         align-items: center;
         justify-content: space-between;
         padding: 0 10px;
-        margin: 0 auto;
+        margin: 2vh auto;
       }
       `;
         this.shadow.appendChild(style);
     }
     connectedCallback() {
         this.render();
+        const burger = this.shadow.querySelector("custom-burger");
+        burger.addEventListener("click", ()=>{
+            console.log("hola");
+        });
     }
 }
 customElements.define("custom-header", Header);
@@ -3118,7 +3164,6 @@ class Logo extends HTMLElement {
         const style = document.createElement("style");
         style.innerHTML = `
       .image-container{
-        background:red;
         overflow:hidden;
         height: 100%;
         width:100%;
@@ -3189,13 +3234,13 @@ class CustomText extends HTMLElement {
           .title{
               font-size:30px;
               font-weight: bold;
-              color: #009048;
+              color: black;
               transition: all 3s ease;
             }
             @media (max-width:600px){
               .title{
                 width: 90%;
-                font-size:70px;
+                font-size:40px;
                 margin: 0 auto;
                 text-align: center;
               }
@@ -3203,7 +3248,7 @@ class CustomText extends HTMLElement {
             .body{
               text-align:center;
               color: black;
-              font-size: 30px;
+              font-size: 25px;
               max-width: 600px;
               margin-bottom: 20px;
           }@media (max-width:600px){
@@ -3297,16 +3342,19 @@ class Burger extends HTMLElement {
     `;
         style.innerHTML = `
       .lines-container{
-        width:7vh;
-        height: 7vh;
+        width:5vh;
+        height: 5vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        background: var(--blue);
+        padding: 5px;
+        border-radius: 5px;
       }
       .line{
-        height: 20%;
+        height: 15%;
         width: 100%;
-        background: blue;
+        background: var(--main-bg-color);
         border-radius: 4px;
       }
     `;
@@ -3317,6 +3365,149 @@ class Burger extends HTMLElement {
     }
 }
 customElements.define("custom-burger", Burger);
+
+},{}],"1jywh":[function(require,module,exports) {
+class MenuList extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    render() {
+        const style = document.createElement("style");
+        this.shadow.innerHTML = `
+        <div class="links-container">
+            <ul></ul>
+        </div>
+    `;
+        style.innerHTML = `
+        .links-container{
+          position: absolute;
+          top:0;
+          left: 0;
+          height: 100vh;
+          width: 100%;
+          background: red;
+          transform: translateX(50px);
+        }
+    `;
+        this.shadow.appendChild(style);
+    }
+    connectedCallback() {
+        this.render();
+    }
+}
+customElements.define("menu-list", MenuList);
+
+},{}],"9jiUc":[function(require,module,exports) {
+class RegistrationForm extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    render() {
+        const style = document.createElement("style");
+        this.shadow.innerHTML = `
+      <form class="form">
+        <label>
+          <p>Email</p>
+          <input type="email"></input>
+        </label>
+        <label>
+          <p>Contraseña</p>
+          <input type="password"></input>
+        </label>
+        <label>
+          <p>Repetir contraseña</p>
+          <input type="password"></input>
+      </label>
+      <div>
+        <custom-button>Crear Cuenta</custom-button>
+      </div>
+      </form>
+    `;
+        style.innerHTML = `
+      .form{
+        background: var(--blue);
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    `;
+        this.shadow.appendChild(style);
+    }
+    connectedCallback() {
+        this.render();
+    }
+}
+customElements.define("custom-registration-form", RegistrationForm);
+
+},{}],"eJvGM":[function(require,module,exports) {
+class PetCard extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    render() {
+        const style = document.createElement("style");
+        const profileImage = this.getAttribute("profile-image");
+        this.shadow.innerHTML = `
+      <div class="card-container">
+        <div class="pet-profile-image">
+          <img src="${profileImage}">
+        </div>
+        <div class="pet-data-container">
+          <div class="name-and-zone">
+            <h3 class="pet-name">Otto</h3>
+            <h5 class="pet-zone">Centro Mar del Plata</h5>
+          </div>
+          <div>
+            <button>Reportar Mascota</button>
+          </div>
+        </div>
+      </div>
+    `;
+        style.innerHTML = `
+      .card-container{
+        background: var(--orange);
+        width: 80%;
+        max-width: 300px;
+        margin: 10px auto;
+        border-radius: 10px;
+      }
+      img{
+        width: auto;
+        height: 30vh;
+      }
+      .pet-profile-image{
+        background: red;
+        max-width: 300px;
+      }
+      .pet-data-container{
+        background: red;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+      }
+      .name-and-zone{
+        background: green;
+        width:50%;
+      }
+    `;
+        this.shadow.appendChild(style);
+    }
+    connectedCallback() {
+        this.render();
+    }
+}
+customElements.define("custom-pet-card", PetCard);
 
 },{}]},["5S0wB","giP6s"], "giP6s", "parcelRequire2ef8")
 

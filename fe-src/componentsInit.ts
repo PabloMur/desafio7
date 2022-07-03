@@ -4,3 +4,6 @@ import "./components/footer/index";
 import "./components/text/index";
 import "./components/button/index";
 import "./components/burger/index";
+import "./components/menu-list/index";
+import "./components/registration-form/index";
+import "./components/pet-card/index";
