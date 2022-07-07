@@ -8,8 +8,9 @@ class Logo extends HTMLElement {
     const img = require("url:../../assets/images/pata.svg");
     this.shadow.innerHTML = `
         <div class="image-container">
-            <a href="/">
+            <a class="anchor"href="/">
               <img src="${img}" alt="">
+              <p class="ancor-name">Pets Finder</p>
             </a>
         </div>
         `;
@@ -17,12 +18,27 @@ class Logo extends HTMLElement {
     style.innerHTML = `
       .image-container{
         overflow:hidden;
-        height: 100%;
+        height: 9vh;
         width:100%;
+        display: flex;
+        align-items: center;
+      }
+      .anchor{
+        display: flex;
+        height: 6vh;
+        align-items: center;
+        text-decoration: none;
+        color: black;  
+      }
+      .ancor-name{
+        font-family: var(--font-family);
+        font weight: 700; 
+        font-size: 1.5em;
+        margin-left: 0.3em;
       }
       img{
-        width: 100%;
-        height: auto;
+        width: auto;
+        height: 100%;
       }
         `;
     this.shadow.appendChild(style);

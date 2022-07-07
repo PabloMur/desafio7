@@ -7,33 +7,25 @@ class Header extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
           <header>
-            <custom-logo></custom-logo>
-            <custom-burger class="burger"></custom-burger>
+            <div class="custom-menu-container">
+              <custom-menu></custom-menu>
+            </div>
           </haeder>
       `;
     const style = document.createElement("style");
     style.innerHTML = `
-    header{
-        background: var(--purple);
+      header{
         height: 11vh;
-        width: 85%;
-        border-radius: 5px;
-        display:flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 10px;
-        margin: 2vh auto;
+        max-width: 100%;
+      }
+      .custom-menu-container{
+        width: 90%;
       }
       `;
     this.shadow.appendChild(style);
   }
   connectedCallback() {
     this.render();
-    const burger = this.shadow.querySelector("custom-burger") as any;
-
-    burger.addEventListener("click", () => {
-      console.log("hola");
-    });
   }
 }
 

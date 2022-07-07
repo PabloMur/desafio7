@@ -555,6 +555,18 @@ router.setRoutes([
     {
         path: "/signup",
         component: "signup-page"
+    },
+    {
+        path: "/login",
+        component: "login-page"
+    },
+    {
+        path: "/my-pets",
+        component: "my-pets-page"
+    },
+    {
+        path: "/my-data",
+        component: "my-data-page"
     }, 
 ]);
 
@@ -2900,8 +2912,11 @@ var _index = require("./pages/home/index");
 var _index1 = require("./pages/report/index");
 var _index2 = require("./pages/pets-around/index");
 var _index3 = require("./pages/signup/index");
+var _index4 = require("./pages/login/index");
+var _index5 = require("./pages/my-pets/index");
+var _index6 = require("./pages/my-data/index");
 
-},{"./pages/home/index":"46Yiy","./pages/report/index":"l7EGD","./pages/pets-around/index":"gXNcj","./pages/signup/index":"iq6LJ"}],"46Yiy":[function(require,module,exports) {
+},{"./pages/home/index":"46Yiy","./pages/report/index":"l7EGD","./pages/pets-around/index":"gXNcj","./pages/signup/index":"iq6LJ","./pages/login/index":"hzE9t","./pages/my-pets/index":"4eeOh","./pages/my-data/index":"baBEO"}],"46Yiy":[function(require,module,exports) {
 var _router = require("@vaadin/router");
 class Home extends HTMLElement {
     constructor(){
@@ -2927,10 +2942,11 @@ class Home extends HTMLElement {
         style.innerHTML = `
       .home-conteiner{
         background: var(--purple);
-        height: 80vh;
+        height: 85vh;
         width: 90%;
         border-radius: 5px;
         margin: 0 auto;
+        margin-top: 4vh;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -2944,9 +2960,9 @@ class Home extends HTMLElement {
         justify-content: center;
         align-items:center;
         background: var(--blue);
-        height: 50%;
+        height: 30%;
         width: 100%;
-        border-radius: 100% 100% 0 0;
+        border-radius: 150% 10% 0 0;
       }
     `;
         this.shadow.appendChild(style);
@@ -2970,7 +2986,7 @@ class Home extends HTMLElement {
 }
 customElements.define("home-page", Home);
 
-},{"url:../../assets/images/park.jpg":"h3QBh","@vaadin/router":"kVZrF"}],"h3QBh":[function(require,module,exports) {
+},{"@vaadin/router":"kVZrF","url:../../assets/images/park.jpg":"h3QBh"}],"h3QBh":[function(require,module,exports) {
 module.exports = require("./helpers/bundle-url").getBundleURL("5jBBn") + "park.d0365f7f.jpg" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -3092,6 +3108,88 @@ class Signup extends HTMLElement {
 }
 customElements.define("signup-page", Signup);
 
+},{}],"hzE9t":[function(require,module,exports) {
+class Login extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    render() {
+        const style = document.createElement("style");
+        this.shadow.innerHTML = `
+              <custom-header></custom-header>
+              <div class="registation-form-container">
+                <p>LOGIN PAGE</p>
+                <custom-registration-form></custom-registration-form>
+              </div>
+              <custom-footer></custom-footer>
+          `;
+        style.innerHTML = `
+        .registation-form-container{
+          background:var(--purple);
+          height: 80vh;
+          width: 90%;
+          margin: 0 auto;
+          border-radius: 5px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      `;
+        this.shadow.appendChild(style);
+    }
+    connectedCallback() {
+        this.render();
+    }
+}
+customElements.define("login-page", Login);
+
+},{}],"4eeOh":[function(require,module,exports) {
+class MyPets extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    render() {
+        const style = document.createElement("style");
+        this.shadow.innerHTML = ``;
+        style.innerHTML = ``;
+        this.shadow.appendChild(style);
+    }
+    connectedCallback() {
+        this.render();
+    }
+}
+customElements.define("my-pets-page", MyPets);
+
+},{}],"baBEO":[function(require,module,exports) {
+class MyDataPage extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    render() {
+        const style = document.createElement("style");
+        this.shadow.innerHTML = `
+        <custom-header></custom-header>
+        <custom-footer></custom-footer>
+      `;
+        style.innerHTML = ``;
+        this.shadow.appendChild(style);
+    }
+    connectedCallback() {
+        this.render();
+    }
+}
+customElements.define("my-data-page", MyDataPage);
+
 },{}],"74VVa":[function(require,module,exports) {
 var _index = require("./components/header/index");
 var _index1 = require("./components/logo/index");
@@ -3102,8 +3200,10 @@ var _index5 = require("./components/burger/index");
 var _index6 = require("./components/menu-list/index");
 var _index7 = require("./components/registration-form/index");
 var _index8 = require("./components/pet-card/index");
+var _index9 = require("./components/session-closer/index");
+var _index10 = require("./components/custom-menu/index");
 
-},{"./components/header/index":"3uGKI","./components/logo/index":"i49Bf","./components/footer/index":"hClkB","./components/text/index":"hGDq8","./components/button/index":"ecVFK","./components/burger/index":"hA3j0","./components/menu-list/index":"1jywh","./components/registration-form/index":"9jiUc","./components/pet-card/index":"eJvGM"}],"3uGKI":[function(require,module,exports) {
+},{"./components/header/index":"3uGKI","./components/logo/index":"i49Bf","./components/footer/index":"hClkB","./components/text/index":"hGDq8","./components/button/index":"ecVFK","./components/burger/index":"hA3j0","./components/menu-list/index":"1jywh","./components/registration-form/index":"9jiUc","./components/pet-card/index":"eJvGM","./components/session-closer/index":"aFW41","./components/custom-menu/index":"8R71D"}],"3uGKI":[function(require,module,exports) {
 class Header extends HTMLElement {
     constructor(){
         super();
@@ -3114,32 +3214,25 @@ class Header extends HTMLElement {
     render() {
         this.shadow.innerHTML = `
           <header>
-            <custom-logo></custom-logo>
-            <custom-burger class="burger"></custom-burger>
+            <div class="custom-menu-container">
+              <custom-menu></custom-menu>
+            </div>
           </haeder>
       `;
         const style = document.createElement("style");
         style.innerHTML = `
-    header{
-        background: var(--purple);
+      header{
         height: 11vh;
-        width: 85%;
-        border-radius: 5px;
-        display:flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 10px;
-        margin: 2vh auto;
+        max-width: 100%;
+      }
+      .custom-menu-container{
+        width: 90%;
       }
       `;
         this.shadow.appendChild(style);
     }
     connectedCallback() {
         this.render();
-        const burger = this.shadow.querySelector("custom-burger");
-        burger.addEventListener("click", ()=>{
-            console.log("hola");
-        });
     }
 }
 customElements.define("custom-header", Header);
@@ -3156,8 +3249,9 @@ class Logo extends HTMLElement {
         const img = require("url:../../assets/images/pata.svg");
         this.shadow.innerHTML = `
         <div class="image-container">
-            <a href="/">
+            <a class="anchor"href="/">
               <img src="${img}" alt="">
+              <p class="ancor-name">Pets Finder</p>
             </a>
         </div>
         `;
@@ -3165,12 +3259,27 @@ class Logo extends HTMLElement {
         style.innerHTML = `
       .image-container{
         overflow:hidden;
-        height: 100%;
+        height: 9vh;
         width:100%;
+        display: flex;
+        align-items: center;
+      }
+      .anchor{
+        display: flex;
+        height: 6vh;
+        align-items: center;
+        text-decoration: none;
+        color: black;  
+      }
+      .ancor-name{
+        font-family: var(--font-family);
+        font weight: 700; 
+        font-size: 1.5em;
+        margin-left: 0.3em;
       }
       img{
-        width: 100%;
-        height: auto;
+        width: auto;
+        height: 100%;
       }
         `;
         this.shadow.appendChild(style);
@@ -3236,6 +3345,7 @@ class CustomText extends HTMLElement {
               font-weight: bold;
               color: black;
               transition: all 3s ease;
+              font-family: var(--font-family);
             }
             @media (max-width:600px){
               .title{
@@ -3378,24 +3488,64 @@ class MenuList extends HTMLElement {
         const style = document.createElement("style");
         this.shadow.innerHTML = `
         <div class="links-container">
-            <ul></ul>
+            <div class="closer-button">
+              <button>X</button>
+            </div>
+            <ul class="opciones">
+              <li><a href="/login">Mis Datos</a></li>
+              <li><a href="/login">Mis mascotas reportadas</a></li>
+              <li><a href="/login">Reportar Mascota</a></li>
+            </ul>
         </div>
     `;
         style.innerHTML = `
         .links-container{
           position: absolute;
-          top:0;
-          left: 0;
-          height: 100vh;
-          width: 100%;
+          bottom: 0;
+          right: 0;
+          height: 870vh;
+          width: 80%;
+          max-width: 400px;
+          background: var(--purple);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .closer-button{
           background: red;
-          transform: translateX(50px);
+          display: flex;
+          justify-content: end;
+          height: 5vh
+        }
+        button{
+          margin-right: 20px;
+        }
+        .opciones{
+          background: green;
+          height: 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: center;
+          padding: 0;
+          margin: 0;
+        }
+        li{
+          list-style: none;
+        }
+        a{
+          text-decoration: none;
+          color: black;
+          font-size: 25px;
+          font-family: sans-serif;
         }
     `;
         this.shadow.appendChild(style);
     }
     connectedCallback() {
         this.render();
+        const button = this.shadow.querySelector(".closer-button");
+        button.addEventListener("click", ()=>{});
     }
 }
 customElements.define("menu-list", MenuList);
@@ -3508,6 +3658,224 @@ class PetCard extends HTMLElement {
     }
 }
 customElements.define("custom-pet-card", PetCard);
+
+},{}],"aFW41":[function(require,module,exports) {
+class SessionCloser extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    render() {
+        const style = document.createElement("style");
+        this.shadow.innerHTML = ``;
+        style.innerHTML = ``;
+        this.shadow.appendChild(style);
+    }
+    connectedCallback() {
+        this.render();
+    }
+}
+customElements.define("custom-session-closer", SessionCloser);
+
+},{}],"8R71D":[function(require,module,exports) {
+class CustomMenu extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+    }
+    connectedCallback() {
+        this.click();
+    }
+    render() {
+        const style = document.createElement("style");
+        this.shadow.innerHTML = `
+              <div class="menu-container">  
+                  <div class="menu-logo">
+                    <custom-logo></custom-logo>
+                  </div>
+                  <nav class="menu-nav">
+                      <ul class="nav-list">
+                          <li><a class="nav-list-link" href="/stack">My Data</a></li>
+                          <li><a class="nav-list-link" href="/proyects">My Pets</a></li>
+                          <li><a class="nav-list-link" href="/proyects">Report</a></li>
+                          <li><a class="nav-list-link emphasis" href="/about">Signup</a></li>
+                          <li><a class="nav-list-link" href="/contact">Login</a></li>
+                      </ul> 
+                  </nav>
+                  <nav class="menu-nav-desplegable escondido">
+                      <ul class="nav-list">
+                          <li><a class="nav-list-link" href="/my-data">Mis datos</a></li>
+                          <li><a class="nav-list-link" href="/proyects">Mis mascotas reportadas</a></li>
+                          <li><a class="nav-list-link" href="/about">Reportar mascota</a></li>
+                          <li><a class="nav-list-link" href="/contact">Contact</a></li>
+                      </ul>
+                  </nav>
+                  <div class="nav-burger-logo">
+                    <div class="lineOne"></div>
+                    <div class="lineTwo"></div>
+                    <div class="lineThree"></div>
+                  </div>
+              </div>
+          `;
+        style.innerHTML = `
+          *{
+            box-sizing: border-box;
+          }
+          .escondido{
+            display: none;
+          }
+          .mostrado{
+            display:inherit;
+          }
+          .menu-container{
+              height: 11vh;
+              width:100%;
+              max-width:100%;
+              background:var(--purple);
+              margin-top:0;
+              display:flex;
+              justify-content: space-between;
+              align-items:center;
+              color:white;
+              padding:20px 60px;
+              position:fixed;
+              left: 0;
+              top: 0;
+              z-index:10;
+          }
+          @media (max-width: 600px){
+            .menu-container{
+              padding: 20px;
+            }
+            .menu-nav{
+              position: absolute;
+              top: 13vh;
+              width:100%;
+              background: black;
+              height: 87vh;
+              overflow:hidden;
+              justify-content: center;
+              align-items:center;
+              display:none;
+            }
+            .menu-nav-desplegable{
+              position: absolute;
+              top: 10vh;
+              right: 0;
+              width:100%;
+              background: black;
+              height: 90vh;
+              overflow:hidden;
+              justify-content: center;
+              align-items:center;
+              background: var(--purple);
+              flex-direction: column;
+            }
+          }
+
+          .menu-logo{
+            display:flex;
+            align-items: center;
+          }
+          .nav-list{
+              display:flex;
+              width:100%;
+              height: 9vh;
+              justify-content: space-around;    
+              align-items: center;  
+          }
+          
+          a{
+            font-weight: bolder;
+            font-family: var(--font-family);
+          }
+
+          @media (max-width: 600px) {
+            .nav-list {
+              width: 100%;
+              height: 60vh;
+              flex-direction: column;
+              padding: 0;
+            }
+            a{
+              font-weight: bolder;
+            }
+          }
+          li{
+              list-style:none;
+              height: 12vh;
+              min-width: 6.1vw;
+              display: flex;
+              justify-content: center;
+              align-items:center;
+          }
+          @media (max-width: 600px){
+            li{
+              background: var(--purple);
+              width: 50%;
+              font-size: 30px;
+              
+            }
+          }
+          .logo-name{
+              font-size: 30px;
+              letter-spacing: 2px;
+              margin-left: 30px;
+          }
+          @media (max-width: 600px){
+            .logo-name{
+              font-size: 2rem;
+              margin-left:0;
+            }
+          }
+          .nav-list-link{
+              color: white;
+              text-decoration: none;
+          }
+          .nav-list-link:hover{
+              color:var(--main-bg-color);
+          }
+          .nav-burger-logo{
+            display: none;
+          }
+          @media (max-width: 600px){
+            .nav-burger-logo{
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              height: 30px;
+              width:31px;
+            }
+            .lineOne, .lineTwo, .lineThree{
+              background: black;
+              height: 25%;
+              border-radius: 3px;
+            }
+          }
+
+          .emphasis{
+            background: black;
+            padding: 5px 8px;
+            border-radius: 5px;
+          }
+          
+      `;
+        this.shadow.appendChild(style);
+    }
+    click() {
+        this.render();
+        let burger = this.shadow.querySelector(".nav-burger-logo");
+        let lista = this.shadow.querySelector(".menu-nav-desplegable");
+        burger.addEventListener("click", ()=>{
+            lista.classList.toggle("mostrado");
+        });
+    }
+}
+customElements.define("custom-menu", CustomMenu);
 
 },{}]},["5S0wB","giP6s"], "giP6s", "parcelRequire2ef8")
 

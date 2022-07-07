@@ -3,12 +3,15 @@
 }
 
 :root {
+  /*Paleta de colores*/
   --main-bg-color: #FFF0DB;
     --dark-bg-color: black;
     --yellow-bg-color: #FFBE0B;
     --orange: #FB5607;
     --blue: #3A86FF;
     --purple: #8338EC;
+  /*Fuete Principal*/
+    --font-family: 'Kantumruy Pro', sans-serif;
 }
 
 body {

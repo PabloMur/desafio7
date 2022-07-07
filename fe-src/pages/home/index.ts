@@ -24,10 +24,11 @@ class Home extends HTMLElement {
     style.innerHTML = `
       .home-conteiner{
         background: var(--purple);
-        height: 80vh;
+        height: 85vh;
         width: 90%;
         border-radius: 5px;
         margin: 0 auto;
+        margin-top: 4vh;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -41,9 +42,9 @@ class Home extends HTMLElement {
         justify-content: center;
         align-items:center;
         background: var(--blue);
-        height: 50%;
+        height: 30%;
         width: 100%;
-        border-radius: 100% 100% 0 0;
+        border-radius: 150% 10% 0 0;
       }
     `;
     this.shadow.appendChild(style);

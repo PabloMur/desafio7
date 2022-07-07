@@ -16,6 +16,7 @@ class CustomText extends HTMLElement {
               font-weight: bold;
               color: black;
               transition: all 3s ease;
+              font-family: var(--font-family);
             }
             @media (max-width:600px){
               .title{
