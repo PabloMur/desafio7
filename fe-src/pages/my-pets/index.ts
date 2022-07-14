@@ -7,7 +7,9 @@ class MyPets extends HTMLElement {
   render() {
     const style = document.createElement("style");
 
-    this.shadow.innerHTML = ``;
+    this.shadow.innerHTML = `
+      <custom-header></custom-header>
+    `;
 
     style.innerHTML = ``;
 

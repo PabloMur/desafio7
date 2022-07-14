@@ -4,7 +4,7 @@
 
 :root {
   /*Paleta de colores*/
-  --main-bg-color: #FFF0DB;
+    --white: #ffffff;
     --dark-bg-color: black;
     --yellow-bg-color: #FFBE0B;
     --orange: #FB5607;
@@ -15,7 +15,7 @@
 }
 
 body {
-  background-color: var(--main-bg-color);
+  background-color: var(--purple);
   margin: 0;
   padding: 0;
 }

@@ -32,6 +32,7 @@ class Logo extends HTMLElement {
       }
       .ancor-name{
         font-family: var(--font-family);
+        color: var(--white);
         font weight: 700; 
         font-size: 1.5em;
         margin-left: 0.3em;

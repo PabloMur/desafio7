@@ -16,11 +16,11 @@ class CustomMenu extends HTMLElement {
                   </div>
                   <nav class="menu-nav">
                       <ul class="nav-list">
-                          <li><a class="nav-list-link" href="/stack">My Data</a></li>
-                          <li><a class="nav-list-link" href="/proyects">My Pets</a></li>
-                          <li><a class="nav-list-link" href="/proyects">Report</a></li>
-                          <li><a class="nav-list-link emphasis" href="/about">Signup</a></li>
-                          <li><a class="nav-list-link" href="/contact">Login</a></li>
+                          <li><a class="nav-list-link" href="/my-data">My Data</a></li>
+                          <li><a class="nav-list-link" href="/my-pets">My Pets</a></li>
+                          <li><a class="nav-list-link" href="/report">My Reports</a></li>
+                          <li><a class="nav-list-link secondary" href="/login">Login  </a></li>
+                          <li><a class="nav-list-link emphasis" href="/signup">Signup</a></li>
                       </ul> 
                   </nav>
                   <nav class="menu-nav-desplegable escondido">
@@ -176,6 +176,12 @@ class CustomMenu extends HTMLElement {
 
           .emphasis{
             background: black;
+            padding: 5px 8px;
+            border-radius: 5px;
+          }
+
+          .secondary{
+            background: var(--blue);
             padding: 5px 8px;
             border-radius: 5px;
           }

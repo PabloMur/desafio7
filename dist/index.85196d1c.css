@@ -3,7 +3,7 @@
 }
 
 :root {
-  --main-bg-color: #fff0db;
+  --white: #fff;
   --dark-bg-color: black;
   --yellow-bg-color: #ffbe0b;
   --orange: #fb5607;
@@ -13,7 +13,7 @@
 }
 
 body {
-  background-color: var(--main-bg-color);
+  background-color: var(--purple);
   margin: 0;
   padding: 0;
 }

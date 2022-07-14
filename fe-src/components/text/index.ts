@@ -12,8 +12,7 @@ class CustomText extends HTMLElement {
 
     style.innerHTML = `
           .title{
-              font-size:30px;
-              font-weight: bold;
+              font-size:50px;
               color: black;
               transition: all 3s ease;
               font-family: var(--font-family);

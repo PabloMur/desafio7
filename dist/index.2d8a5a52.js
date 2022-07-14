@@ -2918,43 +2918,61 @@ var _index6 = require("./pages/my-data/index");
 
 },{"./pages/home/index":"46Yiy","./pages/report/index":"l7EGD","./pages/pets-around/index":"gXNcj","./pages/signup/index":"iq6LJ","./pages/login/index":"hzE9t","./pages/my-pets/index":"4eeOh","./pages/my-data/index":"baBEO"}],"46Yiy":[function(require,module,exports) {
 var _router = require("@vaadin/router");
+// <custom-text>Para ver las mascotas reportadas cerca tuyo necesitamos permiso para conocer tu ubicación.</custom-text>
+//           <div class="button-container">
+//             <custom-button>Dar Mi Ubicacion</custom-button>
+//           </div>
 class Home extends HTMLElement {
     constructor(){
         super();
         this.shadow = this.attachShadow({
             mode: "open"
         });
-        this.bgImage = require("url:../../assets/images/park.jpg");
+        this.bgImage = require("url:../../assets/images/map.png");
     }
     render() {
         const style = document.createElement("style");
         this.shadow.innerHTML = `
         <custom-header></custom-header>
         <div class="home-conteiner">
+          <div class="title-container">
           <custom-text variant="title">Mascotas Perdidas Cerca tuyo</custom-text>
-          <custom-text>Para ver las mascotas reportadas cerca tuyo necesitamos permiso para conocer tu ubicación.</custom-text>
-          <div class="button-container">
-            <custom-button>Dar Mi Ubicacion</custom-button>
           </div>
+          
         </div>
         <custom-footer></custom-footer>
     `;
         style.innerHTML = `
+      *{
+        box-sizing: border-box;
+      }
       .home-conteiner{
-        background: var(--purple);
-        height: 85vh;
+        background: var(--white);
+        height: 80vh;
         width: 90%;
-        border-radius: 5px;
-        margin: 0 auto;
-        margin-top: 4vh;
+        border-radius: 30px;
+        margin: 2vh auto 6vh auto;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         display:flex;
-        flex-direction: column;
         justify-content: space-between;
-        align-items:center;
+        align-items:flex-end;
+        overflow: hidden;
       }
+
+      @media (max-width: 600px){
+        .home-conteiner{
+          flex-direction:column;
+          overflow: none;
+        }
+      }
+
+      .title-container{
+        height: 100%;
+        width: 60%;
+      }
+
       .button-container{
         display: flex;
         justify-content: center;
@@ -2962,7 +2980,9 @@ class Home extends HTMLElement {
         background: var(--blue);
         height: 30%;
         width: 100%;
-        border-radius: 150% 10% 0 0;
+        border-radius: 50% 50% 0 0;
+        background-image: url(${this.bgImage});
+        background-size: cover;
       }
     `;
         this.shadow.appendChild(style);
@@ -2986,8 +3006,8 @@ class Home extends HTMLElement {
 }
 customElements.define("home-page", Home);
 
-},{"@vaadin/router":"kVZrF","url:../../assets/images/park.jpg":"h3QBh"}],"h3QBh":[function(require,module,exports) {
-module.exports = require("./helpers/bundle-url").getBundleURL("5jBBn") + "park.d0365f7f.jpg" + "?" + Date.now();
+},{"@vaadin/router":"kVZrF","url:../../assets/images/map.png":"kb1FJ"}],"kb1FJ":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("5jBBn") + "map.4eb33cc9.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -3061,7 +3081,7 @@ class PetsAround extends HTMLElement {
               <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
               <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
             </div>
-            <p>Mascotas cerca</p>
+            <custom-footer></custom-footer>
         `;
     }
     connectedCallback() {
@@ -3157,7 +3177,9 @@ class MyPets extends HTMLElement {
     }
     render() {
         const style = document.createElement("style");
-        this.shadow.innerHTML = ``;
+        this.shadow.innerHTML = `
+      <custom-header></custom-header>
+    `;
         style.innerHTML = ``;
         this.shadow.appendChild(style);
     }
@@ -3273,6 +3295,7 @@ class Logo extends HTMLElement {
       }
       .ancor-name{
         font-family: var(--font-family);
+        color: var(--white);
         font weight: 700; 
         font-size: 1.5em;
         margin-left: 0.3em;
@@ -3341,8 +3364,7 @@ class CustomText extends HTMLElement {
         const style = document.createElement("style");
         style.innerHTML = `
           .title{
-              font-size:30px;
-              font-weight: bold;
+              font-size:50px;
               color: black;
               transition: all 3s ease;
               font-family: var(--font-family);
@@ -3699,11 +3721,11 @@ class CustomMenu extends HTMLElement {
                   </div>
                   <nav class="menu-nav">
                       <ul class="nav-list">
-                          <li><a class="nav-list-link" href="/stack">My Data</a></li>
-                          <li><a class="nav-list-link" href="/proyects">My Pets</a></li>
-                          <li><a class="nav-list-link" href="/proyects">Report</a></li>
-                          <li><a class="nav-list-link emphasis" href="/about">Signup</a></li>
-                          <li><a class="nav-list-link" href="/contact">Login</a></li>
+                          <li><a class="nav-list-link" href="/my-data">My Data</a></li>
+                          <li><a class="nav-list-link" href="/my-pets">My Pets</a></li>
+                          <li><a class="nav-list-link" href="/report">My Reports</a></li>
+                          <li><a class="nav-list-link secondary" href="/login">Login  </a></li>
+                          <li><a class="nav-list-link emphasis" href="/signup">Signup</a></li>
                       </ul> 
                   </nav>
                   <nav class="menu-nav-desplegable escondido">
@@ -3859,6 +3881,12 @@ class CustomMenu extends HTMLElement {
 
           .emphasis{
             background: black;
+            padding: 5px 8px;
+            border-radius: 5px;
+          }
+
+          .secondary{
+            background: var(--blue);
             padding: 5px 8px;
             border-radius: 5px;
           }
