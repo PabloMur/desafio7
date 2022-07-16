@@ -4,11 +4,11 @@ import { rtdb, ref, onValue } from "./rtdb";
 
 const state = {
   data: {
-    userId: "",
+    token: "",
     roomId: "",
     rtdbRoomId: "",
     roomCreator: "",
-    rtdbData: {},
+    user: {},
     result: "",
   },
   listeners: [],
