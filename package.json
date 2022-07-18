@@ -1,7 +1,6 @@
 {
   "name": "desafio7",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "git@github.com:PabloMur/desafio7.git",
   "author": "Pablo <polillomurillo@gmail.com>",
   "license": "MIT",
