@@ -1,30 +1,20 @@
 const API_BASE = "https://desafio-mod6.herokuapp.com";
 
-import { rtdb, ref, onValue } from "./rtdb";
-
 const state = {
   data: {
     token: "",
-    roomId: "",
-    rtdbRoomId: "",
-    roomCreator: "",
+    location: {
+      lat: "",
+      lng: "",
+    },
+    pets: [],
     user: {},
-    result: "",
   },
   listeners: [],
 
   init() {
     const localData = localStorage.getItem("saved-state");
     this.setState(JSON.parse(localData as any));
-  },
-
-  listenRTDBData() {
-    const cs = this.getState();
-    const gameRoomRef = ref(rtdb, `/gamerooms/${cs.rtdbRoomId}/currentGame`);
-    onValue(gameRoomRef, (snapshot) => {
-      const data = snapshot.val();
-      this.setState({ ...cs, rtdbData: data });
-    });
   },
 
   getState() {
@@ -243,6 +233,7 @@ const state = {
       callback();
     }
   },
+
   async growScore(player: player, callback?) {
     const cs = this.getState();
     const rtdbRoomId = cs.rtdbRoomId;
@@ -262,65 +253,6 @@ const state = {
       }),
     });
     if (callback) {
-      callback();
-    }
-  },
-
-  whoWins(localMove: move, guestMove: move, callback) {
-    const cs = this.getState();
-
-    const pOneGanaConTijeras = localMove == "tijera" && guestMove == "papel";
-    const pOneGanaConPiedra = localMove == "piedra" && guestMove == "tijera";
-    const pOnelGanaConPapel = localMove == "papel" && guestMove == "piedra";
-
-    const pTwoGanaConTijeras = localMove == "papel" && guestMove == "tijera";
-    const pTwoGanaConPapel = localMove == "piedra" && guestMove == "papel";
-    const pTwoGanaConPiedra = localMove == "tijera" && guestMove == "piedra";
-
-    const ganaPlayerOne = [
-      pOneGanaConPiedra,
-      pOnelGanaConPapel,
-      pOneGanaConTijeras,
-    ].includes(true);
-
-    const ganaPlayerTwo = [
-      pTwoGanaConTijeras,
-      pTwoGanaConPapel,
-      pTwoGanaConPiedra,
-    ].includes(true);
-
-    const empate = localMove == guestMove;
-    const iAmLocal = cs.roomCreator;
-
-    if (ganaPlayerOne) {
-      if (iAmLocal) {
-        state.growScore("playerOne", () => {
-          state.setState({ ...cs, result: "ganaste" });
-          state.listenRTDBData();
-          callback();
-        });
-      } else if (!iAmLocal) {
-        state.setState({ ...cs, result: "perdiste" });
-        state.listenRTDBData();
-        callback();
-      }
-    }
-    if (ganaPlayerTwo) {
-      if (!iAmLocal) {
-        state.growScore("playerTwo", () => {
-          state.setState({ ...cs, result: "ganaste" });
-          state.listenRTDBData();
-          callback();
-        });
-      } else if (iAmLocal) {
-        state.setState({ ...cs, result: "perdiste" });
-        state.listenRTDBData();
-        callback();
-      }
-    }
-    if (empate) {
-      this.setState({ ...cs, result: "empataste" });
-      state.listenRTDBData();
       callback();
     }
   },
