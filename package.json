@@ -27,7 +27,7 @@
     "dev:be": "nodemon --watch './be-src/index.ts' --exec 'ts-node ./be-src/dev.ts'",
     "dev:fe": "parcel serve ./fe-src/index.html",
     "build:be": "tsc",
-    "build:fe": "",
+    "build:fe": "parcel build ./fe-src/index.html",
     "build": "npm run build:be && npm run build:fe",
     "start": "node ./be-dist/index.js"
   }
