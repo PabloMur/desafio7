@@ -157,7 +157,7 @@ const state = {
     }
   },
 
-  async playerIsReady(localOrGuest: player, callback?) {
+  async playerIsReady(localOrGuest, callback?) {
     //recibe "playerOne" o "playerTwo"
     const cs = this.getState();
     const request = await fetch(API_BASE + "/start", {
@@ -169,28 +169,6 @@ const state = {
       body: JSON.stringify({
         player: localOrGuest,
         rtdbRoomId: cs.rtdbRoomId,
-      }),
-    });
-    if (callback) {
-      callback();
-    }
-  },
-
-  async playersChoice(localOrGuest: player, choice: move, callback?) {
-    //recibe "playerOne" o "playerTwo"
-    const cs = state.getState();
-    const rtdbRoomId = cs.rtdbRoomId;
-
-    const request = await fetch(API_BASE + "/choice", {
-      mode: "cors",
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        player: localOrGuest,
-        rtdbRoomId: rtdbRoomId,
-        choice: choice,
       }),
     });
     if (callback) {
@@ -227,29 +205,6 @@ const state = {
       },
       body: JSON.stringify({
         rtdbRoomId: rtdbRoomId,
-      }),
-    });
-    if (callback) {
-      callback();
-    }
-  },
-
-  async growScore(player: player, callback?) {
-    const cs = this.getState();
-    const rtdbRoomId = cs.rtdbRoomId;
-    const score = cs.roomCreator
-      ? cs.rtdbData.playerOne.score
-      : cs.rtdbData.playerTwo.score;
-    await fetch(API_BASE + "/grow-score", {
-      mode: "cors",
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        player: player,
-        rtdbRoomId: rtdbRoomId,
-        score: score + 1,
       }),
     });
     if (callback) {
