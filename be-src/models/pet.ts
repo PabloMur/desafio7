@@ -4,7 +4,6 @@ import { sequelize } from "./conn";
 export class Pet extends Model {}
 Pet.init(
   {
-    // los atributos de nuestro modelo (las columnas)
     fullname: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -19,7 +18,7 @@ Pet.init(
     },
   },
   {
-    sequelize, // la conexión a la base
-    modelName: "pet", // tenemos que decirle el nombre del modelo (en singular)
+    sequelize,
+    modelName: "pet",
   }
 );

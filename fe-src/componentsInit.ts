@@ -9,3 +9,4 @@ import "./components/registration-form/index";
 import "./components/pet-card/index";
 import "./components/session-closer/index";
 import "./components/custom-menu/index";
+import "./components/loading-comp/index";

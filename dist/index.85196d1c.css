@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #fff;
+  --dark-bg-color: black;
+  --yellow-bg-color: #ffbe0b;
+  --orange: #fb5607;
+  --blue: #3a86ff;
+  --purple: #8338ec;
+  --font-family: "Kantumruy Pro", sans-serif;
+}
+
+body {
+  background-color: var(--purple);
+  margin: 0;
+  padding: 0;
+}
+
+/*# sourceMappingURL=index.85196d1c.css.map */

@@ -15,7 +15,7 @@ class CustomText extends HTMLElement {
               font-size:50px;
               color: black;
               transition: all 3s ease;
-              font-family: var(--font-family);
+              font-family: 'DM Serif Display', serif;
             }
             @media (max-width:600px){
               .title{

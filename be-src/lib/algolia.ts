@@ -1,8 +1,10 @@
-// hello_algolia.js
 import algoliasearch from "algoliasearch";
 
 // Connect and authenticate with your Algolia app
-const client = algoliasearch("0URCNQXYHI", "c128a72141bfd708f12945d45d23949f");
+const client = algoliasearch(
+  process.env.ALGOLIA_SHORT_KEY,
+  process.env.ALGOLIA_LONG_KEY
+);
 
 // Create a new index and add a record
 export const index = client.initIndex("intro_algolia");

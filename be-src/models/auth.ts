@@ -4,7 +4,6 @@ import { sequelize } from "./conn";
 export class Auth extends Model {}
 Auth.init(
   {
-    // los atributos de nuestro modelo (las columnas)
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -19,7 +18,7 @@ Auth.init(
     },
   },
   {
-    sequelize, // la conexión a la base
-    modelName: "auth", // tenemos que decirle el nombre del modelo (en singular)
+    sequelize,
+    modelName: "auth",
   }
 );

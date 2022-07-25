@@ -10,7 +10,7 @@ class Logo extends HTMLElement {
         <div class="image-container">
             <a class="anchor"href="/">
               <img src="${img}" alt="">
-              <p class="ancor-name">Pets Finder</p>
+              <p class="ancor-name">Pet Finder</p>
             </a>
         </div>
         `;

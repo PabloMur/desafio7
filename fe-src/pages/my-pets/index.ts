@@ -9,6 +9,11 @@ class MyPets extends HTMLElement {
 
     this.shadow.innerHTML = `
       <custom-header></custom-header>
+      <div class="my-data_container">
+        <p>Hola</p>
+        <loading-comp></loading-comp>
+      </div>
+      <custom-footer></custom-footer>
     `;
 
     style.innerHTML = ``;

@@ -7,7 +7,7 @@ class Report extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
           <custom-header></custom-header>
-          <p> report Page</p>
+          <custom-footer></custom-footer>
       `;
   }
   connectedCallback() {

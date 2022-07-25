@@ -1,0 +1,50 @@
+class LoadingComp extends HTMLElement {
+  shadow: ShadowRoot;
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: "open" });
+  }
+  render() {
+    const style = document.createElement("style");
+
+    this.shadow.innerHTML = `
+    <div class="loader_container">
+      <p>Loading, please wait!</p>
+      <iframe src="https://giphy.com/embed/VIfKkSJDf4yroE6QcR" width="60px" height="60px"</iframe>
+    </div>
+    `;
+
+    style.innerHTML = `
+    *{
+      box-sizing: border-box;
+    }
+
+    .loader_container{
+      background:#000000eb;
+      color:white;
+      position: absolute;
+      top: 12vh;
+      right:0;
+      left:0;
+      bottom:0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    iframe{
+      border:none;
+      transition: opacity 2s;
+    }
+    `;
+
+    this.shadow.appendChild(style);
+  }
+  connectedCallback() {
+    this.render();
+  }
+}
+
+customElements.define("loading-comp", LoadingComp);

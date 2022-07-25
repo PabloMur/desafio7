@@ -8,10 +8,13 @@ import { Router } from "@vaadin/router";
 class Home extends HTMLElement {
   shadow: ShadowRoot;
   bgImage: string;
+  bannerImg: string;
+
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
     this.bgImage = require("url:../../assets/images/map.png");
+    this.bannerImg = require("url:../../assets/images/park.jpg");
   }
   render() {
     const style = document.createElement("style");
@@ -19,9 +22,12 @@ class Home extends HTMLElement {
         <custom-header></custom-header>
         <div class="home-conteiner">
           <div class="title-container">
-          <custom-text variant="title">Mascotas Perdidas Cerca tuyo</custom-text>
+            <custom-text variant="title">Mascotas Perdidas Cerca Tuyo</custom-text>
+            <custom-text>Con esta app vas a poder ayudar a mascotas a reencontrarse con su familia. Hecha un vistazo!</custom-text>
+            <custom-button>Buscar Mascotas</custom-button>
           </div>
-          
+          <div class="banner-container">
+          </div>
         </div>
         <custom-footer></custom-footer>
     `;
@@ -54,6 +60,24 @@ class Home extends HTMLElement {
       .title-container{
         height: 100%;
         width: 60%;
+        padding: 30px;
+        display:flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: space-around;
+      }
+
+      .banner-container{
+        background:var(--white);
+        height:100%;
+        width:40%;
+        padding: 30px;
+        background-image: url(${this.bannerImg});
+        background-size:cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius:30px;
+        transition:all 5s ease 0s;
       }
 
       .button-container{
@@ -71,16 +95,25 @@ class Home extends HTMLElement {
     this.shadow.appendChild(style);
   }
   connectedCallback() {
+    // (async function () {
+    //   await console.log("holas");
+    //   const fetchedData = await fetch("http://localhost:3000/env", {
+    //     method: "GET",
+    //   });
+    //   const response = await fetchedData.json();
+    //   console.log(response);
+    // })();
+
     this.render();
     const button = this.shadow.querySelector("custom-button");
     const geolocation = navigator.geolocation;
     button.addEventListener("click", () => {
-      Router.go("/around");
-      geolocation.getCurrentPosition((position) => {
-        console.log(position.coords);
-        const { latitude, longitude } = position.coords;
-        console.table({ latitude, longitude });
-      });
+      // Router.go("/around");
+      // geolocation.getCurrentPosition((position) => {
+      //   console.log(position.coords);
+      //   const { latitude, longitude } = position.coords;
+      //   console.table({ latitude, longitude });
+      // });
     });
   }
 }

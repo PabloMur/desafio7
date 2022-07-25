@@ -9,10 +9,24 @@ class MyDataPage extends HTMLElement {
 
     this.shadow.innerHTML = `
         <custom-header></custom-header>
+        <div class="my-data_container">
+        </div>
         <custom-footer></custom-footer>
       `;
 
-    style.innerHTML = ``;
+    style.innerHTML = `
+    *{
+      box-sizing: border-box;
+    }
+    .my-data_container{
+      background:var(--white);
+      height: 85vh;
+      width: 90%;
+      margin: 0 auto;
+      border-radius: 30px;
+      padding: 30px;
+    }
+    `;
 
     this.shadow.appendChild(style);
   }
