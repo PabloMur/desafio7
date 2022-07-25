@@ -33,10 +33,16 @@ class LoadingComp extends HTMLElement {
       justify-content: center;
       align-items: center;
     }
-
-    iframe{
+    
+    .loader_container p{
       border:none;
-      transition: opacity 2s;
+      color:red;
+      font-size: 40px;
+      transition: 5s linear;
+    }
+
+    .loader_container p:hover{
+      font-size: 60px;
     }
     `;
 
