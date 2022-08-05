@@ -10,3 +10,5 @@ import "./components/pet-card/index";
 import "./components/session-closer/index";
 import "./components/custom-menu/index";
 import "./components/loading-comp/index";
+import "./components/popup-permission-location/index";
+import "./components/custom-login/index";

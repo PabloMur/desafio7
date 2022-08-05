@@ -2,13 +2,16 @@ import { fetchMachine } from "./fetch";
 
 const state = {
   data: {
+    fullname: "",
+    email: "",
+    registrated: false,
+    logged: false,
     token: "",
     location: {
       lat: "",
       lng: "",
     },
     pets: [],
-    user: {},
   },
   listeners: [],
 
@@ -19,13 +22,6 @@ const state = {
 
   getState() {
     return this.data;
-  },
-  //seteamos el nombre y el email del player en el state
-  setNombreAndEmail(nombre: string, email: string) {
-    const cs = this.getState();
-    cs.nombre = nombre;
-    cs.email = email;
-    this.setState(cs);
   },
 
   setState(newState) {
@@ -41,19 +37,19 @@ const state = {
     this.listeners.push(callback);
   },
 
-  async createPlayer(cb?) {
+  //seteamos el nombre y el email del player en el state
+  setUserEmail(email: string) {
+    const cs = this.getState();
+    this.setState({ ...cs, email: email });
+  },
+
+  setUserName(password: string) {},
+
+  //creo que deberia subscribir a los botones y no la pagina-- los botones de la lista
+
+  async createUser() {
     try {
       const cs = this.getState();
-      const nombre = cs.nombre;
-      const email = cs.email;
-
-      cs.registrated = true;
-      this.setState(cs);
-      console.log("Player creado");
-
-      if (cb) {
-        cb();
-      }
     } catch (error) {
       console.error(error);
     }

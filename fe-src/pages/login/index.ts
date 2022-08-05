@@ -9,17 +9,16 @@ class Login extends HTMLElement {
     this.shadow.innerHTML = `
               <custom-header></custom-header>
               <div class="registation-form-container">
-                <p>LOGIN PAGE</p>
-                <custom-registration-form></custom-registration-form>
+                <custom-login-email-input-form></custom-login-email-input-form>
               </div>
               <custom-footer></custom-footer>
           `;
     style.innerHTML = `
         .registation-form-container{
-          background:var(--purple);
-          height: 80vh;
-          width: 90%;
-          margin: 0 auto;
+          background:var(--white);
+          height: 60vh;
+          width: 60%;
+          margin: 15vh auto;
           border-radius: 5px;
           display: flex;
           flex-direction: column;

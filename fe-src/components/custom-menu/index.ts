@@ -25,10 +25,11 @@ class CustomMenu extends HTMLElement {
                   </nav>
                   <nav class="menu-nav-desplegable escondido">
                       <ul class="nav-list">
-                          <li><a class="nav-list-link" href="/my-data">Mis datos</a></li>
-                          <li><a class="nav-list-link" href="/proyects">Mis mascotas reportadas</a></li>
-                          <li><a class="nav-list-link" href="/about">Reportar mascota</a></li>
-                          <li><a class="nav-list-link" href="/contact">Contact</a></li>
+                      <li><a class="nav-list-link" href="/my-data">My Data</a></li>
+                      <li><a class="nav-list-link" href="/my-pets">My Pets</a></li>
+                      <li><a class="nav-list-link" href="/report">My Reports</a></li>
+                      <li><a class="nav-list-link secondary" href="/login">Login  </a></li>
+                      <li><a class="nav-list-link emphasis" href="/signup">Signup</a></li>
                       </ul>
                   </nav>
                   <div class="nav-burger-logo">

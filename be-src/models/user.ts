@@ -8,18 +8,11 @@ User.init(
     // los atributos de nuestro modelo (las columnas)
     fullname: {
       type: DataTypes.STRING,
-    },
-    lastname: {
-      type: DataTypes.STRING,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
-    },
-    bio: {
-      type: DataTypes.STRING,
-    },
-    imageDataUrl: {
-      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {

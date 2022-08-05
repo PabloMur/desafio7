@@ -1,4 +1,5 @@
 import { Router } from "@vaadin/router";
+import { state } from "../../state";
 
 // <custom-text>Para ver las mascotas reportadas cerca tuyo necesitamos permiso para conocer tu ubicación.</custom-text>
 //           <div class="button-container">
@@ -20,6 +21,7 @@ class Home extends HTMLElement {
     const style = document.createElement("style");
     this.shadow.innerHTML = `
         <custom-header></custom-header>
+        <custom-popup-permission-location></custom-popup-permission-location>
         <div class="home-conteiner">
           <div class="title-container">
             <custom-text variant="title">Mascotas Perdidas Cerca Tuyo</custom-text>
@@ -48,6 +50,10 @@ class Home extends HTMLElement {
         justify-content: space-between;
         align-items:flex-end;
         overflow: hidden;
+      }
+
+      custom-popup-permission-location{
+        display:none;
       }
 
       @media (max-width: 600px){
@@ -94,27 +100,26 @@ class Home extends HTMLElement {
     `;
     this.shadow.appendChild(style);
   }
-  connectedCallback() {
-    // (async function () {
-    //   await console.log("holas");
-    //   const fetchedData = await fetch("http://localhost:3000/env", {
-    //     method: "GET",
-    //   });
-    //   const response = await fetchedData.json();
-    //   console.log(response);
-    // })();
-
+  addListeners() {
+    const cs = state.getState();
+    if (!cs.logged) {
+      console.log("no estas logueado papá");
+    }
     this.render();
     const button = this.shadow.querySelector("custom-button");
+    const test = this.shadow.querySelector(
+      "custom-popup-permission-location"
+    ) as any;
     const geolocation = navigator.geolocation;
     button.addEventListener("click", () => {
-      // Router.go("/around");
-      // geolocation.getCurrentPosition((position) => {
-      //   console.log(position.coords);
-      //   const { latitude, longitude } = position.coords;
-      //   console.table({ latitude, longitude });
-      // });
+      test.style.display = "block";
     });
+  }
+  connectedCallback() {
+    state.subscribe(() => {
+      this.addListeners();
+    });
+    this.addListeners();
   }
 }
 

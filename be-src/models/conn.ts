@@ -8,7 +8,6 @@ export const sequelize = new Sequelize({
   port: 5432,
   host: "ec2-52-22-136-117.compute-1.amazonaws.com",
   ssl: true,
-  // esto es necesario para que corra correctamente
   dialectOptions: {
     ssl: {
       require: true,
@@ -16,5 +15,3 @@ export const sequelize = new Sequelize({
     },
   },
 });
-
-//sequelize.sync({ alter: true });

@@ -1,40 +1,32 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "./conn";
 
-export class Pet extends Model {}
-Pet.init(
+export class Report extends Model {}
+Report.init(
   {
-    fullname: {
+    reporter_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    age: {
+    reporter_phone: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     },
-    zone: {
+    report_message: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    image: {
-      type: DataTypes.STRING,
+    ownerId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    lat: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    lng: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    state: {
-      type: DataTypes.STRING,
+    petId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
     sequelize,
-    modelName: "pet",
+    modelName: "report",
   }
 );

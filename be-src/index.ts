@@ -1,14 +1,35 @@
 import * as express from "express";
 import * as path from "path";
 import * as cors from "cors";
+import * as crypto from "crypto";
+import * as jwt from "jsonwebtoken";
+import { algoliaIndex } from "./lib/algolia";
+import { authMiddleware } from "./middleware";
+import {
+  createUser,
+  getProfile,
+  getPets,
+  getAllProfiles,
+  checkProfile,
+} from "./controllers/user-controller";
+import { createAuth, authId } from "./controllers/auth-controller";
+import {
+  allPets,
+  updatePetData,
+  specificPet,
+  createPet,
+} from "./controllers/pets-controller";
+import { createReport } from "./controllers/report-controller";
+import { sgMail } from "./lib/sendgrid";
+import { User } from "./models";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 const SECRET = process.env.SECRET;
 
 const DEV = process.env.NODE_ENV;
 
-const ruta = path.resolve(__dirname, "../../dist");
+const ruta = path.resolve(__dirname, "../dist");
 
 const app = express();
 
@@ -22,8 +43,96 @@ app.use(
 
 app.use(express.static(ruta));
 
+const hashearPassword = (text) => {
+  return crypto.createHash("sha256").update(text).digest("hex");
+};
+
 app.get("/env", (req, res) => {
   res.json(DEV);
+});
+
+//obtenemos todos los usuarios
+app.use("/users", async (req, res) => {
+  const users = await getAllProfiles();
+  res.json(users);
+});
+
+app.get("/pets", async (req, res) => {
+  const allPetsRes = await allPets();
+  res.json(allPetsRes);
+});
+
+//dar de alta un usuario en la base de datos
+app.post("/auth", async (req, res) => {
+  const { fullname, email, password } = req.body;
+
+  const newUser = await createUser(fullname, email);
+  const userId = await newUser.user.get("id");
+  const passwordHashed = hashearPassword(password);
+  const newAuth = await createAuth(userId, email, passwordHashed);
+
+  res.json(newUser);
+});
+
+//obtener token de usuario registrado
+app.post("/auth/token", async (req, res) => {
+  const { email, password } = req.body;
+
+  const passwordHasheado = hashearPassword(password);
+  const auth = await authId(email, passwordHasheado);
+  const token = jwt.sign({ id: auth.get("user_id") }, SECRET);
+
+  if (auth) {
+    res.json({ token });
+  } else {
+    res.status(400).json({ error: "User or Password incorrecto" });
+  }
+});
+
+//checkea si el exite el mail que se le pasa
+app.get("/auth/email-check", async (req, res) => {
+  const emailVerification = await checkProfile(req.body.email);
+  res.json(emailVerification);
+});
+//traer data del usuario-- tiene que estar autenticado
+app.get("/me", authMiddleware, async (req, res) => {
+  const user = await getProfile(req._user.id);
+  res.json(user);
+});
+
+//crear una mascota
+app.post("/pet", authMiddleware, async (req, res) => {
+  const pet = await createPet(req._user.id, req.body);
+  res.json(pet);
+});
+
+//obtener mis mascotas
+app.get("/me/pets", authMiddleware, async (req, res) => {
+  const pets = await getPets(req._user.id);
+  console.log(req._user.id);
+  res.json(pets);
+});
+
+//actualizar la data de una mascota
+app.put("/me/pets/:petId", async (req, res) => {
+  const { petId } = req.params;
+  const updatedPet = await updatePetData(req.body, petId);
+  res.json(updatePetData);
+});
+
+//endpoint para ver mascotas cerca de la ubicacion
+app.get("/pets-around", async (req, res) => {
+  const { lat, lng } = req.query;
+  const { hits } = await algoliaIndex.search("", {
+    aroundLatLng: `${lat},${lng}`,
+    aroundRadius: 10000,
+  });
+  res.json(hits);
+});
+
+app.post("/report", async (req, res) => {
+  const report = await createReport(req.body);
+  res.json(report);
 });
 
 app.get("*", (req, res) => {
