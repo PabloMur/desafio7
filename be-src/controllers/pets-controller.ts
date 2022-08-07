@@ -1,36 +1,33 @@
 import { algoliaIndex } from "../lib/algolia";
 import { Pet, User } from "../models";
 
-export async function createPet(data, user_id) {
-  const { fullname, age, zone, lat, lng, state } = data;
-  const [pet, created] = await Pet.findOrCreate({
-    where: { user_id: user_id },
-    defaults: {
-      fullname,
-      age,
-      zone,
-      lat,
-      lng,
-      state,
-    },
-  });
+export async function createPet(userId, petData) {
+  if (!userId) {
+    throw "user_id es necesario";
+  }
 
-  const petInAlgolia = await algoliaIndex.saveObject({
-    objectID: pet.get("id"),
-    nombre: pet.get("fullname"),
-    _geoloc: {
-      lat: pet.get("lat"),
-      lng: pet.get("lng"),
-    },
-  });
+  if (userId) {
+    const user = await User.findByPk(userId);
 
-  return {
-    pet,
-    created,
-    petInAlgolia,
-  };
+    const pet = await Pet.create({
+      ...petData,
+      userId: user.get("id"),
+    });
+  
+    const petInAlgolia = await algoliaIndex.saveObject({
+      objectID: pet.get("id").toString(),
+      nombre: pet.get("fullname"),
+      _geoloc: {
+        lat: pet.get("lat"),
+        lng: pet.get("lng"),
+      },
+    });
+
+    return {pet,petInAlgolia};
+  } else {
+    throw "Error, user not found";
+  }
 }
-
 export async function allPets() {
   return await Pet.findAll();
 }

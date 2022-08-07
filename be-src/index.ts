@@ -17,11 +17,10 @@ import {
   allPets,
   updatePetData,
   specificPet,
-  createPet,
+  createPet
 } from "./controllers/pets-controller";
 import { createReport } from "./controllers/report-controller";
 import { sgMail } from "./lib/sendgrid";
-import { User } from "./models";
 
 const port = process.env.PORT;
 

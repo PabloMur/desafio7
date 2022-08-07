@@ -1,3 +1,4 @@
+import { algoliaIndex } from "../lib/algolia";
 import { User, Pet } from "../models/index";
 import { cloudinary } from "../lib/cloudinary";
 
@@ -15,24 +16,7 @@ export async function createUser(fullname: string, email: string) {
   };
 }
 
-export async function createPet(userId, petData) {
-  if (!userId) {
-    throw "user_id es necesario";
-  }
 
-  if (userId) {
-    const user = await User.findByPk(userId);
-
-    const pet = await Pet.create({
-      ...petData,
-      userId: user.get("id"),
-    });
-
-    return pet;
-  } else {
-    throw "Error, user not found";
-  }
-}
 
 export async function updateProfile(userId, updateData) {
   if (!updateData) {
