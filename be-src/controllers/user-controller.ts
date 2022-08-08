@@ -1,6 +1,4 @@
-import { algoliaIndex } from "../lib/algolia";
 import { User, Pet } from "../models/index";
-import { cloudinary } from "../lib/cloudinary";
 
 export async function createUser(fullname: string, email: string) {
   const [user, created] = await User.findOrCreate({
@@ -14,40 +12,6 @@ export async function createUser(fullname: string, email: string) {
     user,
     created,
   };
-}
-
-
-
-export async function updateProfile(userId, updateData) {
-  if (!updateData) {
-    throw new Error("Se necesita data para actualizar");
-  }
-  if (updateData.imageDataUrl) {
-    const imageUpload = await cloudinary.uploader.upload(
-      updateData.imageDataUrl,
-      {
-        resource_type: "image",
-        discard_original_filename: true,
-        width: 1000,
-      }
-    );
-
-    const updateDataComplete = {
-      fullname: updateData.fullname,
-      bio: updateData.bio,
-      imageDataUrl: imageUpload.secure_url,
-    };
-
-    console.log(imageUpload.secure_url);
-
-    await User.update(updateDataComplete, {
-      where: {
-        id: userId,
-      },
-    });
-
-    return updateDataComplete;
-  }
 }
 
 export async function getProfile(userId: number) {
@@ -76,4 +40,10 @@ export async function checkProfile(email: string) {
   });
 
   return emailExists ? true : false;
+}
+
+export async function updateUserProfile(userId, data) {
+  const user = await User.findByPk(userId);
+  await user.update({ data });
+  return user;
 }
