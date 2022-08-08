@@ -17,7 +17,7 @@ import {
   allPets,
   updatePetData,
   specificPet,
-  createPet
+  createPet,
 } from "./controllers/pets-controller";
 import { createReport } from "./controllers/report-controller";
 import { sgMail } from "./lib/sendgrid";
@@ -28,7 +28,7 @@ const SECRET = process.env.SECRET;
 
 const DEV = process.env.NODE_ENV;
 
-const ruta = path.resolve(__dirname, "../dist");
+const ruta = path.resolve(__dirname, "../../dist");
 
 const app = express();
 
