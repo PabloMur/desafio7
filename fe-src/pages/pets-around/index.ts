@@ -1,3 +1,5 @@
+import { state } from "../../state";
+
 class PetsAround extends HTMLElement {
   shadow: ShadowRoot;
   constructor() {
@@ -18,7 +20,9 @@ class PetsAround extends HTMLElement {
         `;
   }
   connectedCallback() {
+    const cs = state.getState();
     this.render();
+    console.log(`este es el state: ${JSON.stringify(cs)}`);
   }
 }
 

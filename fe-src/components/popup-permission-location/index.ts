@@ -1,3 +1,5 @@
+import { state } from "../../state";
+import { Router } from "@vaadin/router";
 class CustomPopupPermissionLocation extends HTMLElement {
   shadow: ShadowRoot;
   constructor() {
@@ -51,7 +53,9 @@ class CustomPopupPermissionLocation extends HTMLElement {
     this.render();
     const buton = this.shadow.querySelector("custom-button") as any;
     buton.addEventListener("click", () => {
-      console.log("hola");
+      state.getUserLocation().then(() => {
+        Router.go("/around");
+      });
     });
   }
 }

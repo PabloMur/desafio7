@@ -1,4 +1,5 @@
 import { Router } from "@vaadin/router";
+import { stat } from "fs";
 import { state } from "../../state";
 
 // <custom-text>Para ver las mascotas reportadas cerca tuyo necesitamos permiso para conocer tu ubicación.</custom-text>
@@ -100,11 +101,8 @@ class Home extends HTMLElement {
     `;
     this.shadow.appendChild(style);
   }
-  addListeners() {
+  async addListeners() {
     const cs = state.getState();
-    if (!cs.logged) {
-      console.log("no estas logueado papá");
-    }
     this.render();
     const button = this.shadow.querySelector("custom-button");
     const test = this.shadow.querySelector(

@@ -18,17 +18,18 @@ import {
   updatePetData,
   specificPet,
   createPet,
+  deletePet,
 } from "./controllers/pets-controller";
 import { createReport } from "./controllers/report-controller";
 import { sgMail } from "./lib/sendgrid";
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 const SECRET = process.env.SECRET;
 
 const DEV = process.env.NODE_ENV;
 
-const ruta = path.resolve(__dirname, "../../dist");
+const ruta = path.resolve(__dirname, "../dist");
 
 const app = express();
 
@@ -51,11 +52,12 @@ app.get("/env", (req, res) => {
 });
 
 //obtenemos todos los usuarios
-app.use("/users", async (req, res) => {
+app.get("/users", async (req, res) => {
   const users = await getAllProfiles();
   res.json(users);
 });
 
+//obtenemos todas las mascotas
 app.get("/pets", async (req, res) => {
   const allPetsRes = await allPets();
   res.json(allPetsRes);
@@ -116,7 +118,14 @@ app.get("/me/pets", authMiddleware, async (req, res) => {
 app.put("/me/pets/:petId", async (req, res) => {
   const { petId } = req.params;
   const updatedPet = await updatePetData(req.body, petId);
-  res.json(updatePetData);
+  res.json(updatedPet);
+});
+
+//Eliminar una mascota
+app.delete("/me/pets/:petId", authMiddleware, async (req, res) => {
+  const { petId } = req.params;
+  const deletedPet = await deletePet(petId, req._user.id);
+  res.json(deletedPet);
 });
 
 //endpoint para ver mascotas cerca de la ubicacion

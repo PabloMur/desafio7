@@ -14,7 +14,7 @@ export async function createPet(userId, petData) {
       ...petData,
       userId: user.get("id"),
     });
-  
+
     const petInAlgolia = await algoliaIndex.saveObject({
       objectID: pet.get("id").toString(),
       nombre: pet.get("fullname"),
@@ -24,21 +24,19 @@ export async function createPet(userId, petData) {
       },
     });
 
-    return {pet,petInAlgolia};
+    return { pet, petInAlgolia };
   } else {
     throw "Error, user not found";
   }
 }
 export async function allPets() {
-  return await Pet.findAll();
+  return await Pet.findAll({
+    include: [User],
+  });
 }
 
-export async function specificPet(user_id) {
-  return await Pet.findOne({
-    where: {
-      user_id,
-    },
-  });
+export async function specificPet(petId) {
+  return await Pet.findByPk(petId);
 }
 
 function bodyToIndex(body, id?) {
@@ -66,7 +64,8 @@ export async function updatePetData(dataForUpadate, petId) {
   });
 
   const indexItem = bodyToIndex(dataForUpadate, petId);
-  const algoliaRes = await algoliaIndex.partialUpdateObject(indexItem);
+  await algoliaIndex.partialUpdateObject(indexItem);
+
   return petUpdated;
 }
 
@@ -102,4 +101,10 @@ export async function updateProfile(userId, updateData) {
   }
 }
 
-export async function deletePet() {}
+export async function deletePet(petId, userId) {
+  if (userId) {
+    const pet = await Pet.findByPk(petId);
+    await pet.destroy();
+    return true;
+  }
+}
