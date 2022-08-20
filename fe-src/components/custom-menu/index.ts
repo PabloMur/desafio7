@@ -16,11 +16,13 @@ class CustomMenu extends HTMLElement {
                   </div>
                   <nav class="menu-nav">
                       <ul class="nav-list">
-                          <li><a class="nav-list-link" href="/my-data">My Data</a></li>
-                          <li><a class="nav-list-link" href="/my-pets">My Pets</a></li>
+                          <list-button route="/my-data">My Data</list-button>
+                          <list-button route="/my-pets">My Pets</list-button>
                           <li><a class="nav-list-link" href="/report">My Reports</a></li>
                           <li><a class="nav-list-link secondary" href="/login">Login  </a></li>
                           <li><a class="nav-list-link emphasis" href="/signup">Signup</a></li>
+                          <list-button variant="enfasis" route="/my-data">test</list-button>
+                          <list-button route="/my-pets">test</list-button>
                       </ul> 
                   </nav>
                   <nav class="menu-nav-desplegable escondido">
