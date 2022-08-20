@@ -28,7 +28,7 @@ class PasswordComp extends HTMLElement {
       display:none;
     }
 
-    .depierto{
+    .despierto{
       display: inherit;
     }
 
@@ -137,12 +137,14 @@ class PasswordComp extends HTMLElement {
     const loading = this.shadow.querySelector("loading-comp");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      loading.classList.toggle("despierto");
       const target = e.target as any;
-      const email = target.email.value;
-      state.setUserEmail(email);
-      const check = await state.checkEmail();
-      console.log(check);
-      check ? Router.go("/password") : Router.go("/signup");
+      const password = target.password.value;
+      const userToken = await state.getToken(password);
+      state.setUserToken(userToken.token);
+      state.userLogged();
+      loading.classList.toggle("despierto");
+      Router.go("/");
     });
   }
 }

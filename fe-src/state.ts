@@ -115,6 +115,39 @@ const state = {
       console.error(error);
     }
   },
+  //obtener el token del usuario
+  async getToken(password: string) {
+    try {
+      const cs = this.getState();
+      const fetchingEmail = await fetch(apiBase + "/auth/token", {
+        method: "post",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: cs.email,
+          password,
+        }),
+      });
+      const response = fetchingEmail.json();
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  setUserToken(token: string) {
+    try {
+      const cs = this.getState();
+      this.setState({
+        ...cs,
+        token: token,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
 
   //ubicacion del user
   async getUserLocation() {

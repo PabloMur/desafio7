@@ -1,5 +1,6 @@
 class RegistrationForm extends HTMLElement {
   shadow: ShadowRoot;
+  email: string;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });

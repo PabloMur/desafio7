@@ -9,7 +9,7 @@ class PasswordPage extends HTMLElement {
     this.shadow.innerHTML = `
                 <custom-header></custom-header>
                 <div class="registation-form-container">
-                  <custom-login-email-input-form></custom-login-email-input-form>
+                  <password-comp></password-comp>
                 </div>
                 <custom-footer></custom-footer>
             `;
