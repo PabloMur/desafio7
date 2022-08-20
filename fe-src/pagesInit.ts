@@ -5,3 +5,4 @@ import "./pages/signup/index";
 import "./pages/login/index";
 import "./pages/my-pets/index";
 import "./pages/my-data/index";
+import "./pages/password/index";

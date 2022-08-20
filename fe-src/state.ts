@@ -1,5 +1,6 @@
+import { resolveTripleslashReference } from "typescript";
 import { fetchMachine } from "./fetch";
-const apiBase = process.env.API_BASE_URL;
+const apiBase = process.env.API_BASE_URL || "http://localhost:3001";
 
 const state = {
   data: {
@@ -52,6 +53,14 @@ const state = {
     });
   },
 
+  userRegistrated() {
+    const cs = this.getState();
+    this.setState({
+      ...cs,
+      registrated: true,
+    });
+  },
+
   userLogged() {
     const cs = this.getState();
     this.setState({
@@ -87,6 +96,27 @@ const state = {
   },
 
   //cheackear el mail que nos pasa el user
+  async checkEmail() {
+    try {
+      const cs = this.getState();
+      const fetchingEmail = await fetch(apiBase + "/auth/email-check", {
+        method: "post",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: cs.email,
+        }),
+      });
+      const response = fetchingEmail.json();
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  //ubicacion del user
   async getUserLocation() {
     const cs = this.getState();
     navigator.geolocation.getCurrentPosition((position) => {

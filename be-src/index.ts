@@ -91,7 +91,7 @@ app.post("/auth/token", async (req, res) => {
 });
 
 //checkea si el exite el mail que se le pasa
-app.get("/auth/email-check", async (req, res) => {
+app.post("/auth/email-check", async (req, res) => {
   const emailVerification = await checkProfile(req.body.email);
   res.json(emailVerification);
 });

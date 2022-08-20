@@ -1,4 +1,5 @@
 import { state } from "../../state";
+import { Router } from "@vaadin/router";
 
 class LoginComp extends HTMLElement {
   shadow: ShadowRoot;
@@ -133,11 +134,15 @@ class LoginComp extends HTMLElement {
   connectedCallback() {
     this.render();
     const form = this.shadow.querySelector(".form");
-    form.addEventListener("submit", (e) => {
+    const loading = this.shadow.querySelector("loading-comp");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const target = e.target as any;
-      state.setUserEmail(target.email.value);
-      target.email.value = "";
+      const email = target.email.value;
+      state.setUserEmail(email);
+      const check = await state.checkEmail();
+      console.log(check);
+      check ? Router.go("/password") : Router.go("/signup");
     });
   }
 }

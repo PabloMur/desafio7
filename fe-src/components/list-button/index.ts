@@ -21,7 +21,11 @@ class ListButton extends HTMLElement {
 
     const button = this.shadow.querySelector(".button") as any;
     button.addEventListener("click", () => {
-      cs.logged ? Router.go(this.route) : Router.go("/login");
+      if (this.route == "/signup") {
+        Router.go("/signup");
+      } else {
+        cs.logged ? Router.go(this.route) : Router.go("/login");
+      }
     });
     button.textContent = this.textContent || "ups!";
 
@@ -29,14 +33,14 @@ class ListButton extends HTMLElement {
           .button{
             font-size: 18px;
             border-radius: 4px;
-            padding: 17px 13px;
+            padding: 5px;
             background-color:black;
             color:#D8FCFC;
-            width: 200px;
+            width: auto;
             border:none;
             border-radius: 8px;
             animation: lower .4s ease ;
-            margin:0 auto;
+            margin:5px;
           }
 
           .default{

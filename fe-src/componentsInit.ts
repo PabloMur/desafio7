@@ -13,3 +13,4 @@ import "./components/loading-comp/index";
 import "./components/popup-permission-location/index";
 import "./components/custom-login/index";
 import "./components/list-button/index";
+import "./components/custom-password/index";
