@@ -17,6 +17,7 @@ class LoadingComp extends HTMLElement {
     style.innerHTML = `
     *{
       box-sizing: border-box;
+      border: none;
     }
 
     .loader_container{
@@ -36,7 +37,7 @@ class LoadingComp extends HTMLElement {
     
     .loader_container p{
       border:none;
-      color:red;
+      color:white;
       font-size: 40px;
       transition: 5s linear;
     }

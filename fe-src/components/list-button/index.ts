@@ -48,7 +48,7 @@ class ListButton extends HTMLElement {
           }
 
           .dark{
-            background: var(--black);
+            background: black;
           }
 
           @media screen and (max-width: 600px){

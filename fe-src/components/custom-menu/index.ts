@@ -18,11 +18,9 @@ class CustomMenu extends HTMLElement {
                       <ul class="nav-list">
                           <list-button route="/my-data">My Data</list-button>
                           <list-button route="/my-pets">My Pets</list-button>
-                          <li><a class="nav-list-link" href="/report">My Reports</a></li>
-                          <li><a class="nav-list-link secondary" href="/login">Login  </a></li>
-                          <li><a class="nav-list-link emphasis" href="/signup">Signup</a></li>
-                          <list-button variant="enfasis" route="/my-data">test</list-button>
-                          <list-button route="/my-pets">test</list-button>
+                          <list-button route="/report">My Reports</list-button>
+                          <list-button variant="enfasis" route="/login">Login</list-button>
+                          <list-button variant="dark" route="/signup">Signup</list-button>
                       </ul> 
                   </nav>
                   <nav class="menu-nav-desplegable escondido">

@@ -11,14 +11,11 @@ class LoginComp extends HTMLElement {
 
     this.shadow.innerHTML = `
       <div class="form-container">
+        <loading-comp class="dormido"></loading-comp>
         <form class="form">
           <div class="input-container">
             <label class="label">Ingresa Tu Email</label>
             <input type="email" name="email" class="input" required="required">
-          </div>
-          <div class="input-container">
-            <label class="label">Ingresa Tu Password</label>
-            <input type="password" name="password" class="input" required="required">
           </div>
           <button class="form-button">Comenzar</button> 
         </form>
@@ -26,6 +23,14 @@ class LoginComp extends HTMLElement {
       `;
 
     style.innerHTML = `
+    .dormido{
+      display:none;
+    }
+
+    .depierto{
+      display: inherit;
+    }
+
     .form-container{
       height: 70vh;
       width: 100%;

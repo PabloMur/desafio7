@@ -44,10 +44,24 @@ const state = {
     this.setState({ ...cs, email: email });
   },
 
-  setUserName(password: string) {},
+  setUserName(fullname: string) {
+    const cs = this.getState();
+    this.setState({
+      ...cs,
+      fullname,
+    });
+  },
+
+  userLogged() {
+    const cs = this.getState();
+    this.setState({
+      ...cs,
+      logged: true,
+    });
+  },
 
   //creo que deberia subscribir a los botones y no la pagina-- los botones de la lista
-  async createUser() {
+  async createUser(password: string) {
     try {
       const cs = this.getState();
       const fetchingUser = await fetch(apiBase + "/auth", {
@@ -57,9 +71,9 @@ const state = {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullname: "Poli",
-          email: "escuchado@gmail.com",
-          password: "password",
+          fullname: cs.fullname,
+          email: cs.email,
+          password,
         }),
       });
       const res = await fetchingUser.json();
