@@ -10,6 +10,7 @@ class MyDataPage extends HTMLElement {
     this.shadow.innerHTML = `
         <custom-header></custom-header>
         <div class="my-data_container">
+          <my-data-comp></my-data-comp>
         </div>
         <custom-footer></custom-footer>
       `;
