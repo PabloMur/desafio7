@@ -4,6 +4,7 @@ const apiBase = process.env.API_BASE_URL || "http://localhost:3001";
 
 const state = {
   data: {
+    id: "",
     fullname: "",
     email: "",
     registrated: false,
@@ -49,7 +50,7 @@ const state = {
     const cs = this.getState();
     this.setState({
       ...cs,
-      fullname,
+      fullname: fullname,
     });
   },
 
@@ -130,7 +131,8 @@ const state = {
           password,
         }),
       });
-      const response = fetchingEmail.json();
+      const response = await fetchingEmail.json();
+      this.setUserToken(response.token);
       return response;
     } catch (error) {
       console.error(error);
@@ -144,6 +146,33 @@ const state = {
         ...cs,
         token: token,
       });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async getUserMe() {
+    try {
+      const cs = this.getState();
+      const token = cs.token;
+      const fetchingUser = await fetch(apiBase + "/auth/me", {
+        method: "get",
+        mode: "cors",
+        headers: {
+          Authorization: `bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const response = await fetchingUser.json();
+      // await this.setState({
+      //   ...cs,
+      //   id: response.id,
+      //   fullname: response.fullname,
+      //   pets: response.pets,
+      // });
+      console.log(response);
+      return response;
     } catch (error) {
       console.error(error);
     }

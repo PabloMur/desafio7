@@ -96,7 +96,7 @@ app.post("/auth/email-check", async (req, res) => {
   res.json(emailVerification);
 });
 //traer data del usuario-- tiene que estar autenticado
-app.get("/me", authMiddleware, async (req, res) => {
+app.get("/auth/me", authMiddleware, async (req, res) => {
   const user = await getProfile(req._user.id);
   res.json(user);
 });
