@@ -110,8 +110,9 @@ app.post("/pet", authMiddleware, async (req, res) => {
 //obtener mis mascotas
 app.get("/me/pets", authMiddleware, async (req, res) => {
   const pets = await getPets(req._user.id);
-  console.log(req._user.id);
-  res.json(pets);
+  res.json({
+    pets: pets,
+  });
 });
 
 //actualizar la data de una mascota

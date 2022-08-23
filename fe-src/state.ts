@@ -165,17 +165,39 @@ const state = {
       });
 
       const response = await fetchingUser.json();
-      // await this.setState({
-      //   ...cs,
-      //   id: response.id,
-      //   fullname: response.fullname,
-      //   pets: response.pets,
-      // });
+      await this.setState({
+        ...cs,
+        id: response.id,
+        fullname: response.fullname,
+        pets: response.pets,
+      });
       console.log(response);
       return response;
     } catch (error) {
       console.error(error);
     }
+  },
+
+  async getUserPets() {
+    const cs = state.getState();
+    const token = cs.token;
+
+    const fetchPets = await fetch(apiBase + "/me/pets", {
+      method: "get",
+      mode: "cors",
+      headers: {
+        Authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const response = await fetchPets.json();
+    this.setState({
+      ...cs,
+      pets: response.pets,
+    });
+    console.log(response);
+    return response;
   },
 
   //ubicacion del user

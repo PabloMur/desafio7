@@ -15,4 +15,3 @@ import "./components/custom-login/index";
 import "./components/list-button/index";
 import "./components/custom-password/index";
 import "./components/my-data/index";
-import "./components/session-listener/index";

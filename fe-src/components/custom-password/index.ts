@@ -143,6 +143,7 @@ class PasswordComp extends HTMLElement {
       const userToken = await state.getToken(password);
       state.setUserToken(userToken.token);
       state.userLogged();
+      await state.getUserMe();
       loading.classList.toggle("despierto");
       Router.go("/");
     });

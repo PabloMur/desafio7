@@ -22,7 +22,7 @@ class Home extends HTMLElement {
     const style = document.createElement("style");
     this.shadow.innerHTML = `
         <custom-header></custom-header>
-        <session-lister></session-lister>
+        
         <custom-popup-permission-location></custom-popup-permission-location>
         <div class="home-conteiner">
           <div class="title-container">
