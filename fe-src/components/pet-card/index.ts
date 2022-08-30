@@ -41,6 +41,8 @@ class PetCard extends HTMLElement {
         overflow: hidden;
         padding: 10px;
         border: 1px solid #00000029;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        font-family: 'DM Serif Display', serif;
       }
       img{
         width: auto;
