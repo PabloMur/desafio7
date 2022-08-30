@@ -196,7 +196,6 @@ const state = {
       ...cs,
       pets: response.pets,
     });
-    console.log(response);
     return response;
   },
 

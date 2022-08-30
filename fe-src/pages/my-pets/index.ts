@@ -7,22 +7,12 @@ class MyPets extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
   }
   render() {
-    const traerMascotas = async () => {
-      const pets = await state.getUserPets();
-      console.log(pets.pets[0].fullname);
-      console.log(typeof pets);
-    };
-    const cs = state.getState();
-    cs.logged ? (console.log(true), traerMascotas()) : console.log(false);
-
     const style = document.createElement("style");
 
     this.shadow.innerHTML = `
       <custom-header></custom-header>
-      <div class="my-data_container">
-        <p>Hola</p>
-        <loading-comp class="dormido"></loading-comp>
-      </div>
+      <my-pets-container></my-pets-container>
+      <loading-comp class="dormido"></loading-comp>
       <custom-footer></custom-footer>
     `;
 

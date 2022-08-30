@@ -22,7 +22,6 @@ class Home extends HTMLElement {
     const style = document.createElement("style");
     this.shadow.innerHTML = `
         <custom-header></custom-header>
-        
         <custom-popup-permission-location></custom-popup-permission-location>
         <div class="home-conteiner">
           <div class="title-container">
@@ -52,6 +51,7 @@ class Home extends HTMLElement {
         justify-content: space-between;
         align-items:flex-end;
         overflow: hidden;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
       }
 
       custom-popup-permission-location{

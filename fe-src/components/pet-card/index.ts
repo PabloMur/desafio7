@@ -7,49 +7,72 @@ class PetCard extends HTMLElement {
   render() {
     const style = document.createElement("style");
     const profileImage = this.getAttribute("profile-image");
+    const petName = this.getAttribute("pet-name");
+    const petZone = this.getAttribute("pet-zone");
 
     this.shadow.innerHTML = `
       <div class="card-container">
         <div class="pet-profile-image">
-          <img src="${profileImage}">
         </div>
         <div class="pet-data-container">
           <div class="name-and-zone">
-            <h3 class="pet-name">Otto</h3>
-            <h5 class="pet-zone">Centro Mar del Plata</h5>
+            <h3 class="pet-name">${petName}</h3>
+            <h5 class="pet-zone">${petZone}</h5>
           </div>
           <div>
-            <button>Reportar Mascota</button>
+            <button class="edit-button">+ Editar</button>
           </div>
         </div>
       </div>
     `;
 
     style.innerHTML = `
+      *{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
       .card-container{
-        background: var(--orange);
-        width: 80%;
-        max-width: 300px;
+        background: #ffe5b5;
+        width: 250px;
         margin: 10px auto;
-        border-radius: 10px;
+        border-radius: 20px;
+        overflow: hidden;
+        padding: 10px;
+        border: 1px solid #00000029;
       }
       img{
         width: auto;
         height: 30vh;
       }
       .pet-profile-image{
-        background: red;
         max-width: 300px;
+        width: auto;
+        height: 30vh;
+        background-image: url(${profileImage});
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 20px;
       }
       .pet-data-container{
-        background: red;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         padding: 10px;
       }
       .name-and-zone{
-        background: green;
         width:50%;
+      }
+
+      .edit-button{
+        color: white;
+        background: black;
+        border: none;
+        font-size: 18px;
+        padding: 5px;
+        border-radius: 10px;
       }
     `;
 
