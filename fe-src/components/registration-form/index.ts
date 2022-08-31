@@ -55,6 +55,8 @@ class RegistrationForm extends HTMLElement {
         height: 50px;
         border-radius: 5px;
         box-shadow: 5px 5px 2px #c7c7c7;
+        padding: 5px;
+        font-size: 20px;
       }
 
       button{

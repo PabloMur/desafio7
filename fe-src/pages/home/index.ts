@@ -43,7 +43,7 @@ class Home extends HTMLElement {
         height: 80vh;
         width: 90%;
         border-radius: 30px;
-        margin: 2vh auto 6vh auto;
+        margin: 5vh auto;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
