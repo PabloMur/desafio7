@@ -38,11 +38,27 @@ class CustomPopupPermissionLocation extends HTMLElement {
       justify-content: center;
       align-items: center;
       transition: opacity 5s linear 5s;
+      border: 1px solid black;
+      font-size: 22px;
     }
 
     .permission__card{
       background: var(--purple);
       max-width: 600px;
+      padding: 20px;
+      text-align: center;
+      border-radius: 20px;
+      animation-duration: .3s;
+      animation-name: aparecer;
+    }
+
+    @keyframes aparecer{
+      0%{
+        opacity: 0;
+      }
+      100%{
+        opacity: 1;
+      }
     }
 
     `;

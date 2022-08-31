@@ -33,13 +33,13 @@ class ListButton extends HTMLElement {
           .button{
             font-size: 18px;
             border-radius: 4px;
-            padding: 5px;
+            padding: 7px;
             background-color:black;
             color:#D8FCFC;
             width: auto;
             border:none;
             border-radius: 8px;
-            animation: lower .4s ease ;
+            animation: lower .5s ease ;
             margin:5px;
           }
 
@@ -63,13 +63,10 @@ class ListButton extends HTMLElement {
           }
           @keyframes lower{
             0%{
-              transform: translateY(100%);
-            }
-            75%{
-              transform: translateY(-10%);
+              opacity: 0;
             }
             100%{
-              transform: translateY(0%);
+              opacity: 1;
             }
           }
           `;

@@ -15,15 +15,17 @@ class Signup extends HTMLElement {
         `;
     style.innerHTML = `
       .registation-form-container{
-        background:var(--purple);
-        height: 80vh;
-        width: 90%;
-        margin: 0 auto;
-        border-radius: 5px;
+        background: white;
+        height: 70vh;
+        width: 60%;
+        margin: 10vh auto;
+        border-radius: 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
       }
     `;
     this.shadow.appendChild(style);

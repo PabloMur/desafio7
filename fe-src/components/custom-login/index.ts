@@ -73,7 +73,7 @@ class LoginComp extends HTMLElement {
       height: 50px;
       color: white;
       font-size: 20px;
-      background: var(--orange);
+      background: #9933ff;
       border:none;
       border-radius: 4px;
       text-align: center;
