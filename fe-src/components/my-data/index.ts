@@ -1,3 +1,5 @@
+import { state } from "../../state";
+
 class MyData extends HTMLElement {
   shadow: ShadowRoot;
   fullname: string;
@@ -38,9 +40,8 @@ class MyData extends HTMLElement {
     }
 
     .my-data-container{
-        background: purple;
         width: 50%;
-        height: 100%;
+        height: 70vh;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -53,12 +54,29 @@ class MyData extends HTMLElement {
         flex-direction: column;
     }
     
+    input{
+      width: 300px;
+      height: 40px;
+      border-radius: 5px;
+      border: none;
+    }
+
     `;
 
     this.shadow.appendChild(style);
   }
-  connectedCallback() {
+
+  listenState() {
+    const cs = state.getState();
+    this.fullname = cs.fullname;
     this.render();
+  }
+
+  connectedCallback() {
+    state.subscribe(() => {
+      this.listenState();
+    });
+    this.listenState();
   }
 }
 

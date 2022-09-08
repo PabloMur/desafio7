@@ -40,7 +40,7 @@ class MyPetsContainer extends HTMLElement {
 
     .container{
         min-height: 80vh;
-        width: 80%;
+        width: 90%;
         background: #ffffff24;
         margin: 5vh auto;
         display: flex;

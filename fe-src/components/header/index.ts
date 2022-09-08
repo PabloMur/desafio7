@@ -17,6 +17,7 @@ class Header extends HTMLElement {
       header{
         height: 11vh;
         max-width: 100%;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
       }
       .custom-menu-container{
         width: 90%;

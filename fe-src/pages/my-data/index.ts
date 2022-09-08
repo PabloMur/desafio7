@@ -20,10 +20,11 @@ class MyDataPage extends HTMLElement {
       box-sizing: border-box;
     }
     .my-data_container{
-      background:var(--white);
-      height: 85vh;
+      backdrop-filter: blur(10px);
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      height: 80vh;
       width: 90%;
-      margin: 0 auto;
+      margin: 5vh auto;
       border-radius: 30px;
       padding: 30px;
     }

@@ -39,7 +39,7 @@ class Home extends HTMLElement {
         box-sizing: border-box;
       }
       .home-conteiner{
-        background: var(--white);
+        background: #ffe5b5;
         height: 80vh;
         width: 90%;
         border-radius: 30px;
