@@ -29,7 +29,7 @@ const SECRET = process.env.SECRET;
 
 const DEV = process.env.NODE_ENV;
 
-const ruta = path.resolve(__dirname, "../dist");
+const ruta = path.resolve(__dirname, "dist");
 
 const app = express();
 
