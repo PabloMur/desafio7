@@ -17,9 +17,13 @@ export async function createAuth(userId, email, password) {
 }
 
 export async function authId(email, password) {
-  const res = await Auth.findOne({
-    where: { email: email, password: password },
-  });
+  try {
+    const res = await Auth.findOne({
+      where: { email: email, password: password },
+    });
 
-  return res;
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
 }

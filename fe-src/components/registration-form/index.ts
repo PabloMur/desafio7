@@ -19,15 +19,15 @@ class RegistrationForm extends HTMLElement {
       <form class="form">
         <label>
           <p>Email</p>
-          <input type="email" value="${this.email}">
+          <input name="email" type="email" value="${this.email}">
         </label>
         <label>
           <p>Contraseña</p>
-          <input type="password">
+          <input name="password" type="password">
         </label>
         <label>
           <p>Repetir contraseña</p>
-          <input type="password">
+          <input name="password-dos" class="password" type="password">
       </label>
       
         <button>Crear Cuenta</button>
@@ -74,11 +74,34 @@ class RegistrationForm extends HTMLElement {
 
     this.shadow.appendChild(style);
   }
+
+  addListeners() {
+    this.render();
+    const form = this.shadow.querySelector(".form");
+    const cs = state.getState();
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const target = e.target as any;
+      const passwordUno = target.password.value;
+      const passwordDos = target["password-dos"].value;
+      const email = target.email.value;
+      const fullname = "User";
+      const contraseñasIguales = passwordDos === passwordDos;
+      console.log(email, fullname, passwordUno, passwordDos);
+
+      contraseñasIguales
+        ? await state.createUser(passwordUno, fullname)
+        : console.log("algo fallo");
+    });
+  }
+
   connectedCallback() {
     state.subscribe(() => {
-      this.render();
+      this.addListeners();
     });
-    this.render();
+    this.addListeners();
   }
 }
 

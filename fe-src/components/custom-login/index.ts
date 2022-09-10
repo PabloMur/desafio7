@@ -137,18 +137,14 @@ class LoginComp extends HTMLElement {
     const loading = this.shadow.querySelector("loading-comp");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      console.log("empezando");
-      console.log(loading);
-
       loading.classList.toggle("despierto");
 
       const target = e.target as any;
       const email = target.email.value;
       state.setUserEmail(email);
       const check = await state.checkEmail();
-      console.log(check);
+
       loading.classList.toggle("despierto");
-      console.log("terminando");
       check ? Router.go("/password") : Router.go("/signup");
     });
   }

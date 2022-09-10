@@ -1,5 +1,3 @@
-import { resolveTripleslashReference } from "typescript";
-import { fetchMachine } from "./fetch";
 const apiBase = process.env.API_BASE_URL || "http://localhost:3001";
 
 const state = {
@@ -71,7 +69,7 @@ const state = {
   },
 
   //creo que deberia subscribir a los botones y no la pagina-- los botones de la lista
-  async createUser(password: string) {
+  async createUser(password: string, fullname: string) {
     try {
       const cs = this.getState();
       const fetchingUser = await fetch(apiBase + "/auth", {
@@ -81,7 +79,7 @@ const state = {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullname: cs.fullname,
+          fullname,
           email: cs.email,
           password,
         }),
@@ -132,6 +130,8 @@ const state = {
         }),
       });
       const response = await fetchingEmail.json();
+      console.log(response);
+
       this.setUserToken(response.token);
       return response;
     } catch (error) {

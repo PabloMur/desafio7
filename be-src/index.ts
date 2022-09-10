@@ -29,7 +29,7 @@ const SECRET = process.env.SECRET;
 
 const DEV = process.env.NODE_ENV;
 
-const ruta = path.resolve(__dirname, "../dist");
+const ruta = path.resolve(__dirname, "../../dist");
 
 const app = express();
 
@@ -66,13 +66,16 @@ app.get("/pets", async (req, res) => {
 //dar de alta un usuario en la base de datos
 app.post("/auth", async (req, res) => {
   const { fullname, email, password } = req.body;
+  try {
+    const newUser = await createUser(fullname, email);
+    const userId = await newUser.user.get("id");
+    const passwordHashed = hashearPassword(password);
+    const newAuth = await createAuth(userId, email, passwordHashed);
 
-  const newUser = await createUser(fullname, email);
-  const userId = await newUser.user.get("id");
-  const passwordHashed = hashearPassword(password);
-  const newAuth = await createAuth(userId, email, passwordHashed);
-
-  res.json(newUser);
+    res.json(newUser);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 //obtener token de usuario registrado
