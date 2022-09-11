@@ -1,5 +1,3 @@
-const apiBase = process.env.API_BASE_URL;
-
 const state = {
   data: {
     id: "",
@@ -72,7 +70,7 @@ const state = {
   async createUser(password: string, fullname: string) {
     try {
       const cs = this.getState();
-      const fetchingUser = await fetch(apiBase + "/auth", {
+      const fetchingUser = await fetch("/auth", {
         method: "post",
         mode: "cors",
         headers: {
@@ -118,7 +116,7 @@ const state = {
   async getToken(password: string) {
     try {
       const cs = this.getState();
-      const fetchingEmail = await fetch(apiBase + "/auth/token", {
+      const fetchingEmail = await fetch("/auth/token", {
         method: "post",
         mode: "cors",
         headers: {
@@ -155,7 +153,7 @@ const state = {
     try {
       const cs = this.getState();
       const token = cs.token;
-      const fetchingUser = await fetch(apiBase + "/auth/me", {
+      const fetchingUser = await fetch("/auth/me", {
         method: "get",
         mode: "cors",
         headers: {
@@ -182,7 +180,7 @@ const state = {
     const cs = state.getState();
     const token = cs.token;
 
-    const fetchPets = await fetch(apiBase + "/me/pets", {
+    const fetchPets = await fetch("/me/pets", {
       method: "get",
       mode: "cors",
       headers: {
