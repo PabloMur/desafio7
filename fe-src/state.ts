@@ -98,7 +98,7 @@ const state = {
   async checkEmail() {
     try {
       const cs = this.getState();
-      const fetchingEmail = await fetch(apiBase + "/auth/email-check", {
+      const fetchingEmail = await fetch("/auth/email-check", {
         method: "post",
         mode: "cors",
         headers: {
