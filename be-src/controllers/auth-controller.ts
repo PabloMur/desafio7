@@ -22,7 +22,11 @@ export async function authId(email, password) {
       where: { email: email, password: password },
     });
 
-    return res;
+    if (res) {
+      return res;
+    } else {
+      return;
+    }
   } catch (error) {
     console.error(error);
   }

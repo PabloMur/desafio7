@@ -74,7 +74,7 @@ app.post("/auth", async (req, res) => {
 
     res.json(newUser);
   } catch (error) {
-    console.error(error);
+    res.send({ error });
   }
 });
 
