@@ -39,7 +39,11 @@ export async function checkProfile(email: string) {
     where: { email: email },
   });
 
-  return emailExists ? true : false;
+  const empty = emailExists.length === 0;
+
+  // return { type: typeof emailExists, emailExists, empty };
+
+  return empty ? false : true;
 }
 
 export async function updateUserProfile(userId, data) {
