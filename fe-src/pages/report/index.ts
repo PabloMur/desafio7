@@ -7,6 +7,8 @@ class Report extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
           <custom-header></custom-header>
+          <report-maker></report-maker>
+          <custom-test></custom-test>
           <custom-footer></custom-footer>
       `;
   }

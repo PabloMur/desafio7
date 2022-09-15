@@ -24,7 +24,7 @@ class LoadingComp extends HTMLElement {
       background:#000000eb;
       color:white;
       position: absolute;
-      top: 12vh;
+      top:0;
       right:0;
       left:0;
       bottom:0;
@@ -33,6 +33,7 @@ class LoadingComp extends HTMLElement {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      z-index: 3;
     }
     
     .loader_container p{

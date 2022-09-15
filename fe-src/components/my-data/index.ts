@@ -40,13 +40,17 @@ class MyData extends HTMLElement {
     }
 
     .my-data-container{
-        width: 50%;
-        height: 70vh;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+      min-height: 80vh;
+      width: 90%;
+      background: #ffffff24;
+      margin: 5vh auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     }
 
     .fullname-container, .password-container{

@@ -82,11 +82,11 @@ app.post("/auth", async (req, res) => {
 app.post("/auth/token", async (req, res) => {
   const { email, password } = req.body;
 
+  let aux;
   const passwordHasheado = hashearPassword(password);
   const auth = await authId(email, passwordHasheado);
-  const token = jwt.sign({ id: auth.get("user_id") }, SECRET);
-
-  if (auth) {
+  if (auth !== null) {
+    const token = jwt.sign({ id: auth.get("user_id") }, SECRET);
     res.json({ token });
   } else {
     res.status(400).json({ error: "User or Password incorrecto" });

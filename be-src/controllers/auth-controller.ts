@@ -21,12 +21,8 @@ export async function authId(email, password) {
     const res = await Auth.findOne({
       where: { email: email, password: password },
     });
-
-    if (res) {
-      return res;
-    } else {
-      return;
-    }
+    console.log(res);
+    return res;
   } catch (error) {
     console.error(error);
   }
