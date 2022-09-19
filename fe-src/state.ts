@@ -1,3 +1,5 @@
+import { Router } from "@vaadin/router";
+
 const state = {
   data: {
     id: "",
@@ -130,9 +132,17 @@ const state = {
       const response = await fetchingEmail.json();
       console.log(response);
 
-      this.setUserToken(response.token);
-      return response;
+      if (response.error) {
+        alert("contraseña incorrecta");
+        return response;
+      } else {
+        this.setUserToken(response.token);
+        this.userLogged();
+        console.log("hola soy el status " + response.status);
+        return response;
+      }
     } catch (error) {
+      console.log("soy el catch");
       console.error(error);
     }
   },
@@ -200,7 +210,7 @@ const state = {
   //ubicacion del user
   async getUserLocation() {
     const cs = this.getState();
-    navigator.geolocation.getCurrentPosition((position) => {
+    await navigator.geolocation.getCurrentPosition((position) => {
       cs.userLocation.lat = position.coords.latitude;
       cs.userLocation.lng = position.coords.longitude;
       this.setState(cs);

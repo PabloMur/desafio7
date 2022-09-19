@@ -81,13 +81,11 @@ app.post("/auth", async (req, res) => {
 //obtener token de usuario registrado
 app.post("/auth/token", async (req, res) => {
   const { email, password } = req.body;
-
-  let aux;
   const passwordHasheado = hashearPassword(password);
   const auth = await authId(email, passwordHasheado);
   if (auth !== null) {
     const token = jwt.sign({ id: auth.get("user_id") }, SECRET);
-    res.json({ token });
+    res.status(200).json({ token });
   } else {
     res.status(400).json({ error: "User or Password incorrecto" });
   }

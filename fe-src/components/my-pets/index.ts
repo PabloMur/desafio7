@@ -23,10 +23,10 @@ class MyPetsContainer extends HTMLElement {
     const style = document.createElement("style");
 
     this.shadow.innerHTML = `
-        <div class="container">
         <custom-text variant="title">Mis Mascotas</custom-text>
+        <div class="container">
         ${this.pets.map((pet) => {
-          return `<custom-pet-card profile-image="https://www.caracteristicas.co/wp-content/uploads/2017/02/perro-1-e1561678907722.jpg" pet-name="${pet.fullname}" pet-zone="${pet.zone}"></custom-pet-card>`;
+          return `<custom-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}"></custom-pet-card>`;
         })}
         </div>
     `;
@@ -44,7 +44,7 @@ class MyPetsContainer extends HTMLElement {
         background: #ffffff24;
         margin: 5vh auto;
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         border-radius: 20px;

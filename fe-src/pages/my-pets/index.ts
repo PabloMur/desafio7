@@ -12,7 +12,6 @@ class MyPets extends HTMLElement {
     this.shadow.innerHTML = `
       <custom-header></custom-header>
       <my-pets-container></my-pets-container>
-      <loading-comp class="dormido"></loading-comp>
       <custom-footer></custom-footer>
     `;
 
