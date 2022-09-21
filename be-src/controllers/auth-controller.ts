@@ -26,3 +26,12 @@ export async function authId(email, password) {
     console.error(error);
   }
 }
+
+export async function updatePassword(email, password) {
+  try {
+    const update = Auth.update(password, { where: { email: email } });
+    return update;
+  } catch (error) {
+    console.error(error);
+  }
+}

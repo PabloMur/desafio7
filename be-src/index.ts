@@ -11,8 +11,13 @@ import {
   getPets,
   getAllProfiles,
   checkProfile,
+  updateUserProfile,
 } from "./controllers/user-controller";
-import { createAuth, authId } from "./controllers/auth-controller";
+import {
+  createAuth,
+  authId,
+  updatePassword,
+} from "./controllers/auth-controller";
 import {
   allPets,
   updatePetData,
@@ -101,6 +106,12 @@ app.post("/auth/email-check", async (req, res) => {
 app.get("/auth/me", authMiddleware, async (req, res) => {
   const user = await getProfile(req._user.id);
   res.json(user);
+});
+
+//actualizar la data de un user
+app.put("/auth/me", authMiddleware, async (req, res) => {
+  const update = await updateUserProfile(req._user.id, req.body);
+  res.json(update);
 });
 
 //crear una mascota
