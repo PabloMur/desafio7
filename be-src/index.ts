@@ -3,7 +3,7 @@ import * as path from "path";
 import * as cors from "cors";
 import * as crypto from "crypto";
 import * as jwt from "jsonwebtoken";
-import { algoliaIndex } from "./lib/algolia";
+import { searchPetsAround } from "./controllers/algolia-controller";
 import { authMiddleware } from "./middleware";
 import {
   createUser,
@@ -29,7 +29,7 @@ const SECRET = process.env.SECRET;
 
 const DEV = process.env.NODE_ENV;
 
-const ruta = path.resolve(__dirname, "../dist");
+const ruta = path.resolve(__dirname, "../../dist");
 
 const app = express();
 
@@ -96,6 +96,7 @@ app.post("/auth/email-check", async (req, res) => {
   const emailVerification = await checkProfile(req.body.email);
   res.json(emailVerification);
 });
+
 //traer data del usuario-- tiene que estar autenticado
 app.get("/auth/me", authMiddleware, async (req, res) => {
   const user = await getProfile(req._user.id);
@@ -133,11 +134,8 @@ app.delete("/me/pets/:petId", authMiddleware, async (req, res) => {
 //endpoint para ver mascotas cerca de la ubicacion
 app.get("/pets-around", async (req, res) => {
   const { lat, lng } = req.query;
-  const { hits } = await algoliaIndex.search("", {
-    aroundLatLng: `${lat},${lng}`,
-    aroundRadius: 10000,
-  });
-  res.json(hits);
+  const response = await searchPetsAround(lat, lng);
+  res.json(response);
 });
 
 app.post("/report", async (req, res) => {
