@@ -50,10 +50,11 @@ class PetsAround extends HTMLElement {
 
     this.shadow.appendChild(style);
   }
-  connectedCallback() {
+  async connectedCallback() {
     const cs = state.getState();
-    this.render();
-    console.log(`este es el state: ${JSON.stringify(cs)}`);
+    await state.getPetsAround().then(() => {
+      this.render();
+    });
   }
 }
 

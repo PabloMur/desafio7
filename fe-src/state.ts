@@ -216,6 +216,26 @@ const state = {
       this.setState(cs);
     });
   },
+
+  async getPetsAround() {
+    try {
+      const cs = state.getState();
+
+      const fetchPets = await fetch(
+        `/pets-around?lat=${cs.userLocation.lat}&lng=${cs.userLocation.lng}`,
+        {
+          method: "get",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const response = await fetchPets.json();
+      return response;
+    } catch (error) {}
+  },
 };
 
 export { state };
