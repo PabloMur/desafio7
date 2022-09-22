@@ -47,7 +47,8 @@ export async function checkProfile(email: string) {
 }
 
 export async function updateUserProfile(userId, data) {
+  console.log(data);
   const user = await User.findByPk(userId);
-  await user.update({ data });
+  await user.update(data);
   return user;
 }
