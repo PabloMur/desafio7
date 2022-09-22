@@ -159,6 +159,7 @@ const state = {
     }
   },
 
+  //obtener la data del usuario
   async getUserMe() {
     try {
       const cs = this.getState();
@@ -180,6 +181,31 @@ const state = {
         pets: response.pets,
       });
       console.log(response);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async UpdateUserName(fullname: string) {
+    try {
+      const cs = this.getState();
+      const token = cs.token;
+      const fetchingUserName = await fetch("/auth/me", {
+        method: "put",
+        mode: "cors",
+        headers: {
+          Authorization: `bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullname: fullname,
+        }),
+      });
+
+      const response = await fetchingUserName.json();
+      console.log(response);
+
       return response;
     } catch (error) {
       console.error(error);

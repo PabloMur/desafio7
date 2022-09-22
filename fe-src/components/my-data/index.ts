@@ -18,7 +18,7 @@ class MyData extends HTMLElement {
         <form class="form">
           <div class="fullname-container">
             <label class="label">Nombre</label>
-            <input type="email" name="email" class="input" required="required" value="${this.fullname}">
+            <input type="text" name="fullname" class="fullname" required="required" value="${this.fullname}">
           </div>
           <div class="password-container">
             <label>nueva contraseña</label>
@@ -26,7 +26,7 @@ class MyData extends HTMLElement {
             <label>repite la contraseña</label>
             <input type="password">
           </div>
-          <custom-button>Guardar</custom-button> 
+          <button class="button">Guardar Cap</button> 
         </form>
       </>`;
 
@@ -74,6 +74,13 @@ class MyData extends HTMLElement {
     const cs = state.getState();
     this.fullname = cs.fullname;
     this.render();
+    const form = this.shadow.querySelector(".form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const target = e.target as any;
+      const fullname = target.fullname.value;
+      await state.UpdateUserName(fullname);
+    });
   }
 
   connectedCallback() {

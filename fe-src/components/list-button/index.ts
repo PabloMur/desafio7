@@ -21,11 +21,7 @@ class ListButton extends HTMLElement {
 
     const button = this.shadow.querySelector(".button") as any;
     button.addEventListener("click", () => {
-      if (this.route == "/signup") {
-        Router.go("/signup");
-      } else {
-        cs.logged ? Router.go(this.route) : Router.go("/login");
-      }
+      cs.logged ? Router.go(this.route) : Router.go("/login");
     });
     button.textContent = this.textContent || "ups!";
 
