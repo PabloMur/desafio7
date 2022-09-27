@@ -16,6 +16,7 @@ export async function createPet(userId, petData) {
     });
 
     const petInAlgolia = await algoliaIndex.saveObject({
+      petData,
       objectID: pet.get("id").toString(),
       nombre: pet.get("fullname"),
       _geoloc: {
