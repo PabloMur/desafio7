@@ -11,4 +11,5 @@ router.setRoutes([
   { path: "/my-pets", component: "my-pets-page" },
   { path: "/my-data", component: "my-data-page" },
   { path: "/password", component: "password-page" },
+  { path: "/mapbox", component: "mapbox-page" },
 ]);

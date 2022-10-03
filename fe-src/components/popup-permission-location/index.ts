@@ -66,11 +66,13 @@ class CustomPopupPermissionLocation extends HTMLElement {
     this.shadow.appendChild(style);
   }
   connectedCallback() {
+    const cs = state.getState();
     this.render();
+
     const buton = this.shadow.querySelector("custom-button") as any;
     buton.addEventListener("click", async () => {
-      await state.getUserLocation().then(() => {
-        Router.go("/around");
+      await state.getUserLocation(() => {
+        console.log(cs + "a ver si esto sale");
       });
     });
   }

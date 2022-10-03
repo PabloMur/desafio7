@@ -17,3 +17,4 @@ import "./components/custom-password/index";
 import "./components/my-data/index";
 import "./components/my-pets/index";
 import "./components/reportMaker/index";
+import "./components/mapbox/index";

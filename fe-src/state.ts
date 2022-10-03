@@ -234,13 +234,25 @@ const state = {
   },
 
   //ubicacion del user
-  async getUserLocation() {
-    const cs = this.getState();
-    await navigator.geolocation.getCurrentPosition((position) => {
-      cs.userLocation.lat = position.coords.latitude;
-      cs.userLocation.lng = position.coords.longitude;
+  async getUserLocation(cb?) {
+    try {
+      const cs = this.getState();
+      navigator.geolocation.getCurrentPosition((position) => {
+        cs.userLocation.lat = position.coords.latitude;
+        cs.userLocation.lng = position.coords.longitude;
+        console.log(JSON.stringify(cs.userLocation) + "navigation method");
+      });
       this.setState(cs);
-    });
+      console.log(
+        JSON.stringify(cs.userLocation) + " esta es la ubicacion del usuario"
+      );
+      if (cb) {
+        cb();
+      }
+      return;
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   async getPetsAround() {
@@ -259,6 +271,8 @@ const state = {
       );
 
       const response = await fetchPets.json();
+      console.log(cs.userLocation);
+      console.log(response);
       return response;
     } catch (error) {}
   },

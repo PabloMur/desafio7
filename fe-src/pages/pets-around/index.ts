@@ -2,9 +2,11 @@ import { state } from "../../state";
 
 class PetsAround extends HTMLElement {
   shadow: ShadowRoot;
+  pets;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
+    this.pets = [];
   }
   render() {
     const style = document.createElement("style");
@@ -14,10 +16,6 @@ class PetsAround extends HTMLElement {
             <div class="general-container">
             <custom-text variant="title">Mascotas Perdidas Cerca</custom-text>
             <div class="cards-container">
-              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
-              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
-              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
-              <custom-pet-card profile-image="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></custom-pet-card>
             </div>
             </div>
             <custom-footer></custom-footer>
@@ -51,10 +49,9 @@ class PetsAround extends HTMLElement {
     this.shadow.appendChild(style);
   }
   async connectedCallback() {
-    const cs = state.getState();
-    await state.getPetsAround().then(() => {
-      this.render();
-    });
+    await state.getPetsAround();
+    this.render();
+    state.getPetsAround();
   }
 }
 
