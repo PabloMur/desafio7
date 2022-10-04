@@ -12,12 +12,17 @@ class MapboxComp extends HTMLElement {
 
     this.shadow.innerHTML = `
       <div id="map"></div>
-      <script>
-        
-      </script>
     `;
 
-    style.innerHTML = ``;
+    style.innerHTML = `
+      #map{
+        height: 60vh;
+        max-width: 80%;
+        margin: 0 auto;
+        border-radius: 25px;
+      }
+
+    `;
 
     this.shadow.appendChild(style);
   }
@@ -25,24 +30,31 @@ class MapboxComp extends HTMLElement {
   addMap() {
     this.render();
     const mapContainer = this.shadow.querySelector("#map");
-    console.log(mapContainer);
 
     mapboxgl.accessToken =
       "pk.eyJ1IjoicG9sbXVyIiwiYSI6ImNsNHd1ZnN1eDAxODkzZW8xMzBqYWtoZmQifQ.J77fA0creIqgIqJKRW6HWg";
 
     const map = new mapboxgl.Map({
       container: mapContainer, // container ID
-      style: "mapbox://styles/mapbox/streets-v11", // style URL
-      center: [-74.5, 40], // starting position [lng, lat]
+      style: "mapbox://styles/mapbox/outdoors-v11", // style URL
+      center: [-58.3815704, -34.6037389], // starting position [lng, lat]
       zoom: 9, // starting zoom
       projection: "globe", // display the map as a 3D globe
     });
 
+    map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+      })
+    );
+
     map.on("style.load", () => {
       map.setFog({}); // Set the default atmosphere style
     });
-
-    console.log("pepito");
   }
 
   connectedCallback() {

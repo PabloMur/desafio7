@@ -32,5 +32,8 @@
     "build:fe": "parcel build ./fe-src/index.html",
     "build": "npm run build:be && npm run build:fe",
     "start": "node ./be-dist/be-src/index.js"
+  },
+  "devDependencies": {
+    "@types/mapbox-gl": "^2.7.6"
   }
 }
