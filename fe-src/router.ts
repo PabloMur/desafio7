@@ -12,4 +12,5 @@ router.setRoutes([
   { path: "/my-data", component: "my-data-page" },
   { path: "/password", component: "password-page" },
   { path: "/mapbox", component: "mapbox-page" },
+  { path: "/test", component: "test-page" },
 ]);

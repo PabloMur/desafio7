@@ -1,6 +1,6 @@
-import * as express from "express";
+import express from "express";
 import * as path from "path";
-import * as cors from "cors";
+import cors from "cors";
 import * as crypto from "crypto";
 import * as jwt from "jsonwebtoken";
 import { searchPetsAround } from "./controllers/algolia-controller";
@@ -28,7 +28,7 @@ import {
 import { createReport } from "./controllers/report-controller";
 import { sgMail } from "./lib/sendgrid";
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3001;
 
 const SECRET = process.env.SECRET;
 
