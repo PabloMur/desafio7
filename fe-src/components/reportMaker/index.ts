@@ -17,6 +17,8 @@ class ReportMaker extends HTMLElement {
 
     this.shadow.innerHTML = `
       <div class="container">
+        <h2>Reportar una mascota</h2>
+
         <form class="form">
         <label>
             <p>Nombre de la mascota</p>
@@ -27,12 +29,12 @@ class ReportMaker extends HTMLElement {
             <div class="pet-image-container"></div>
             <button>Agregar imagen de la mascota</button>
         </label>
-        <label>
+        <label class="last-pet-zone">
             <p>Zona en la que se perdió</p>
             <div class="pet-zone-container"></div>
-            <label for="pet-zone">Ultima ubicación</label>
+            <label class="label-pet-zone"for="pet-zone">Ultima ubicación</label>
             <input name="pet-zone" type="text" requiere="require">
-            <p>Buscá un punto de referencia para reportar a tu mascota. Puede ser una dirección, un barrio o una ciudad.</p>
+            <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
         </label>
     
         <button>Reportar como perdido</button>
@@ -51,6 +53,7 @@ class ReportMaker extends HTMLElement {
         width: 90%;
         background: #ffffff24;
         margin: 5vh auto;
+        padding: 50px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -58,6 +61,8 @@ class ReportMaker extends HTMLElement {
         border-radius: 20px;
         backdrop-filter: blur(10px);
         box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: "Roboto", sans-serif;
       }
 
       .form{
@@ -66,24 +71,38 @@ class ReportMaker extends HTMLElement {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: orange;
+        background: var(--purple);
+        border-radius: 20px;
+        padding: 20px;
       }
 
       .pet-image-container,
       .pet-zone-container{
         min-height: 30vh;
-        width: 90%;
+        width: 100%;
+        max-width: 400px;
         margin: 0 auto;
-        background: grey;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 5px 5px 2px #00000017;
+      }
+      
+      .last-pet-zone{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .label-pet-zone{
+        margin-top: 12px;
       }
 
       input{
         border: none;
         width: 400px;
-        background: var(--purple);
         height: 50px;
         border-radius: 5px;
-        box-shadow: 5px 5px 2px #c7c7c7;
+        box-shadow: 5px 5px 2px #00000017;
         padding: 5px;
         font-size: 20px;
       }
@@ -97,7 +116,7 @@ class ReportMaker extends HTMLElement {
         color: white;
         border: none;
         font-size: 20px;
-        box-shadow: 5px 5px 2px #c7c7c7;
+        box-shadow: 5px 5px 2px #00000017;
       }
     `;
 
