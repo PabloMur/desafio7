@@ -1,5 +1,7 @@
 import mapboxgl from "mapbox-gl";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "mapbox-gl/dist/mapbox-gl.css";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 class MapboxComp extends HTMLElement {
   constructor() {
@@ -20,12 +22,13 @@ class MapboxComp extends HTMLElement {
       }
 
       #map{
-        height: 60vh;
-        max-width: 80%;
-        margin: 10vh  auto;
-        border-radius: 25px;
-        background:red; 
-        padding: 50px;
+        height: 80vh;
+        width: 100%;
+        border-radius: 20px;
+      }
+
+      .mapboxgl-ctrl-geocoder--input{
+        border-radius: 4px;
       }
     `;
 
@@ -37,25 +40,68 @@ class MapboxComp extends HTMLElement {
 
     const map = new mapboxgl.Map({
       container: mapContainer, // container ID
-      style: "mapbox://styles/mapbox/outdoors-v11", // style URL
-      center: [-58.3815704, -34.6037389], // starting position [lng, lat]
-      zoom: 9, // starting zoom
+      style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
+      center: [-60.6306144, -32.9477027], // starting position [lng, lat]
+      zoom: 12, // starting zoom
       projection: "globe" as any, // display the map as a 3D globe
     });
 
     map.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-        showUserHeading: true,
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        flipCoordinates: true,
       })
     );
+
+    const geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+      showUserHeading: true,
+    });
+
+    map.addControl(geolocate);
+
+    map.addControl(new mapboxgl.NavigationControl());
 
     map.on("style.load", () => {
       map.setFog({}); // Set the default atmosphere style
     });
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function success(pos) {
+      const crd = pos.coords;
+
+      console.log("Your current position is:");
+      console.log(`Latitude : ${crd.latitude + 200}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+
+      const marker1 = new mapboxgl.Marker({
+        color: "#0000ff",
+        draggable: false,
+      })
+        .setLngLat([crd.longitude + 0.005, crd.latitude])
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            "<custom-pet-card pet-name='Otto'></custom-pet-card>"
+          )
+        )
+        .addTo(map);
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
   }
 
   connectedCallback() {
@@ -64,3 +110,8 @@ class MapboxComp extends HTMLElement {
 }
 
 customElements.define("mapbox-comp", MapboxComp);
+
+// para hacer un nuevo marker con coordinadas especificas deberia usar:
+// const marker1 = new mapboxgl.Marker()
+//          .setLngLat([12.554729, 55.70651])
+//          .addTo(map);

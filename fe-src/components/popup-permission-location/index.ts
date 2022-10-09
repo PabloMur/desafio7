@@ -14,7 +14,7 @@ class CustomPopupPermissionLocation extends HTMLElement {
         <div class="permission__card">
           <p>Para continuar necesitamos que nos des tu consentimiento para obtener tu ubicacion</p>
           <div class="permission__button-container">
-            <custom-button>Dar Mi Ubicacion</custom-button>
+            <custom-button>Aceptar y continuar!</custom-button>
           </div>
         </div>
     </div>
@@ -71,9 +71,7 @@ class CustomPopupPermissionLocation extends HTMLElement {
 
     const buton = this.shadow.querySelector("custom-button") as any;
     buton.addEventListener("click", async () => {
-      await state.getUserLocation(() => {
-        console.log(cs + "a ver si esto sale");
-      });
+      Router.go("/mapbox");
     });
   }
 }
