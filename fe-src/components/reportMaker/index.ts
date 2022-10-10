@@ -1,12 +1,14 @@
+import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl";
+import { Dropzone } from "dropzone";
 import { state } from "../../state";
 
+console.log(Dropzone);
+
 class ReportMaker extends HTMLElement {
-  shadow: ShadowRoot;
   email: string;
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: "open" });
-    this.email = "";
   }
   render() {
     const cs = state.getState();
@@ -15,7 +17,7 @@ class ReportMaker extends HTMLElement {
     }
     const style = document.createElement("style");
 
-    this.shadow.innerHTML = `
+    this.innerHTML = `
       <div class="container">
         <h2>Reportar una mascota</h2>
 
@@ -31,7 +33,7 @@ class ReportMaker extends HTMLElement {
         </label>
         <label class="last-pet-zone">
             <p>Zona en la que se perdió</p>
-            <div class="pet-zone-container"></div>
+            <div class="pet-zone-container" id="map"></div>
             <label class="label-pet-zone"for="pet-zone">Ultima ubicación</label>
             <input name="pet-zone" type="text" requiere="require">
             <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
@@ -72,19 +74,30 @@ class ReportMaker extends HTMLElement {
         justify-content: center;
         align-items: center;
         background: var(--purple);
+        box-shadow: 5px 5px 2px #00000017;
         border-radius: 20px;
         padding: 20px;
       }
 
       .pet-image-container,
       .pet-zone-container{
-        min-height: 30vh;
+        min-height: 50vh;
         width: 100%;
         max-width: 400px;
         margin: 0 auto;
         background: white;
         border-radius: 5px;
         box-shadow: 5px 5px 2px #00000017;
+      }
+
+      .pet-zone-container{
+        padding: 40px;
+      }
+
+      .pet-image-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       
       .last-pet-zone{
@@ -118,38 +131,50 @@ class ReportMaker extends HTMLElement {
         font-size: 20px;
         box-shadow: 5px 5px 2px #00000017;
       }
+      .dz-size{
+        display:none;
+      }
     `;
 
-    this.shadow.appendChild(style);
-  }
+    const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
+    const mapContainer = this.querySelector("#map") as any;
 
-  addListeners() {
-    this.render();
-    const form = this.shadow.querySelector(".form");
-    const cs = state.getState();
+    mapboxgl.accessToken = MAPBOX_API_KEY;
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const target = e.target as any;
-      const passwordUno = target.password.value;
-      const passwordDos = target["password-dos"].value;
-      const email = target.email.value;
-      const fullname = "User";
-      const contraseñasIguales = passwordDos === passwordDos;
-      console.log(email, fullname, passwordUno, passwordDos);
-
-      contraseñasIguales
-        ? await state.createUser(passwordUno, fullname)
-        : console.log("algo fallo");
+    const map = new mapboxgl.Map({
+      container: mapContainer, // container ID
+      style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
+      center: [-71.2998992, -41.1237693], // starting position [lng, lat]
+      zoom: 12, // starting zoom
+      projection: "globe" as any, // display the map as a 3D globe
     });
+
+    map.on("style.load", () => {
+      map.setFog({}); // Set the default atmosphere style
+    });
+
+    this.appendChild(style);
   }
 
   connectedCallback() {
-    state.subscribe(() => {
-      this.addListeners();
+    this.render();
+    const form = this.querySelector(".form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      console.log("hola");
     });
-    this.addListeners();
+
+    const myDropzone = new Dropzone(".pet-image-container", {
+      url: "/falsa",
+      autoProcessQueue: false,
+      clickable: true,
+      uploadMultiple: true,
+    });
+
+    myDropzone.on("addedfile", function (file) {
+      // usando este evento pueden acceder al dataURL directamente
+      console.log(file);
+    });
   }
 }
 

@@ -1,11 +1,9 @@
 class Report extends HTMLElement {
-  shadow: ShadowRoot;
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: "open" });
   }
   render() {
-    this.shadow.innerHTML = `
+    this.innerHTML = `
           <custom-header></custom-header>
           <report-maker></report-maker>
           <custom-footer></custom-footer>

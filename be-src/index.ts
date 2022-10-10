@@ -28,7 +28,7 @@ import {
 import { createReport } from "./controllers/report-controller";
 import { sgMail } from "./lib/sendgrid";
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 
 const SECRET = process.env.SECRET;
 
@@ -42,7 +42,7 @@ app.use(cors());
 
 app.use(
   express.json({
-    limit: "50mb",
+    limit: "500mb",
   })
 );
 
