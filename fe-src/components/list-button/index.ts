@@ -44,11 +44,13 @@ class ListButton extends HTMLElement {
           }
 
           .enfasis{
-            background: var(--blue);    
+            background: var(--blue);
+            box-shadow: 5px 5px 2px #00000017;    
           }
 
           .dark{
             background: black;
+            box-shadow: 5px 5px 2px #00000017;
           }
 
           @media screen and (max-width: 600px){

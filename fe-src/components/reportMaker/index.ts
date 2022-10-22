@@ -1,14 +1,17 @@
-import "mapbox-gl/dist/mapbox-gl.css";
-import mapboxgl from "mapbox-gl";
-import { Dropzone } from "dropzone";
+import { initMapForReportComp } from "../../assets/mapForReport";
+import { initDropzone } from "../../assets/dropzone";
 import { state } from "../../state";
-
-console.log(Dropzone);
 
 class ReportMaker extends HTMLElement {
   email: string;
   constructor() {
     super();
+  }
+  initMap() {
+    initMapForReportComp(this.querySelector("#map") as any);
+  }
+  initDropzonefromAssets() {
+    initDropzone();
   }
   render() {
     const cs = state.getState();
@@ -19,7 +22,7 @@ class ReportMaker extends HTMLElement {
 
     this.innerHTML = `
       <div class="container">
-        <h2>Reportar una mascota</h2>
+        <custom-text variant="title">Reportar una mascota</custom-text>
 
         <form class="form">
         <label>
@@ -28,8 +31,10 @@ class ReportMaker extends HTMLElement {
         </label>
         <label>
             <p>imagen</p>
-            <div class="pet-image-container"></div>
-            <button>Agregar imagen de la mascota</button>
+            <div class="pet-image-container">
+              <div class="pet-image-container-text"> Haz click aqui o <br/>arrastra una imagen de tu mascota! </div>
+            </div>
+            <div class="line"></div>
         </label>
         <label class="last-pet-zone">
             <p>Zona en la que se perdió</p>
@@ -40,7 +45,7 @@ class ReportMaker extends HTMLElement {
         </label>
     
         <button>Reportar como perdido</button>
-        <button>Cancelar</button>
+        <button class="cancel-button">Cancelar Report</button>
         </form>
       </div>
     `;
@@ -69,14 +74,26 @@ class ReportMaker extends HTMLElement {
 
       .form{
         padding: 10px;
+        margin-top: 30px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
         background: var(--purple);
         box-shadow: 5px 5px 2px #00000017;
         border-radius: 20px;
         padding: 20px;
+      }
+
+      .pet-image-container-text{
+        border: 2px dashed #8f8f8f;
+        min-height: 44vh;
+        width: 90%;
+        display:flex;
+        justify-content: center;
+        align-items: center; 
+        border-radius: 4px;
+        position: relative;
+        color:#8f8f8f;
       }
 
       .pet-image-container,
@@ -85,7 +102,7 @@ class ReportMaker extends HTMLElement {
         width: 100%;
         max-width: 400px;
         margin: 0 auto;
-        background: white;
+        background: #ffe5b5;
         border-radius: 5px;
         box-shadow: 5px 5px 2px #00000017;
       }
@@ -106,12 +123,19 @@ class ReportMaker extends HTMLElement {
         align-items: center;
       }
 
+      .line{
+        height: 1px;
+        width: 100%;
+        background: #5b00edcd;
+        margin: 5vh auto;
+      }
+
       .label-pet-zone{
         margin-top: 12px;
       }
 
       input{
-        border: none;
+        border: 1px solid black;
         width: 400px;
         height: 50px;
         border-radius: 5px;
@@ -131,49 +155,37 @@ class ReportMaker extends HTMLElement {
         font-size: 20px;
         box-shadow: 5px 5px 2px #00000017;
       }
-      .dz-size{
+      .dz-size,.dz-filename,.dz-success-mark,.dz-error-mark{
         display:none;
       }
+
+      .dz-preview dz-image-preview{
+        position: absolute;
+        top: 0;
+      }
+
+      .cancel-button{
+        background: #c50000;
+      }
     `;
-
-    const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
-    const mapContainer = this.querySelector("#map") as any;
-
-    mapboxgl.accessToken = MAPBOX_API_KEY;
-
-    const map = new mapboxgl.Map({
-      container: mapContainer, // container ID
-      style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
-      center: [-71.2998992, -41.1237693], // starting position [lng, lat]
-      zoom: 12, // starting zoom
-      projection: "globe" as any, // display the map as a 3D globe
-    });
-
-    map.on("style.load", () => {
-      map.setFog({}); // Set the default atmosphere style
-    });
-
+    this.initMap();
+    this.initDropzonefromAssets();
     this.appendChild(style);
   }
 
   connectedCallback() {
     this.render();
     const form = this.querySelector(".form");
+    const clearButton = this.querySelector(".cancel-button");
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       console.log("hola");
     });
 
-    const myDropzone = new Dropzone(".pet-image-container", {
-      url: "/falsa",
-      autoProcessQueue: false,
-      clickable: true,
-      uploadMultiple: true,
-    });
-
-    myDropzone.on("addedfile", function (file) {
-      // usando este evento pueden acceder al dataURL directamente
-      console.log(file);
+    clearButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("cancelando operacion");
     });
   }
 }

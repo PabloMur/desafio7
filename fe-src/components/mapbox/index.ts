@@ -41,7 +41,7 @@ class MapboxComp extends HTMLElement {
     const map = new mapboxgl.Map({
       container: mapContainer, // container ID
       style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
-      center: [-60.6306144, -32.9477027], // starting position [lng, lat]
+      center: [-57.549898, -38.0045147], // starting position [lng, lat]
       zoom: 12, // starting zoom
       projection: "globe" as any, // display the map as a 3D globe
     });

@@ -1,12 +1,3 @@
-import { Router } from "@vaadin/router";
-import { stat } from "fs";
-import { state } from "../../state";
-
-// <custom-text>Para ver las mascotas reportadas cerca tuyo necesitamos permiso para conocer tu ubicación.</custom-text>
-//           <div class="button-container">
-//             <custom-button>Dar Mi Ubicacion</custom-button>
-//           </div>
-
 class Home extends HTMLElement {
   shadow: ShadowRoot;
   bgImage: string;
@@ -103,21 +94,17 @@ class Home extends HTMLElement {
     this.shadow.appendChild(style);
   }
   async addListeners() {
-    const cs = state.getState();
     this.render();
     const button = this.shadow.querySelector("custom-button");
     const test = this.shadow.querySelector(
       "custom-popup-permission-location"
     ) as any;
-    const geolocation = navigator.geolocation;
+
     button.addEventListener("click", () => {
       test.style.display = "block";
     });
   }
   connectedCallback() {
-    state.subscribe(() => {
-      this.addListeners();
-    });
     this.addListeners();
   }
 }
