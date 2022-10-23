@@ -133,8 +133,11 @@ class PasswordComp extends HTMLElement {
   }
   connectedCallback() {
     this.render();
+
     const form = this.shadow.querySelector(".form");
     const loading = this.shadow.querySelector("loading-comp");
+    const cs = state.getState();
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       loading.classList.toggle("despierto");
@@ -144,7 +147,7 @@ class PasswordComp extends HTMLElement {
       state.setUserToken(userToken.token);
       await state.getUserMe();
       loading.classList.toggle("despierto");
-      Router.go("/");
+      cs.route ? Router.go(cs.route) : Router.go("/");
     });
   }
 }

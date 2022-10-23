@@ -104,6 +104,7 @@ class MyData extends HTMLElement {
       loading.classList.toggle("despierto");
       const target = e.target as any;
       const fullname = target.fullname.value;
+      state.setUserName(fullname);
       await state.UpdateUserName(fullname);
       loading.classList.toggle("despierto");
     });

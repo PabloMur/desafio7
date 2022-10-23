@@ -15,7 +15,7 @@ class Footer extends HTMLElement {
             <footer>
               <div class="container">
                 <div class="find">
-                  <p>Find me on:</p>
+                  <custom-text variant="light">Find me on:</custom-text>
                   <a target="_black" href="https://github.com/PabloMur">
                     <img src="${this.github}">
                   </a>
@@ -24,7 +24,7 @@ class Footer extends HTMLElement {
                   </a>
                 </div>
                 <div class="learn">
-                  <p>i learned this in: </p>
+                  <custom-text variant="light">I learned this in: </custom-text>
                   <a target="_black" href="https://apx.school/">
                     <img src="${this.apx}">
                   </a>
@@ -57,6 +57,7 @@ class Footer extends HTMLElement {
           align-items: center;
           justify-content: center;
         }
+
 
         `;
     this.shadow.appendChild(style);

@@ -26,20 +26,19 @@ class ReportMaker extends HTMLElement {
 
         <form class="form">
         <label>
-            <p>Nombre de la mascota</p>
+            <custom-text>Nombre de la mascota</custom-text>
             <input name="pet-name" type="text" requiere="require">
         </label>
         <label>
-            <p>imagen</p>
+            <custom-text>Imagen de tu mascota</custom-text>
             <div class="pet-image-container">
               <div class="pet-image-container-text"> Haz click aqui o <br/>arrastra una imagen de tu mascota! </div>
             </div>
-            <div class="line"></div>
         </label>
         <label class="last-pet-zone">
-            <p>Zona en la que se perdió</p>
+            <custom-text>Zona en la que se perdió</custom-text>
             <div class="pet-zone-container" id="map"></div>
-            <label class="label-pet-zone"for="pet-zone">Ultima ubicación</label>
+            <custom-text>Ultima ubicación</custom-text>
             <input name="pet-zone" type="text" requiere="require">
             <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
         </label>
@@ -78,7 +77,7 @@ class ReportMaker extends HTMLElement {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background: var(--purple);
+        background: #f5b849;
         box-shadow: 5px 5px 2px #00000017;
         border-radius: 20px;
         padding: 20px;
@@ -104,6 +103,7 @@ class ReportMaker extends HTMLElement {
         margin: 0 auto;
         background: #ffe5b5;
         border-radius: 5px;
+        border: 1px solid black;
         box-shadow: 5px 5px 2px #00000017;
       }
 
@@ -121,13 +121,6 @@ class ReportMaker extends HTMLElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-      }
-
-      .line{
-        height: 1px;
-        width: 100%;
-        background: #5b00edcd;
-        margin: 5vh auto;
       }
 
       .label-pet-zone{

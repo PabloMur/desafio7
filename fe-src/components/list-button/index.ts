@@ -18,10 +18,15 @@ class ListButton extends HTMLElement {
     this.shadow.innerHTML = `
         <button class="button ${this.variant}"></button>
         `;
-
     const button = this.shadow.querySelector(".button") as any;
     button.addEventListener("click", () => {
-      cs.logged ? Router.go(this.route) : Router.go("/login");
+      //si esta logueado vamos a la ruta que tiene guardado el button
+      if (cs.logged) Router.go(this.route);
+      //sino, guardamos la ruta y nos logueamos, una vez logueados vamos a la ruta que corresponda
+      else {
+        state.navigationRoute(this.route);
+        Router.go("/login");
+      }
     });
     button.textContent = this.textContent || "ups!";
 

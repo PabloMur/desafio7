@@ -11,28 +11,50 @@ class CustomText extends HTMLElement {
     const style = document.createElement("style");
 
     style.innerHTML = `
+          *{
+            box-sizing: border-box;
+          }
           .title{
-              font-size:50px;
-              color: black;
-              transition: all 3s ease;
-              font-family: 'DM Serif Display', serif;
+            font-size:50px;
+            color: black;
+            transition: all 3s ease;
+            font-family: 'DM Serif Display', serif;
+          }
+          
+          @media (max-width:600px){
+            .title{
+              width: 90%;
+              font-size:40px;
+              margin: 0 auto;
+              text-align: center;
             }
-            @media (max-width:600px){
-              .title{
-                width: 90%;
-                font-size:40px;
-                margin: 0 auto;
-                text-align: center;
-              }
+          }
+            
+          .body{
+            text-align:center;
+            color: black;
+            font-size: 25px;
+            max-width: 600px;
+            margin: 10px auto;
+            font-family: 'DM Serif Display', serif;
+          }
+          @media (max-width:600px){
+            .body{
+              width: 90%;
+              margin: 0 auto;
             }
-            .body{
-              text-align:center;
-              color: black;
-              font-size: 25px;
-              max-width: 600px;
-              margin-bottom: 20px;
-          }@media (max-width:600px){
-            .body{
+          }
+
+          .light{
+            text-align:center;
+            color: white;
+            font-size: 25px;
+            max-width: 600px;
+            margin: 10px auto;
+            font-family: 'DM Serif Display', serif;
+          }
+          @media (max-width:600px){
+            .light{
               width: 90%;
               margin: 0 auto;
             }

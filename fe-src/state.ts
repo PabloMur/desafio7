@@ -1,7 +1,8 @@
-import { Router } from "@vaadin/router";
+//import { Router } from "@vaadin/router";
 
 const state = {
   data: {
+    route: null,
     id: "",
     fullname: "",
     email: "",
@@ -13,6 +14,7 @@ const state = {
       lng: 0,
     },
     pets: [],
+    report: {},
   },
   listeners: [],
 
@@ -38,6 +40,15 @@ const state = {
     this.listeners.push(callback);
   },
 
+  //Seteamos la ruta para navegar en la app en caso de que este logueado el user
+  navigationRoute(route: string) {
+    const cs = this.getState();
+    this.setState({
+      ...cs,
+      route,
+    });
+  },
+
   //seteamos el nombre y el email del player en el state
   setUserEmail(email: string) {
     const cs = this.getState();
@@ -48,7 +59,7 @@ const state = {
     const cs = this.getState();
     this.setState({
       ...cs,
-      fullname: fullname,
+      fullname,
     });
   },
 
