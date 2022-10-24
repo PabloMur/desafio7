@@ -1,5 +1,3 @@
-import { state } from "../../state";
-
 class MyPets extends HTMLElement {
   shadow: ShadowRoot;
   constructor() {
@@ -14,14 +12,6 @@ class MyPets extends HTMLElement {
       <my-pets-container></my-pets-container>
       <custom-footer></custom-footer>
     `;
-
-    style.innerHTML = `
-    .dormido{
-      display: none;
-    }
-    `;
-
-    this.shadow.appendChild(style);
   }
   connectedCallback() {
     this.render();
