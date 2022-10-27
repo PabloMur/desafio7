@@ -1,3 +1,6 @@
+import { Router } from "@vaadin/router";
+import { state } from "../../state";
+
 class CustomMenu extends HTMLElement {
   shadow: ShadowRoot;
   constructor() {
@@ -21,16 +24,8 @@ class CustomMenu extends HTMLElement {
                           <list-button route="/report">My Reports</list-button>
                           <list-button variant="enfasis" route="/login">Login</list-button>
                           <list-button variant="dark" route="/signup">Signup</list-button>
+                          <button class="logout">logOut</button>
                       </ul> 
-                  </nav>
-                  <nav class="menu-nav-desplegable escondido">
-                      <ul class="nav-list">
-                      <li><a class="nav-list-link" href="/my-data">My Data</a></li>
-                      <li><a class="nav-list-link" href="/my-pets">My Pets</a></li>
-                      <li><a class="nav-list-link" href="/report">My Reports</a></li>
-                      <li><a class="nav-list-link secondary" href="/login">Login  </a></li>
-                      <li><a class="nav-list-link emphasis" href="/signup">Signup</a></li>
-                      </ul>
                   </nav>
                   <div class="nav-burger-logo">
                     <div class="lineOne"></div>
@@ -194,6 +189,11 @@ class CustomMenu extends HTMLElement {
     this.render();
     let burger = this.shadow.querySelector(".nav-burger-logo") as any;
     let lista = this.shadow.querySelector(".menu-nav-desplegable") as any;
+    let salir = this.shadow.querySelector(".logout" as any);
+    salir.addEventListener("click", () => {
+      state.logout();
+      Router.go("/login");
+    });
     burger.addEventListener("click", () => {
       lista.classList.toggle("mostrado");
     });

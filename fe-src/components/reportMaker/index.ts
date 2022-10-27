@@ -1,23 +1,27 @@
 import { initMapForReportComp } from "../../assets/mapForReport";
 import { initDropzone } from "../../assets/dropzone";
+import { Dropzone } from "dropzone";
 import { state } from "../../state";
 
 class ReportMaker extends HTMLElement {
-  email: string;
+  file: any;
   constructor() {
     super();
+    this.file = null;
   }
   initMap() {
     initMapForReportComp(this.querySelector("#map") as any);
   }
   initDropzonefromAssets() {
-    initDropzone();
+    const myDropzone = initDropzone();
+    myDropzone.on("thumbnail", (file) => (this.file = file));
   }
+
+  modificarFile(str: any) {
+    return (this.file = str);
+  }
+
   render() {
-    const cs = state.getState();
-    if (cs.email) {
-      this.email = cs.email;
-    }
     const style = document.createElement("style");
 
     this.innerHTML = `
@@ -27,7 +31,7 @@ class ReportMaker extends HTMLElement {
         <form class="form">
         <label>
             <custom-text>Nombre de la mascota</custom-text>
-            <input name="pet-name" type="text" requiere="require">
+            <input name="petname" type="text" requiere="require">
         </label>
         <label>
             <custom-text>Imagen de tu mascota</custom-text>
@@ -148,19 +152,20 @@ class ReportMaker extends HTMLElement {
         font-size: 20px;
         box-shadow: 5px 5px 2px #00000017;
       }
+      
       .dz-size,.dz-filename,.dz-success-mark,.dz-error-mark{
         display:none;
       }
-
+      
       .dz-preview dz-image-preview{
         position: absolute;
         top: 0;
       }
-
+      
       .cancel-button{
         background: #c50000;
       }
-    `;
+      `;
     this.initMap();
     this.initDropzonefromAssets();
     this.appendChild(style);
@@ -173,12 +178,15 @@ class ReportMaker extends HTMLElement {
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      console.log("hola");
+      const target = e.target as any;
+      const petName = target.petname.value;
+      console.log(petName);
+      console.log(this.file.dataURL);
     });
 
     clearButton.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("cancelando operacion");
+      location.reload();
     });
   }
 }

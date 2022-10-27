@@ -5,8 +5,6 @@ class MyPets extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
   }
   render() {
-    const style = document.createElement("style");
-
     this.shadow.innerHTML = `
       <custom-header></custom-header>
       <my-pets-container></my-pets-container>

@@ -6,12 +6,9 @@ export function initDropzone() {
     autoProcessQueue: false,
     clickable: true,
     uploadMultiple: true,
+    thumbnailWidth: 250,
+    thumbnailHeight: 150,
   });
 
-  myDropzone.on("thumbnail", function (file) {
-    // usando este evento pueden acceder al dataURL directamente
-    console.log(file);
-    console.log(file.dataURL);
-    return file.dataURL;
-  });
+  return myDropzone;
 }

@@ -23,6 +23,10 @@ const state = {
     this.setState(JSON.parse(localData as any));
   },
 
+  logout() {
+    localStorage.removeItem("saved-state");
+  },
+
   getState() {
     return this.data;
   },
@@ -76,6 +80,17 @@ const state = {
     this.setState({
       ...cs,
       logged: true,
+    });
+  },
+
+  // PARA SEGuir desarrollando, es buena idea pero a pulir
+  dataForReport(value: any) {
+    const cs = state.getState();
+    this.setState({
+      ...cs,
+      report: {
+        value,
+      },
     });
   },
 

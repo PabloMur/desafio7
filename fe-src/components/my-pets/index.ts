@@ -16,7 +16,7 @@ class MyPetsContainer extends HTMLElement {
       this.render();
     };
 
-    cs.logged ? traerMascotas() : console.log("no logged");
+    if (cs.logged) traerMascotas();
   }
 
   render() {
@@ -25,48 +25,44 @@ class MyPetsContainer extends HTMLElement {
     this.shadow.innerHTML = `
         <div class="container">
           <custom-text variant="title">Mis Mascotas</custom-text>
-        <div class="pet-cards-container">
-          ${this.pets
-            .map((pet) => {
-              return `<custom-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}"></custom-pet-card>`;
-            })
-            .join("")}
-        </div>
+          <div class="pet-cards-container">
+            ${this.pets
+              .map((pet) => {
+                return `<custom-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}"></custom-pet-card>`;
+              })
+              .join("")}
+          </div>
         </div>
     `;
 
     style.innerHTML = `
     *{
-        box-sizing: border-box;
-        padding: 0;
-        margin: 0;
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
     }
 
     .container{
-        min-height: 80vh;
-        width: 90%;
-        background: #ffffff24;
-        margin: 5vh auto;
-        display: flex;
-        flex-direction: column;
-        
-        justify-content: center;
-        align-items: center;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+      min-height: 80vh;
+      width: 90%;
+      background: #ffffff24;
+      margin: 5vh auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     }
 
     .pet-cards-container{
+      max-width: 70%;
       display: flex;
       flex-wrap: wrap;
-      flex: 0 0 33.333333%;
     }
-    
-    .mascota{
-        width: 300px;
-        height: 15vh;
-        background: purple;
+    custom-pet-card{
+      margin: 0 auto;
     }
     
     `;

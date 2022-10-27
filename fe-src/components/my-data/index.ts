@@ -12,8 +12,8 @@ class MyData extends HTMLElement {
     const style = document.createElement("style");
 
     this.shadow.innerHTML = `
+    <loading-comp class="dormido"></loading-comp>
     <div class="my-data-container">
-        <loading-comp class="dormido"></loading-comp>
         <custom-text variant="title">Mis Datos</custom-text>
         <form class="form">
           <div class="fullname-container">
@@ -104,9 +104,10 @@ class MyData extends HTMLElement {
       loading.classList.toggle("despierto");
       const target = e.target as any;
       const fullname = target.fullname.value;
-      state.setUserName(fullname);
       await state.UpdateUserName(fullname);
+      console.log(loading);
       loading.classList.toggle("despierto");
+      state.setUserName(fullname);
     });
   }
 

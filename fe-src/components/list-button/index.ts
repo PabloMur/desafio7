@@ -21,7 +21,10 @@ class ListButton extends HTMLElement {
     const button = this.shadow.querySelector(".button") as any;
     button.addEventListener("click", () => {
       //si esta logueado vamos a la ruta que tiene guardado el button
-      if (cs.logged) Router.go(this.route);
+      if (cs.logged) {
+        state.navigationRoute(this.route);
+        Router.go(this.route);
+      }
       //sino, guardamos la ruta y nos logueamos, una vez logueados vamos a la ruta que corresponda
       else {
         state.navigationRoute(this.route);
