@@ -1,4 +1,10 @@
-//import { Router } from "@vaadin/router";
+type msg = {
+  to: string;
+  from: string;
+  subject: string;
+  text: string;
+  html: string;
+};
 
 const state = {
   data: {
@@ -56,31 +62,22 @@ const state = {
   //seteamos el nombre y el email del player en el state
   setUserEmail(email: string) {
     const cs = this.getState();
-    this.setState({ ...cs, email: email });
+    this.setState({ ...cs, email });
   },
 
   setUserName(fullname: string) {
     const cs = this.getState();
-    this.setState({
-      ...cs,
-      fullname,
-    });
+    this.setState({ ...cs, fullname });
   },
-
+  //Esto creo que no lo estoy usando!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   userRegistrated() {
     const cs = this.getState();
-    this.setState({
-      ...cs,
-      registrated: true,
-    });
+    this.setState({ ...cs, registrated: true });
   },
 
   userLogged() {
     const cs = this.getState();
-    this.setState({
-      ...cs,
-      logged: true,
-    });
+    this.setState({ ...cs, logged: true });
   },
 
   // PARA SEGuir desarrollando, es buena idea pero a pulir
@@ -97,7 +94,7 @@ const state = {
   //creo que deberia subscribir a los botones y no la pagina-- los botones de la lista
   async createUser(password: string, fullname: string) {
     try {
-      const cs = this.getState();
+      const email = this.getState().email;
       const fetchingUser = await fetch("/auth", {
         method: "post",
         mode: "cors",
@@ -106,14 +103,14 @@ const state = {
         },
         body: JSON.stringify({
           fullname,
-          email: cs.email,
+          email,
           password,
         }),
       });
       const res = await fetchingUser.json();
-      if (res) {
-        console.log(res);
-      }
+
+      res ?? console.log(res);
+
       return res;
     } catch (error) {
       console.error(error);
@@ -156,7 +153,6 @@ const state = {
         }),
       });
       const response = await fetchingEmail.json();
-      console.log(response);
 
       if (response.error) {
         alert("contraseña incorrecta");
@@ -164,7 +160,7 @@ const state = {
       } else {
         this.setUserToken(response.token);
         this.userLogged();
-        console.log("hola soy el status " + response.status);
+
         return response;
       }
     } catch (error) {
@@ -176,10 +172,7 @@ const state = {
   setUserToken(token: string) {
     try {
       const cs = this.getState();
-      this.setState({
-        ...cs,
-        token: token,
-      });
+      this.setState({ ...cs, token });
     } catch (error) {
       console.error(error);
     }
@@ -200,13 +193,14 @@ const state = {
       });
 
       const response = await fetchingUser.json();
-      await this.setState({
+
+      this.setState({
         ...cs,
         id: response.id,
         fullname: response.fullname,
         pets: response.pets,
       });
-      console.log(response);
+
       return response;
     } catch (error) {
       console.error(error);
@@ -260,47 +254,68 @@ const state = {
   },
 
   //ubicacion del user
-  async getUserLocation(cb?) {
+  // async getUserLocation(cb?) {
+  //   try {
+  //     const cs = this.getState();
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       let latitude = position.coords.latitude;
+  //       let longitude = position.coords.longitude;
+  //       state.setState({
+  //         ...cs,
+  //         userLocation: {
+  //           lat: latitude,
+  //           lng: longitude,
+  //         },
+  //       });
+  //       console.log(JSON.stringify(cs.userLocation) + "navigation method");
+  //     });
+  //     this.setState(cs);
+  //     console.log(
+  //       JSON.stringify(cs.userLocation) + " esta es la ubicacion del usuario"
+  //     );
+  //     if (cb) {
+  //       cb();
+  //     }
+  //     return;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // },
+
+  async getPetsAround(lat, lon) {
     try {
-      const cs = this.getState();
-      navigator.geolocation.getCurrentPosition((position) => {
-        cs.userLocation.lat = position.coords.latitude;
-        cs.userLocation.lng = position.coords.longitude;
-        console.log(JSON.stringify(cs.userLocation) + "navigation method");
-      });
-      this.setState(cs);
-      console.log(
-        JSON.stringify(cs.userLocation) + " esta es la ubicacion del usuario"
-      );
-      if (cb) {
-        cb();
-      }
-      return;
-    } catch (error) {
-      console.error(error);
+      const fetchPets = await fetch(`/pets-around?lat=${lat}&lng=${lon}`);
+      const response = await fetchPets.json();
+      return response;
+    } catch (err) {
+      console.error(err);
     }
   },
 
-  async getPetsAround() {
+  async sendEmail(mensaje: msg) {
     try {
-      const cs = state.getState();
-
-      const fetchPets = await fetch(
-        `/pets-around?lat=${cs.userLocation.lat}&lng=${cs.userLocation.lng}`,
-        {
-          method: "get",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
+      const test = await fetch("/send-email", {
+        method: "post",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          msg: {
+            to: "polillomurillo@gmail.com",
+            from: "pablomurillo.sp@gmail.com",
+            subject: "Avistamiento de tu mascota",
+            text: "and",
+            html: "<strong>Este mensaje ha sido enviado desde el Front-End mother!</strong>",
           },
-        }
-      );
+        }),
+      });
 
-      const response = await fetchPets.json();
-      console.log(cs.userLocation);
-      console.log(response);
+      const response = await test.json();
       return response;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 

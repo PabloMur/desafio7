@@ -1,24 +1,30 @@
 import { initMapForReportComp } from "../../assets/mapForReport";
 import { initDropzone } from "../../assets/dropzone";
-import { Dropzone } from "dropzone";
 import { state } from "../../state";
 
 class ReportMaker extends HTMLElement {
   file: any;
+  petLatitude: any;
+  petLongitude: any;
+  map: any;
   constructor() {
     super();
     this.file = null;
+    this.map = null;
   }
   initMap() {
-    initMapForReportComp(this.querySelector("#map") as any);
+    const cs = state.getState();
+    const lng = cs.lng;
+    const lat = cs.lat;
+    this.map = initMapForReportComp(
+      this.querySelector("#map" as any),
+      lat,
+      lng
+    );
   }
   initDropzonefromAssets() {
     const myDropzone = initDropzone();
     myDropzone.on("thumbnail", (file) => (this.file = file));
-  }
-
-  modificarFile(str: any) {
-    return (this.file = str);
   }
 
   render() {
@@ -28,27 +34,33 @@ class ReportMaker extends HTMLElement {
       <div class="container">
         <custom-text variant="title">Reportar una mascota</custom-text>
 
+        <form id="pet-zone-location__form">
+          <label class="last-pet-zone">
+            <custom-text>Zona en la que se perdió</custom-text>
+            <div class="pet-zone-container" id="map"></div>
+            <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
+            <div >
+              <input class="petZona" name="petzone" type="text" requiere="require">
+              <button class="buton-add-zone">Buscar</button>
+            </div>
+          </label>
+        </form>
+
         <form class="form">
-        <label>
+          <label>
             <custom-text>Nombre de la mascota</custom-text>
             <input name="petname" type="text" requiere="require">
-        </label>
-        <label>
+          </label>
+          <label>
             <custom-text>Imagen de tu mascota</custom-text>
             <div class="pet-image-container">
               <div class="pet-image-container-text"> Haz click aqui o <br/>arrastra una imagen de tu mascota! </div>
             </div>
-        </label>
-        <label class="last-pet-zone">
-            <custom-text>Zona en la que se perdió</custom-text>
-            <div class="pet-zone-container" id="map"></div>
-            <custom-text>Ultima ubicación</custom-text>
-            <input name="pet-zone" type="text" requiere="require">
-            <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
-        </label>
-    
-        <button>Reportar como perdido</button>
-        <button class="cancel-button">Cancelar Report</button>
+          </label>
+
+          <button>Reportar como perdido</button>
+          <button class="cancel-button">Cancelar Report</button>
+
         </form>
       </div>
     `;
@@ -76,6 +88,7 @@ class ReportMaker extends HTMLElement {
       }
 
       .form{
+        min-height: 80vh;
         padding: 10px;
         margin-top: 30px;
         display: flex;
@@ -171,10 +184,19 @@ class ReportMaker extends HTMLElement {
     this.appendChild(style);
   }
 
-  connectedCallback() {
+  addListeners() {
     this.render();
     const form = this.querySelector(".form");
     const clearButton = this.querySelector(".cancel-button");
+    const zoneForm = this.querySelector("#pet-zone-location__form");
+
+    zoneForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const target = e.target as any;
+      const zona = target.petzone.value;
+      console.log(zona);
+      console.log(this);
+    });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -188,6 +210,10 @@ class ReportMaker extends HTMLElement {
       e.preventDefault();
       location.reload();
     });
+  }
+
+  connectedCallback() {
+    this.addListeners();
   }
 }
 

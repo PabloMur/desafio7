@@ -994,7 +994,7 @@
 
 "@sendgrid/mail@^7.7.0":
   version "7.7.0"
-  resolved "https://registry.npmjs.org/@sendgrid/mail/-/mail-7.7.0.tgz"
+  resolved "https://registry.yarnpkg.com/@sendgrid/mail/-/mail-7.7.0.tgz#aba09f5ce2e9d8ceee92284c3ea8b4a90b0e38fe"
   integrity sha512-5+nApPE9wINBvHSUxwOxkkQqM/IAAaBYoP9hw7WwgDNQPxraruVqHizeTitVtKGiqWCKm2mnjh4XGN3fvFLqaw==
   dependencies:
     "@sendgrid/client" "^7.7.0"
@@ -3220,6 +3220,11 @@ nodemon@^2.0.18:
     touch "^3.1.0"
     undefsafe "^2.0.5"
     update-notifier "^5.1.0"
+
+nominatim-client@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/nominatim-client/-/nominatim-client-3.2.1.tgz#c6ec49aa07d46b56851715c80d5058158943681e"
+  integrity sha512-i7kGGMvXU37nUhDhlTuj0JhoWntT69BUFeEOHxw40Wf5J++dUCGnPgMCE+6KAJZCOVeK6lqjMAxP2+zyg0CbKw==
 
 nopt@~1.0.10:
   version "1.0.10"

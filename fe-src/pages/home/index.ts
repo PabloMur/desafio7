@@ -1,3 +1,5 @@
+import { state } from "../../state";
+
 class Home extends HTMLElement {
   shadow: ShadowRoot;
   bgImage: string;

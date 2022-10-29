@@ -26,7 +26,7 @@ import {
   deletePet,
 } from "./controllers/pets-controller";
 import { createReport } from "./controllers/report-controller";
-import { sgMail } from "./lib/sendgrid";
+import { enviarEmail } from "./lib/sendgrid";
 
 const port = process.env.PORT || 3002;
 
@@ -123,35 +123,42 @@ app.post("/pet", authMiddleware, async (req, res) => {
 //obtener mis mascotas
 app.get("/me/pets", authMiddleware, async (req, res) => {
   const pets = await getPets(req._user.id);
-  res.json({
-    pets: pets,
-  });
+  res.json({ pets });
 });
 
 //actualizar la data de una mascota
 app.put("/me/pets/:petId", async (req, res) => {
   const { petId } = req.params;
   const updatedPet = await updatePetData(req.body, petId);
-  res.json(updatedPet);
+  res.json({ updatedPet });
 });
 
 //Eliminar una mascota
 app.delete("/me/pets/:petId", authMiddleware, async (req, res) => {
   const { petId } = req.params;
   const deletedPet = await deletePet(petId, req._user.id);
-  res.json(deletedPet);
+  res.json({ deletedPet });
 });
 
 //endpoint para ver mascotas cerca de la ubicacion
 app.get("/pets-around", async (req, res) => {
   const { lat, lng } = req.query;
   const response = await searchPetsAround(lat, lng);
-  res.json(response);
+  res.json({ response });
 });
 
+//reportar una mascota propia
 app.post("/report", async (req, res) => {
   const report = await createReport(req.body);
-  res.json(report);
+  res.json({ report });
+});
+
+//reportar una mascota avistada
+app.post("/send-email", async (req, res) => {
+  const { msg } = req.body;
+  console.log(msg);
+  const avistamiento = await enviarEmail(msg);
+  res.json({ avistamiento });
 });
 
 app.get("*", (req, res) => {

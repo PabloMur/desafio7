@@ -19,6 +19,7 @@
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.10.0",
     "nodemon": "^2.0.18",
+    "nominatim-client": "^3.2.1",
     "parcel": "^2.7.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
