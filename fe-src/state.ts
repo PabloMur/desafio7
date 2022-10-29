@@ -1,3 +1,5 @@
+import { type } from "os";
+
 type msg = {
   to: string;
   from: string;
@@ -31,6 +33,21 @@ const state = {
 
   logout() {
     localStorage.removeItem("saved-state");
+    this.setState({
+      route: null,
+      id: "",
+      fullname: "",
+      email: "",
+      registrated: false,
+      logged: false,
+      token: "",
+      userLocation: {
+        lat: 0,
+        lng: 0,
+      },
+      pets: [],
+      report: {},
+    });
   },
 
   getState() {
@@ -286,6 +303,7 @@ const state = {
     try {
       const fetchPets = await fetch(`/pets-around?lat=${lat}&lng=${lon}`);
       const response = await fetchPets.json();
+      console.log(typeof response);
       return response;
     } catch (err) {
       console.error(err);

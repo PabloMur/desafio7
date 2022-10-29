@@ -16,11 +16,7 @@ class ReportMaker extends HTMLElement {
     const cs = state.getState();
     const lng = cs.lng;
     const lat = cs.lat;
-    this.map = initMapForReportComp(
-      this.querySelector("#map" as any),
-      lat,
-      lng
-    );
+    this.map = initMapForReportComp(this.querySelector("#map" as any));
   }
   initDropzonefromAssets() {
     const myDropzone = initDropzone();
@@ -34,18 +30,6 @@ class ReportMaker extends HTMLElement {
       <div class="container">
         <custom-text variant="title">Reportar una mascota</custom-text>
 
-        <form id="pet-zone-location__form">
-          <label class="last-pet-zone">
-            <custom-text>Zona en la que se perdió</custom-text>
-            <div class="pet-zone-container" id="map"></div>
-            <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
-            <div >
-              <input class="petZona" name="petzone" type="text" requiere="require">
-              <button class="buton-add-zone">Buscar</button>
-            </div>
-          </label>
-        </form>
-
         <form class="form">
           <label>
             <custom-text>Nombre de la mascota</custom-text>
@@ -56,6 +40,11 @@ class ReportMaker extends HTMLElement {
             <div class="pet-image-container">
               <div class="pet-image-container-text"> Haz click aqui o <br/>arrastra una imagen de tu mascota! </div>
             </div>
+          </label>
+          <label class="last-pet-zone">
+            <custom-text>Zona en la que se perdió</custom-text>
+            <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
+            <div class="pet-zone-container" id="map"></div>
           </label>
 
           <button>Reportar como perdido</button>
@@ -188,15 +177,6 @@ class ReportMaker extends HTMLElement {
     this.render();
     const form = this.querySelector(".form");
     const clearButton = this.querySelector(".cancel-button");
-    const zoneForm = this.querySelector("#pet-zone-location__form");
-
-    zoneForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const target = e.target as any;
-      const zona = target.petzone.value;
-      console.log(zona);
-      console.log(this);
-    });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();

@@ -3,31 +3,38 @@ import { Pet, User } from "../models";
 import { cloudinary } from "../lib/cloudinary";
 
 export async function createPet(userId, petData) {
-  if (!userId) {
-    throw "user_id es necesario";
-  }
+  if (!userId) throw "user_id es necesario";
 
-  if (userId) {
-    const user = await User.findByPk(userId);
+  if (userId && petData.image) {
+    try {
+      const user = await User.findByPk(userId);
+      //const { image, fullname, age, zone, lat, lng, state } = petData;
+      const imageParseada = await cloudinary.uploader.upload(petData.image, {
+        resource_type: "image",
+        discard_original_filename: true,
+        width: 1000,
+      });
 
-    const pet = await Pet.create({
-      ...petData,
-      userId: user.get("id"),
-    });
+      const pet = await Pet.create({
+        ...petData,
+        image: imageParseada.secure_url,
+        userId: user.get("id"),
+      });
 
-    const petInAlgolia = await algoliaIndex.saveObject({
-      petData,
-      objectID: pet.get("id").toString(),
-      nombre: pet.get("fullname"),
-      _geoloc: {
-        lat: pet.get("lat"),
-        lng: pet.get("lng"),
-      },
-    });
+      const petInAlgolia = await algoliaIndex.saveObject({
+        pet,
+        objectID: pet.get("id").toString(),
+        nombre: pet.get("fullname"),
+        _geoloc: {
+          lat: pet.get("lat"),
+          lng: pet.get("lng"),
+        },
+      });
 
-    return { pet, petInAlgolia };
-  } else {
-    throw "Error, user not found";
+      return { pet, petInAlgolia };
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 export async function allPets() {
@@ -42,18 +49,14 @@ export async function specificPet(petId) {
 
 function bodyToIndex(body, id?) {
   const respuesta: any = {};
-  if (body.fullname) {
-    respuesta.fullname = body.fullname;
-  }
-  if (body.ownerId) {
-    respuesta.ownerId = body.ownerId;
-  }
-  if (body.lat && body.lng) {
+
+  if (body.fullname) respuesta.fullname = body.fullname;
+  if (body.ownerId) respuesta.ownerId = body.ownerId;
+  if (body.lat && body.lng)
     respuesta._geoloc = { lat: body.lat, lng: body.lng };
-  }
-  if (id) {
-    respuesta.objectID = id;
-  }
+
+  if (id) respuesta.objectID = id;
+
   return respuesta;
 }
 
@@ -71,9 +74,8 @@ export async function updatePetData(dataForUpadate, petId) {
 }
 
 export async function updateProfile(userId, updateData) {
-  if (!updateData) {
-    throw new Error("Se necesita data para actualizar");
-  }
+  if (!updateData) throw new Error("Se necesita data para actualizar");
+
   if (updateData.imageDataUrl) {
     const imageUpload = await cloudinary.uploader.upload(
       updateData.imageDataUrl,
@@ -102,10 +104,14 @@ export async function updateProfile(userId, updateData) {
   }
 }
 
-export async function deletePet(petId, userId) {
+export async function deletePet(petId: string, userId) {
   if (userId) {
-    const pet = await Pet.findByPk(petId);
-    await pet.destroy();
-    return true;
+    try {
+      const pet = await Pet.findByPk(petId);
+      await pet.destroy();
+      return true;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

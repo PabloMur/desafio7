@@ -28,7 +28,7 @@ import {
 import { createReport } from "./controllers/report-controller";
 import { enviarEmail } from "./lib/sendgrid";
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3000;
 
 const SECRET = process.env.SECRET;
 

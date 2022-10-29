@@ -8,7 +8,7 @@ class MapboxComp extends HTMLElement {
   pets: any;
   constructor() {
     super();
-    this.pets = null;
+    this.pets = [];
   }
 
   initMap() {
@@ -35,6 +35,23 @@ class MapboxComp extends HTMLElement {
         const { lat, lng } = geocoder.mapMarker._lngLat;
         this.pets = await state.getPetsAround(lat, lng);
         console.log(this.pets);
+        console.log(typeof this.pets.response);
+        for (const pet in this.pets.response) {
+          console.log(this.pets.response[pet]._geoloc);
+          const { petData } = this.pets.response[pet];
+
+          const { lat, lng } = this.pets.response[pet]._geoloc;
+          new mapboxgl.Marker()
+            .setLngLat([lng, lat])
+            .setPopup(
+              new mapboxgl.Popup({ offset: 40 }).setHTML(
+                `<img class="profile-pic" src="${petData.image}"/>
+                 <h2>${petData.fullname}</h2>
+                 <p>${petData.zone}</p`
+              )
+            )
+            .addTo(map);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -49,10 +66,12 @@ class MapboxComp extends HTMLElement {
     }) as any;
 
     geolocate.on("geolocate", async () => {
-      const { latitude, longitude } = await geolocate._lastKnownPosition.coords;
-      console.log(latitude);
-      console.log(longitude);
-      state.getPetsAround(latitude, longitude);
+      try {
+        const { latitude, longitude } = await geolocate._lastKnownPosition
+          .coords;
+        this.pets = await state.getPetsAround(latitude, longitude);
+        console.log(this.pets);
+      } catch (error) {}
     });
 
     map.addControl(geocoder);
@@ -83,10 +102,24 @@ class MapboxComp extends HTMLElement {
         width: 100%;
         border-radius: 20px;
       }
-    `;
 
-    this.initMap();
+      .mapboxgl-popup {
+        max-width: 250px;
+      }
+      
+      .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        background: var(--orange);
+      }
+
+      .profile-pic{
+        width: auto;
+        max-height: 30vh;
+      }
+    `;
     this.appendChild(style);
+    this.initMap();
   }
 
   connectedCallback() {

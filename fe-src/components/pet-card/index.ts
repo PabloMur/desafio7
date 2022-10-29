@@ -1,14 +1,17 @@
 class PetCard extends HTMLElement {
   shadow: ShadowRoot;
+  profileImage: any;
+  petName: any;
+  petZone: any;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
+    this.profileImage = this.getAttribute("profile-image");
+    this.petName = this.getAttribute("pet-name");
+    this.petZone = this.getAttribute("pet-zone");
   }
   render() {
     const style = document.createElement("style");
-    const profileImage = this.getAttribute("profile-image");
-    const petName = this.getAttribute("pet-name");
-    const petZone = this.getAttribute("pet-zone");
 
     this.shadow.innerHTML = `
       <div class="card-container">
@@ -16,11 +19,11 @@ class PetCard extends HTMLElement {
         </div>
         <div class="pet-data-container">
           <div class="name-and-zone">
-            <h3 class="pet-name">${petName}</h3>
-            <h5 class="pet-zone">${petZone}</h5>
+            <h3 class="pet-name">${this.petName}</h3>
+            <h5 class="pet-zone">${this.petZone}</h5>
           </div>
           <div>
-            <button class="edit-button">+ Editar</button>
+            <button class="edit-button">Tengo Informacion</button>
           </div>
         </div>
       </div>
@@ -52,7 +55,7 @@ class PetCard extends HTMLElement {
         max-width: 300px;
         width: auto;
         height: 30vh;
-        background-image: url(${profileImage});
+        background-image: url(${this.profileImage});
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
