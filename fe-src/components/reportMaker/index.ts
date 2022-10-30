@@ -13,9 +13,8 @@ class ReportMaker extends HTMLElement {
     this.map = null;
   }
   initMap() {
-    const cs = state.getState();
-    const lng = cs.lng;
-    const lat = cs.lat;
+    const { lat, lng } = state.getState();
+
     this.map = initMapForReportComp(this.querySelector("#map" as any));
   }
   initDropzonefromAssets() {

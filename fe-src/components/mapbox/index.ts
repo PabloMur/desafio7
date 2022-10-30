@@ -34,24 +34,7 @@ class MapboxComp extends HTMLElement {
       try {
         const { lat, lng } = geocoder.mapMarker._lngLat;
         this.pets = await state.getPetsAround(lat, lng);
-        console.log(this.pets);
-        console.log(typeof this.pets.response);
-        for (const pet in this.pets.response) {
-          console.log(this.pets.response[pet]._geoloc);
-          const { petData } = this.pets.response[pet];
-
-          const { lat, lng } = this.pets.response[pet]._geoloc;
-          new mapboxgl.Marker()
-            .setLngLat([lng, lat])
-            .setPopup(
-              new mapboxgl.Popup({ offset: 40 }).setHTML(
-                `<img class="profile-pic" src="${petData.image}"/>
-                 <h2>${petData.fullname}</h2>
-                 <p>${petData.zone}</p`
-              )
-            )
-            .addTo(map);
-        }
+        this.putMarkers(map);
       } catch (error) {
         console.error(error);
       }
@@ -70,7 +53,7 @@ class MapboxComp extends HTMLElement {
         const { latitude, longitude } = await geolocate._lastKnownPosition
           .coords;
         this.pets = await state.getPetsAround(latitude, longitude);
-        console.log(this.pets);
+        this.putMarkers(map);
       } catch (error) {}
     });
 
@@ -81,6 +64,22 @@ class MapboxComp extends HTMLElement {
     map.on("style.load", () => {
       map.setFog({});
     });
+  }
+
+  putMarkers(map) {
+    for (const petItem in this.pets.response) {
+      const { image, lat, lng, fullname, zone } =
+        this.pets.response[petItem].pet;
+
+      new mapboxgl.Marker()
+        .setLngLat([lng, lat])
+        .setPopup(
+          new mapboxgl.Popup({ offset: 10 }).setHTML(
+            `<custom-pet-card profile-image="${image}" pet-name="${fullname}" pet-zone="${zone}"></custom-pet-card>`
+          )
+        )
+        .addTo(map);
+    }
   }
 
   render() {
@@ -108,9 +107,8 @@ class MapboxComp extends HTMLElement {
       }
       
       .mapboxgl-popup-content {
-        text-align: center;
-        font-family: 'Open Sans', sans-serif;
-        background: var(--orange);
+        background: transparent;
+        padding: 0;
       }
 
       .profile-pic{

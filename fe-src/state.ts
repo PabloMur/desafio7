@@ -1,5 +1,3 @@
-import { type } from "os";
-
 type msg = {
   to: string;
   from: string;
@@ -181,7 +179,6 @@ const state = {
         return response;
       }
     } catch (error) {
-      console.log("soy el catch");
       console.error(error);
     }
   },
@@ -303,7 +300,6 @@ const state = {
     try {
       const fetchPets = await fetch(`/pets-around?lat=${lat}&lng=${lon}`);
       const response = await fetchPets.json();
-      console.log(typeof response);
       return response;
     } catch (err) {
       console.error(err);

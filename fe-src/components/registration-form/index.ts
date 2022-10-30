@@ -1,3 +1,4 @@
+import { Router } from "@vaadin/router";
 import { state } from "../../state";
 
 class RegistrationForm extends HTMLElement {
@@ -16,6 +17,8 @@ class RegistrationForm extends HTMLElement {
     const style = document.createElement("style");
 
     this.shadow.innerHTML = `
+      <loading-comp class="dormido"></loading-comp>
+      <div class="registation-form-container">
       <form class="form">
         <label>
           <p>Email</p>
@@ -28,16 +31,37 @@ class RegistrationForm extends HTMLElement {
         <label>
           <p>Repetir contraseña</p>
           <input name="password-dos" class="password" type="password">
-      </label>
-      
-        <button>Crear Cuenta</button>
-    
+        </label>
+        <button>Crear Cuenta</button> 
       </form>
+      </div>
     `;
 
     style.innerHTML = `
       *{
         box-sizing: border-box;
+      }
+
+      .dormido{
+        display:none;
+      }
+  
+      .despierto{
+        display: inherit;
+      }
+      
+      .registation-form-container{
+        background: white;
+        height: 70vh;
+        width: 60%;
+        margin: 10vh auto;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
       }
 
       .form{
@@ -78,22 +102,29 @@ class RegistrationForm extends HTMLElement {
   addListeners() {
     this.render();
     const form = this.shadow.querySelector(".form");
+    const loading = this.shadow.querySelector("loading-comp");
     const cs = state.getState();
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-
+      loading.classList.toggle("despierto");
       const target = e.target as any;
-      const passwordUno = target.password.value;
-      const passwordDos = target["password-dos"].value;
-      const email = target.email.value;
+      const passUno = target.password.value;
+      const passDos = target["password-dos"].value;
       const fullname = "User";
-      const contraseñasIguales = passwordDos === passwordDos;
-      console.log(email, fullname, passwordUno, passwordDos);
+      const passIguales = passDos === passDos;
 
-      contraseñasIguales
-        ? await state.createUser(passwordUno, fullname)
-        : console.log("algo fallo");
+      try {
+        if (passIguales) {
+          await state.createUser(passUno, fullname);
+          await state.getToken(passUno);
+          await state.getUserMe();
+          loading.classList.toggle("despierto");
+          Router.go(cs.route || "/");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     });
   }
 
