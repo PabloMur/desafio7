@@ -1,4 +1,3 @@
-//import { initMapForReportComp } from "../../assets/mapForReport";
 import { createMap, initGeocoder } from "../../assets/mapForPetsAround";
 import { initDropzone } from "../../assets/dropzone";
 import { state } from "../../state";
@@ -10,7 +9,7 @@ class ReportMaker extends HTMLElement {
   map: any;
   petZone: string;
   petStatus: string;
-
+  petAge: number;
   constructor() {
     super();
     this.file = null;
@@ -42,13 +41,18 @@ class ReportMaker extends HTMLElement {
     const style = document.createElement("style");
 
     this.innerHTML = `
+      <loading-comp class="dormido"></loading-comp>
       <div class="container">
         <custom-text variant="title">Reportar una mascota</custom-text>
 
         <form class="form">
           <label>
-            <custom-text>Nombre de la mascota</custom-text>
+            <custom-text>Nombre de la mascota:</custom-text>
             <input name="petname" type="text" requiere="require">
+          </label>
+          <label>
+            <custom-text>Edad de tu mascota:</custom-text>
+            <input name="pet-age" type="text" requiere="require">
           </label>
           <label>
             <custom-text>Imagen de tu mascota</custom-text>
@@ -72,6 +76,14 @@ class ReportMaker extends HTMLElement {
     style.innerHTML = `
       *{
         box-sizing: border-box;
+      }
+
+      .dormido{
+        display: none;
+      }
+
+      .despierto{
+        display: inherit;
       }
 
       .container{
@@ -192,16 +204,31 @@ class ReportMaker extends HTMLElement {
     this.render();
     const form = this.querySelector(".form");
     const clearButton = this.querySelector(".cancel-button");
+    const loader = this.querySelector("loading-comp");
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      loader.classList.toggle("despierto");
       const target = e.target as any;
       const petName = target.petname.value;
+      const petAge = target["pet-age"].value;
       console.log(petName);
       console.log(this.file.dataURL);
       console.log(this.petLatitude);
       console.log(this.petLongitude);
       console.log(this.petZone);
+      console.log(petAge);
+      const pet = {
+        fullname: petName,
+        age: petAge,
+        zone: this.petZone,
+        lat: this.petLatitude,
+        lng: this.petLongitude,
+        state: this.petStatus,
+        image: this.file.dataURL,
+      };
+      await state.reportUserPet(pet);
+      loader.classList.toggle("despierto");
     });
 
     clearButton.addEventListener("click", (e) => {
