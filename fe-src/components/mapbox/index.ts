@@ -1,60 +1,47 @@
 import mapboxgl from "mapbox-gl";
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { state } from "../../state";
+
+import {
+  createMap,
+  initGeocoder,
+  initGeolocate,
+  getAndSetPetsinToMap,
+} from "../../assets/mapForPetsAround";
 
 class MapboxComp extends HTMLElement {
   pets: any;
+  petName: string;
   constructor() {
     super();
     this.pets = [];
+    this.petName = null;
   }
 
-  initMap() {
-    const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
+  async initMap() {
     const mapContainer = this.querySelector("#map") as any;
-    mapboxgl.accessToken = MAPBOX_API_KEY;
+    const map = await createMap(mapContainer);
 
-    const map = new mapboxgl.Map({
-      container: mapContainer, // container ID
-      style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
-      center: [-57.549898, -38.0045147], // starting position [lng, lat]
-      zoom: 12, // starting zoom
-      projection: "globe" as any, // display the map as a 3D globe
-    });
-
-    const geocoder = new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl,
-      flipCoordinates: true,
-    });
+    const geocoder = await initGeocoder();
 
     geocoder.on("result", async () => {
       try {
-        const { lat, lng } = geocoder.mapMarker._lngLat;
-        this.pets = await state.getPetsAround(lat, lng);
-        this.putMarkers(map);
+        const provider = await geocoder.mapMarker._lngLat;
+        await getAndSetPetsinToMap(map, this.pets, provider);
       } catch (error) {
         console.error(error);
       }
     });
 
-    const geolocate = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true,
-      },
-      trackUserLocation: true,
-      showUserHeading: true,
-    }) as any;
+    const geolocate = await initGeolocate();
 
     geolocate.on("geolocate", async () => {
       try {
         const { latitude, longitude } = await geolocate._lastKnownPosition
           .coords;
-        this.pets = await state.getPetsAround(latitude, longitude);
-        this.putMarkers(map);
-      } catch (error) {}
+        const provider = { lat: latitude, lng: longitude };
+        await getAndSetPetsinToMap(map, this.pets, provider);
+      } catch (error) {
+        console.error(error);
+      }
     });
 
     map.addControl(geocoder);
@@ -66,27 +53,14 @@ class MapboxComp extends HTMLElement {
     });
   }
 
-  putMarkers(map) {
-    for (const petItem in this.pets.response) {
-      const { image, lat, lng, fullname, zone } =
-        this.pets.response[petItem].pet;
-
-      new mapboxgl.Marker()
-        .setLngLat([lng, lat])
-        .setPopup(
-          new mapboxgl.Popup({ offset: 10 }).setHTML(
-            `<custom-pet-card profile-image="${image}" pet-name="${fullname}" pet-zone="${zone}"></custom-pet-card>`
-          )
-        )
-        .addTo(map);
-    }
-  }
-
   render() {
     const style = document.createElement("style");
 
     this.innerHTML = `
-    <div id='map'></div>
+    <div class="container">
+      <pet-info-sender petname="${this.petName}" class="dormido"></pet-info-sender>
+      <div id='map'></div>
+    </div>
     `;
 
     style.innerHTML = `
@@ -95,6 +69,22 @@ class MapboxComp extends HTMLElement {
         padding: 0;
         margin:0;
       }
+
+      .dormido{
+        display:none;
+      }
+
+      .despierto{
+        display: inherit;
+      }
+
+      .container{
+        width: 90%;
+        height: 80vh;
+        background: pink;
+        margin: 5vh auto;
+        border-radius: 20px;
+       }
 
       #map{
         height: 80vh;
@@ -120,14 +110,20 @@ class MapboxComp extends HTMLElement {
     this.initMap();
   }
 
-  connectedCallback() {
+  addListeners() {
     this.render();
+    const container = this.querySelector(".container");
+    const petInfoSender = this.querySelector("pet-info-sender");
+    container.addEventListener("report", (e: any) => {
+      console.log(e.detail.petName);
+      this.petName = "Test";
+      petInfoSender.classList.toggle("despierto");
+    });
+  }
+
+  connectedCallback() {
+    this.addListeners();
   }
 }
 
 customElements.define("mapbox-comp", MapboxComp);
-
-// para hacer un nuevo marker con coordinadas especificas deberia usar:
-// const marker1 = new mapboxgl.Marker()
-//          .setLngLat([12.554729, 55.70651])
-//          .addTo(map);
