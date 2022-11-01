@@ -40,12 +40,8 @@ class LoadingComp extends HTMLElement {
       border:none;
       color:white;
       font-size: 40px;
-      transition: 5s linear;
     }
 
-    .loader_container p:hover{
-      font-size: 60px;
-    }
     `;
 
     this.shadow.appendChild(style);

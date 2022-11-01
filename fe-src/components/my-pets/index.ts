@@ -66,6 +66,11 @@ class MyPetsContainer extends HTMLElement {
     }
     
     `;
+    const test = this.shadow.querySelector(".container");
+
+    test.addEventListener("report", (e: any) => {
+      console.log(e.detail.petName);
+    });
 
     this.shadow.appendChild(style);
   }

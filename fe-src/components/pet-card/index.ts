@@ -1,19 +1,19 @@
 class PetCard extends HTMLElement {
-  shadow: ShadowRoot;
   profileImage: any;
   petName: any;
   petZone: any;
+  petId: any;
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: "open" });
     this.profileImage = this.getAttribute("profile-image");
     this.petName = this.getAttribute("pet-name");
     this.petZone = this.getAttribute("pet-zone");
+    this.petId = this.getAttribute("pet-id");
   }
   render() {
     const style = document.createElement("style");
 
-    this.shadow.innerHTML = `
+    this.innerHTML = `
       <div class="card-container">
         <div class="pet-profile-image">
         </div>
@@ -81,10 +81,29 @@ class PetCard extends HTMLElement {
       }
     `;
 
-    this.shadow.appendChild(style);
+    this.appendChild(style);
+  }
+
+  addListeners() {
+    this.render();
+    const button = this.querySelector(".edit-button");
+    button.addEventListener("click", () => {
+      this.dispatchEvent(
+        new CustomEvent("report", {
+          detail: {
+            petId: this.petId,
+            petName: this.petName,
+          },
+          bubbles: true,
+          // esto hace que el evento pueda
+          // ser escuchado desde un elemento
+          // que está más "arriba" en el arbol
+        })
+      );
+    });
   }
   connectedCallback() {
-    this.render();
+    this.addListeners();
   }
 }
 
