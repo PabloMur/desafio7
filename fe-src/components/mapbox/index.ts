@@ -1,3 +1,4 @@
+import { Router } from "@vaadin/router";
 import mapboxgl from "mapbox-gl";
 
 import {
@@ -114,10 +115,14 @@ class MapboxComp extends HTMLElement {
     this.render();
     const container = this.querySelector(".container");
     const petInfoSender = this.querySelector("pet-info-sender");
-    container.addEventListener("report", (e: any) => {
+    container.addEventListener("report", async (e: any) => {
       console.log(e.detail.petName);
       this.petName = "Test";
+      console.log(this.petName);
+      const petname = petInfoSender.getAttribute("petname");
+      console.log;
       petInfoSender.classList.toggle("despierto");
+      Router.go("/test");
     });
   }
 

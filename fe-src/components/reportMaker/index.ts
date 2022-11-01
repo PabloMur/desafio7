@@ -1,4 +1,5 @@
-import { initMapForReportComp } from "../../assets/mapForReport";
+//import { initMapForReportComp } from "../../assets/mapForReport";
+import { createMap, initGeocoder } from "../../assets/mapForPetsAround";
 import { initDropzone } from "../../assets/dropzone";
 import { state } from "../../state";
 
@@ -7,15 +8,30 @@ class ReportMaker extends HTMLElement {
   petLatitude: any;
   petLongitude: any;
   map: any;
+  petZone: string;
+  petStatus: string;
+
   constructor() {
     super();
     this.file = null;
     this.map = null;
   }
-  initMap() {
-    const { lat, lng } = state.getState();
-
-    this.map = initMapForReportComp(this.querySelector("#map" as any));
+  async initMap() {
+    //this.map = initMapForReportComp(this.querySelector("#map" as any));
+    this.map = await createMap(this.querySelector("#map" as any));
+    const geocoder = await initGeocoder();
+    geocoder.on("result", async () => {
+      try {
+        const provider = await geocoder.mapMarker._lngLat;
+        this.petLatitude = provider.lat;
+        this.petLongitude = provider.lng;
+        this.petZone = JSON.parse(geocoder.lastSelected).text;
+        this.petStatus = "perdido";
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    this.map.addControl(geocoder);
   }
   initDropzonefromAssets() {
     const myDropzone = initDropzone();
@@ -183,6 +199,9 @@ class ReportMaker extends HTMLElement {
       const petName = target.petname.value;
       console.log(petName);
       console.log(this.file.dataURL);
+      console.log(this.petLatitude);
+      console.log(this.petLongitude);
+      console.log(this.petZone);
     });
 
     clearButton.addEventListener("click", (e) => {

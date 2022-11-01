@@ -7,7 +7,7 @@ class Test extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
               <custom-header></custom-header>
-              <pet-info-sender></pet-info-sender>
+              <my-pet-card></my-pet-card>
               <custom-footer></custom-footer>
           `;
   }

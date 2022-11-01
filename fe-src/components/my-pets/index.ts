@@ -23,12 +23,13 @@ class MyPetsContainer extends HTMLElement {
     const style = document.createElement("style");
 
     this.shadow.innerHTML = `
+        <loading-comp class="dormido"></loading-comp>
         <div class="container">
           <custom-text variant="title">Mis Mascotas</custom-text>
           <div class="pet-cards-container">
             ${this.pets
               .map((pet) => {
-                return `<custom-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}"></custom-pet-card>`;
+                return `<my-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}" pet-status="${pet.state}"></my-pet-card>`;
               })
               .join("")}
           </div>
@@ -40,6 +41,14 @@ class MyPetsContainer extends HTMLElement {
       box-sizing: border-box;
       padding: 0;
       margin: 0;
+    }
+
+    .dormido{
+      display: none;
+    }
+
+    .despierto{
+      display: inherit;
     }
 
     .container{
@@ -66,9 +75,10 @@ class MyPetsContainer extends HTMLElement {
     }
     
     `;
-    const test = this.shadow.querySelector(".container");
-
-    test.addEventListener("report", (e: any) => {
+    const container = this.shadow.querySelector(".container");
+    const loading = this.shadow.querySelector("loading-comp");
+    container.addEventListener("report", (e: any) => {
+      loading.classList.toggle("despierto");
       console.log(e.detail.petName);
     });
 

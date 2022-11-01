@@ -27,7 +27,6 @@ export const initGeocoder = async () => {
     return new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
-      flipCoordinates: true,
     });
   } catch (error) {
     console.error(error);
@@ -53,7 +52,9 @@ export const putMarkers = async (map: any, pets: any) => {
     for (const petItem in pets.response) {
       const { image, lat, lng, fullname, zone } = pets.response[petItem].pet;
 
-      new mapboxgl.Marker()
+      new mapboxgl.Marker({
+        color: "#FF0000",
+      })
         .setLngLat([lng, lat])
         .setPopup(
           new mapboxgl.Popup({ offset: 10 }).setHTML(

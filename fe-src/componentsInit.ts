@@ -20,3 +20,4 @@ import "./components/reportMaker/index";
 import "./components/mapbox/index";
 import "./components/popup-pet-card/index ";
 import "./components/pet-info-sender/index";
+import "./components/my-pet-card/index";

@@ -6,6 +6,16 @@ type msg = {
   html: string;
 };
 
+type pet = {
+  fullname: string;
+  age: string;
+  zone: string;
+  lat: number;
+  lng: number;
+  state: string;
+  image: string;
+};
+
 const state = {
   data: {
     route: null,
@@ -246,6 +256,24 @@ const state = {
     }
   },
 
+  async reportUserPet(pet: pet) {
+    const cs = state.getState();
+    const token = cs.token;
+
+    const fetchPets = await fetch("/pet", {
+      method: "post",
+      mode: "cors",
+      headers: {
+        Authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pet),
+    });
+
+    const response = await fetchPets.json();
+    return response;
+  },
+
   async getUserPets() {
     const cs = state.getState();
     const token = cs.token;
@@ -267,35 +295,6 @@ const state = {
     return response;
   },
 
-  //ubicacion del user
-  // async getUserLocation(cb?) {
-  //   try {
-  //     const cs = this.getState();
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       let latitude = position.coords.latitude;
-  //       let longitude = position.coords.longitude;
-  //       state.setState({
-  //         ...cs,
-  //         userLocation: {
-  //           lat: latitude,
-  //           lng: longitude,
-  //         },
-  //       });
-  //       console.log(JSON.stringify(cs.userLocation) + "navigation method");
-  //     });
-  //     this.setState(cs);
-  //     console.log(
-  //       JSON.stringify(cs.userLocation) + " esta es la ubicacion del usuario"
-  //     );
-  //     if (cb) {
-  //       cb();
-  //     }
-  //     return;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // },
-
   async getPetsAround(lat, lon) {
     try {
       const fetchPets = await fetch(`/pets-around?lat=${lat}&lng=${lon}`);
@@ -308,6 +307,7 @@ const state = {
 
   async sendEmail(mensaje: msg) {
     try {
+      const cs = this.getState();
       const test = await fetch("/send-email", {
         method: "post",
         mode: "cors",
@@ -316,7 +316,7 @@ const state = {
         },
         body: JSON.stringify({
           msg: {
-            to: "polillomurillo@gmail.com",
+            to: cs.email,
             from: "pablomurillo.sp@gmail.com",
             subject: "Avistamiento de tu mascota",
             text: "and",
