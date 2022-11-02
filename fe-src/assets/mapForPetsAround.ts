@@ -50,7 +50,8 @@ export const initGeolocate = async () => {
 export const putMarkers = async (map: any, pets: any) => {
   try {
     for (const petItem in pets.response) {
-      const { image, lat, lng, fullname, zone } = pets.response[petItem].pet;
+      const { image, lat, lng, fullname, zone, id, ownerEmail } =
+        pets.response[petItem].pet;
 
       new mapboxgl.Marker({
         color: "#FF0000",
@@ -58,7 +59,7 @@ export const putMarkers = async (map: any, pets: any) => {
         .setLngLat([lng, lat])
         .setPopup(
           new mapboxgl.Popup({ offset: 10 }).setHTML(
-            `<custom-pet-card profile-image="${image}" pet-name="${fullname}" pet-zone="${zone}"></custom-pet-card>`
+            `<custom-pet-card owner-email="${ownerEmail}" pet-id="${id}" profile-image="${image}" pet-name="${fullname}" pet-zone="${zone}"></custom-pet-card>`
           )
         )
         .addTo(map);
@@ -72,6 +73,9 @@ export const getAndSetPetsinToMap = async (map: any, pets: any, prov: any) => {
   try {
     const { lat, lng } = prov;
     pets = await state.getPetsAround(lat, lng);
+    console.log("++++");
+    console.log(pets);
+    console.log("++++");
     await putMarkers(map, pets);
   } catch (error) {
     console.error(error);

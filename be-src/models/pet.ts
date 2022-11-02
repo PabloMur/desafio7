@@ -8,6 +8,11 @@ Pet.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+
+    ownerEmail: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     age: {
       type: DataTypes.INTEGER,
       allowNull: true,

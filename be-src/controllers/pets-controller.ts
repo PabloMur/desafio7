@@ -44,7 +44,9 @@ export async function allPets() {
 }
 
 export async function specificPet(petId) {
-  return await Pet.findByPk(petId);
+  return await Pet.findByPk(petId, {
+    include: [User],
+  });
 }
 
 function bodyToIndex(body, id?) {
@@ -108,7 +110,7 @@ export async function deletePet(petId: string, userId) {
   if (userId) {
     try {
       const pet = await Pet.findByPk(petId);
-      await algoliaIndex.deleteObject(petId).then(()=>console.log(petId))
+      await algoliaIndex.deleteObject(petId).then(() => console.log(petId));
       await pet.destroy();
       return true;
     } catch (error) {

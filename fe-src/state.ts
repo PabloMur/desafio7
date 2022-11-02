@@ -1,5 +1,3 @@
-import { deletePet } from "../be-src/controllers/pets-controller";
-
 type msg = {
   to: string;
   from: string;
@@ -10,6 +8,7 @@ type msg = {
 
 type pet = {
   fullname: string;
+  ownerEmail: string;
   age: string;
   zone: string;
   lat: number;

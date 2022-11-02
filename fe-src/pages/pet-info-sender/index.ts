@@ -1,4 +1,4 @@
-class Test extends HTMLElement {
+class InfoSenderPage extends HTMLElement {
   shadow: ShadowRoot;
   constructor() {
     super();
@@ -7,7 +7,7 @@ class Test extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
               <custom-header></custom-header>
-              <my-pet-card></my-pet-card>
+              <pet-info-sender></pet-info-sender>
               <custom-footer></custom-footer>
           `;
   }
@@ -16,4 +16,4 @@ class Test extends HTMLElement {
   }
 }
 
-customElements.define("test-page", Test);
+customElements.define("sighting-page", InfoSenderPage);

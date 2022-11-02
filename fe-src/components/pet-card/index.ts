@@ -3,12 +3,14 @@ class PetCard extends HTMLElement {
   petName: any;
   petZone: any;
   petId: any;
+  ownerEmail: any;
   constructor() {
     super();
     this.profileImage = this.getAttribute("profile-image");
     this.petName = this.getAttribute("pet-name");
     this.petZone = this.getAttribute("pet-zone");
     this.petId = this.getAttribute("pet-id");
+    this.ownerEmail = this.getAttribute("owner-email");
   }
   render() {
     const style = document.createElement("style");
@@ -23,7 +25,7 @@ class PetCard extends HTMLElement {
             <h5 class="pet-zone">${this.petZone}</h5>
           </div>
           <div>
-            <button class="edit-button">Tengo Informacion</button>
+            <button class="info-button">Tengo Informacion</button>
           </div>
         </div>
       </div>
@@ -71,7 +73,7 @@ class PetCard extends HTMLElement {
         width:50%;
       }
 
-      .edit-button{
+      .info-button{
         color: white;
         background: black;
         border: none;
@@ -86,18 +88,16 @@ class PetCard extends HTMLElement {
 
   addListeners() {
     this.render();
-    const button = this.querySelector(".edit-button");
+    const button = this.querySelector(".info-button");
     button.addEventListener("click", () => {
       this.dispatchEvent(
         new CustomEvent("report", {
           detail: {
             petId: this.petId,
             petName: this.petName,
+            ownerEmail: this.ownerEmail,
           },
           bubbles: true,
-          // esto hace que el evento pueda
-          // ser escuchado desde un elemento
-          // que está más "arriba" en el arbol
         })
       );
     });

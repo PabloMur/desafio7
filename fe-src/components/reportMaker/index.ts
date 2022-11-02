@@ -205,6 +205,7 @@ class ReportMaker extends HTMLElement {
     const form = this.querySelector(".form");
     const clearButton = this.querySelector(".cancel-button");
     const loader = this.querySelector("loading-comp");
+    const cs = state.getState();
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -212,14 +213,10 @@ class ReportMaker extends HTMLElement {
       const target = e.target as any;
       const petName = target.petname.value;
       const petAge = target["pet-age"].value;
-      console.log(petName);
-      console.log(this.file.dataURL);
-      console.log(this.petLatitude);
-      console.log(this.petLongitude);
-      console.log(this.petZone);
-      console.log(petAge);
+
       const pet = {
         fullname: petName,
+        ownerEmail: cs.email,
         age: petAge,
         zone: this.petZone,
         lat: this.petLatitude,

@@ -1,18 +1,24 @@
+import { state } from "../../state";
+
 class PetInfoSender extends HTMLElement {
-  petName: string;
   shadow: ShadowRoot;
+  reportData: any;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
-    this.petName = this.getAttribute("petname") || " esta mascota:";
+    this.reportData = null;
   }
   render() {
+    const cs = state.getState();
+    this.reportData = cs.report;
+    console.log(this.reportData);
+
     const style = document.createElement("style");
 
     this.shadow.innerHTML = `
         <div class="infosender-container">
           <form class="form">
-              <custom-text varian="title">Repotar Informacion de ${this.petName}</custom-text>
+              <custom-text varian="title">Repotar Informacion de ${this.reportData.value.petName}</custom-text>
               <label>
                 <p>Tu nombre</p>
                 <input type="text" name="informant-name" required>
@@ -45,7 +51,6 @@ class PetInfoSender extends HTMLElement {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: absolute;
         top: 10vh;
         right: 0;
         bottom: 0;
@@ -65,7 +70,6 @@ class PetInfoSender extends HTMLElement {
         justify-content: center;
       }
       label{
-        background: red;
         width: 90%;
         margin: 0 auto;
       }
