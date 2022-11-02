@@ -51,6 +51,12 @@ class CustomPopupPermissionLocation extends HTMLElement {
       animation-duration: .3s;
       animation-name: aparecer;
     }
+    @media (max-width: 600px){
+      .permission__card{
+        width: 90%;
+        color: black:
+      }
+    }
 
     @keyframes aparecer{
       0%{

@@ -70,6 +70,13 @@ class MyPetsContainer extends HTMLElement {
       display: flex;
       flex-wrap: wrap;
     }
+
+    @media (max-width: 600px){
+      .pet-cards-container{
+        max-width: 90%;
+      }
+    }
+
     custom-pet-card{
       margin: 0 auto;
     }
@@ -81,7 +88,7 @@ class MyPetsContainer extends HTMLElement {
       loading.classList.toggle("despierto");
       console.log(e.detail.petId);
       await state.deletePet(e.detail.petId);
-      location.reload()
+      location.reload();
       loading.classList.toggle("despierto");
     });
 

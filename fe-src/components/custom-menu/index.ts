@@ -43,6 +43,7 @@ class CustomMenu extends HTMLElement {
           }
           .mostrado{
             display:inherit;
+            background: green;
           }
           .menu-container{
               height: 11vh;
@@ -66,27 +67,15 @@ class CustomMenu extends HTMLElement {
             }
             .menu-nav{
               position: absolute;
-              top: 13vh;
-              width:100%;
-              background: black;
-              height: 87vh;
-              overflow:hidden;
-              justify-content: center;
-              align-items:center;
-              display:none;
-            }
-            .menu-nav-desplegable{
-              position: absolute;
-              top: 10vh;
-              right: 0;
-              width:100%;
-              background: black;
-              height: 90vh;
-              overflow:hidden;
-              justify-content: center;
-              align-items:center;
+              top: 12vh;
+              left: 100%;
+              width: 100%;
+              margin: 0 auto;
               background: var(--purple);
-              flex-direction: column;
+              height: 89vh;
+              overflow:hidden;
+              justify-content: center;
+              align-items:center;
             }
           }
 
@@ -110,7 +99,7 @@ class CustomMenu extends HTMLElement {
           @media (max-width: 600px) {
             .nav-list {
               width: 100%;
-              height: 60vh;
+              height: 60vh; 
               flex-direction: column;
               padding: 0;
             }
@@ -181,6 +170,11 @@ class CustomMenu extends HTMLElement {
             padding: 5px 8px;
             border-radius: 5px;
           }
+
+          .mostrado{
+            display:inherit;
+            left: 0;
+          }
           
       `;
     this.shadow.appendChild(style);
@@ -188,12 +182,14 @@ class CustomMenu extends HTMLElement {
   click() {
     this.render();
     let burger = this.shadow.querySelector(".nav-burger-logo") as any;
-    let lista = this.shadow.querySelector(".menu-nav-desplegable") as any;
+    let lista = this.shadow.querySelector(".menu-nav") as any;
     let salir = this.shadow.querySelector(".logout" as any);
+
     salir.addEventListener("click", () => {
       state.logout();
       Router.go("/login");
     });
+
     burger.addEventListener("click", () => {
       lista.classList.toggle("mostrado");
     });

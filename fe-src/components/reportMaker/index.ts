@@ -112,6 +112,12 @@ class ReportMaker extends HTMLElement {
         border-radius: 20px;
         padding: 20px;
       }
+      
+      @media (max-width: 600px){
+        .form{
+          min-width: 100%;
+        }
+      }
 
       .pet-image-container-text{
         border: 2px dashed #8f8f8f;
@@ -159,7 +165,7 @@ class ReportMaker extends HTMLElement {
 
       input{
         border: 1px solid black;
-        width: 400px;
+        max-width: 400px;
         height: 50px;
         border-radius: 5px;
         box-shadow: 5px 5px 2px #00000017;
@@ -169,7 +175,7 @@ class ReportMaker extends HTMLElement {
 
       button{
         margin-top: 20px;
-        width: 400px;
+        max-width: 400px;
         height: 50px;
         border-radius: 5px;
         background: black;

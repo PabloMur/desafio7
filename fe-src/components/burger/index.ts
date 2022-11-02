@@ -35,6 +35,10 @@ class Burger extends HTMLElement {
   }
   connectedCallback() {
     this.render();
+    const button = this.shadow.querySelector(".lines-container");
+    button.addEventListener("click", () => {
+      console.log("Sou la burguer");
+    });
   }
 }
 

@@ -24,7 +24,7 @@ class CustomText extends HTMLElement {
           @media (max-width:600px){
             .title{
               width: 90%;
-              font-size:40px;
+              font-size:30px;
               margin: 0 auto;
               text-align: center;
             }
@@ -42,6 +42,7 @@ class CustomText extends HTMLElement {
             .body{
               width: 90%;
               margin: 0 auto;
+              font-size: 18px;
             }
           }
 

@@ -19,7 +19,7 @@ class Home extends HTMLElement {
         <div class="home-conteiner">
           <div class="title-container">
             <custom-text variant="title">Mascotas Perdidas Cerca Tuyo</custom-text>
-            <custom-text>Con esta app vas a poder ayudar a mascotas a reencontrarse con su familia. Hecha un vistazo!</custom-text>
+            <custom-text class="intro">Con esta app vas a poder ayudar a mascotas a reencontrarse con su familia. Hecha un vistazo!</custom-text>
             <custom-button>Buscar Mascotas</custom-button>
           </div>
           <div class="banner-container">
@@ -37,9 +37,6 @@ class Home extends HTMLElement {
         width: 90%;
         border-radius: 30px;
         margin: 5vh auto;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
         display:flex;
         justify-content: space-between;
         align-items:flex-end;
@@ -55,6 +52,8 @@ class Home extends HTMLElement {
         .home-conteiner{
           flex-direction:column;
           overflow: none;
+          align-items: center;
+          position: relative;
         }
       }
 
@@ -66,6 +65,19 @@ class Home extends HTMLElement {
         flex-direction: column;
         align-items:center;
         justify-content: space-around;
+      }
+      @media (max-width: 600px){
+        .title-container{
+          width: 100%;
+          position: absolute;
+          z-index: 3;
+        }
+        .intro{
+          background: var(--purple);
+          padding: 10px;
+          border-radius: 20px;
+          color: white;
+        }
       }
 
       .banner-container{
@@ -80,6 +92,14 @@ class Home extends HTMLElement {
         border-radius:30px;
         transition:all 5s ease 0s;
       }
+      @media (max-width: 600px){
+        .banner-container{
+          width: 100%;
+          height: 50%;
+          position: absolute;
+          bottom:0;
+        }
+      }
 
       .button-container{
         display: flex;
@@ -91,6 +111,11 @@ class Home extends HTMLElement {
         border-radius: 50% 50% 0 0;
         background-image: url(${this.bgImage});
         background-size: cover;
+      }
+      @media (max-width: 600px){
+        .button-container{
+          background: red;
+        }
       }
     `;
     this.shadow.appendChild(style);
