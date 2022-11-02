@@ -23,7 +23,7 @@ class LoadingComp extends HTMLElement {
     .loader_container{
       background:#000000eb;
       color:white;
-      position: absolute;
+      position: fixed;
       top:0;
       right:0;
       left:0;

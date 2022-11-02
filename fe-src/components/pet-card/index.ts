@@ -2,14 +2,12 @@ class PetCard extends HTMLElement {
   profileImage: any;
   petName: any;
   petZone: any;
-  petId: any;
   ownerEmail: any;
   constructor() {
     super();
     this.profileImage = this.getAttribute("profile-image");
     this.petName = this.getAttribute("pet-name");
     this.petZone = this.getAttribute("pet-zone");
-    this.petId = this.getAttribute("pet-id");
     this.ownerEmail = this.getAttribute("owner-email");
   }
   render() {
@@ -93,7 +91,6 @@ class PetCard extends HTMLElement {
       this.dispatchEvent(
         new CustomEvent("report", {
           detail: {
-            petId: this.petId,
             petName: this.petName,
             ownerEmail: this.ownerEmail,
           },

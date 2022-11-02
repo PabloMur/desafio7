@@ -1,6 +1,7 @@
 import { createMap, initGeocoder } from "../../assets/mapForPetsAround";
 import { initDropzone } from "../../assets/dropzone";
 import { state } from "../../state";
+import { Router } from "@vaadin/router";
 
 class ReportMaker extends HTMLElement {
   file: any;
@@ -16,7 +17,6 @@ class ReportMaker extends HTMLElement {
     this.map = null;
   }
   async initMap() {
-    //this.map = initMapForReportComp(this.querySelector("#map" as any));
     this.map = await createMap(this.querySelector("#map" as any));
     const geocoder = await initGeocoder();
     geocoder.on("result", async () => {
@@ -32,6 +32,7 @@ class ReportMaker extends HTMLElement {
     });
     this.map.addControl(geocoder);
   }
+
   initDropzonefromAssets() {
     const myDropzone = initDropzone();
     myDropzone.on("thumbnail", (file) => (this.file = file));
@@ -49,10 +50,6 @@ class ReportMaker extends HTMLElement {
           <label>
             <custom-text>Nombre de la mascota:</custom-text>
             <input name="petname" type="text" requiere="require">
-          </label>
-          <label>
-            <custom-text>Edad de tu mascota:</custom-text>
-            <input name="pet-age" type="text" requiere="require">
           </label>
           <label>
             <custom-text>Imagen de tu mascota</custom-text>
@@ -212,12 +209,10 @@ class ReportMaker extends HTMLElement {
       loader.classList.toggle("despierto");
       const target = e.target as any;
       const petName = target.petname.value;
-      const petAge = target["pet-age"].value;
 
       const pet = {
         fullname: petName,
         ownerEmail: cs.email,
-        age: petAge,
         zone: this.petZone,
         lat: this.petLatitude,
         lng: this.petLongitude,
@@ -226,6 +221,7 @@ class ReportMaker extends HTMLElement {
       };
       await state.reportUserPet(pet);
       loader.classList.toggle("despierto");
+      Router.go("/my-pets");
     });
 
     clearButton.addEventListener("click", (e) => {

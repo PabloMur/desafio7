@@ -73,9 +73,6 @@ export const getAndSetPetsinToMap = async (map: any, pets: any, prov: any) => {
   try {
     const { lat, lng } = prov;
     pets = await state.getPetsAround(lat, lng);
-    console.log("++++");
-    console.log(pets);
-    console.log("++++");
     await putMarkers(map, pets);
   } catch (error) {
     console.error(error);

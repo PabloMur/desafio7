@@ -1,5 +1,5 @@
 type msg = {
-  to: string;
+  to: any;
   from: string;
   subject: string;
   text: string;
@@ -9,7 +9,6 @@ type msg = {
 type pet = {
   fullname: string;
   ownerEmail: string;
-  age: string;
   zone: string;
   lat: number;
   lng: number;
@@ -326,25 +325,17 @@ const state = {
 
   async sendEmail(mensaje: msg) {
     try {
-      const cs = this.getState();
-      const test = await fetch("/send-email", {
+      const emailFetch = await fetch("/send-email", {
         method: "post",
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          msg: {
-            to: cs.email,
-            from: "pablomurillo.sp@gmail.com",
-            subject: "Avistamiento de tu mascota",
-            text: "and",
-            html: "<strong>Este mensaje ha sido enviado desde el Front-End mother!</strong>",
-          },
+          msg: mensaje,
         }),
       });
-
-      const response = await test.json();
+      const response = await emailFetch.json();
       return response;
     } catch (error) {
       console.error(error);
