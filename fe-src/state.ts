@@ -1,3 +1,5 @@
+import { deletePet } from "../be-src/controllers/pets-controller";
+
 type msg = {
   to: string;
   from: string;
@@ -257,21 +259,39 @@ const state = {
   },
 
   async reportUserPet(pet: pet) {
-    const cs = state.getState();
-    const token = cs.token;
+    try {
+      const cs = state.getState();
+      const token = cs.token;
+      await fetch("/pet", {
+        method: "post",
+        mode: "cors",
+        headers: {
+          Authorization: `bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pet),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
 
-    const fetchPets = await fetch("/pet", {
-      method: "post",
-      mode: "cors",
-      headers: {
-        Authorization: `bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(pet),
-    });
-
-    const response = await fetchPets.json();
-    return response;
+  async deletePet(petID) {
+    try {
+      const cs = this.getState();
+      const fetchDelPet = await fetch("/me/pets/" + petID, {
+        method: "delete",
+        mode: "cors",
+        headers: {
+          Authorization: `bearer ${cs.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await fetchDelPet.json();
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   async getUserPets() {

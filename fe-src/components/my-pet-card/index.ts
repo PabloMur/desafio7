@@ -11,7 +11,7 @@ class MyPetCard extends HTMLElement {
       "https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
     this.petName = this.getAttribute("pet-name") || "Apix";
     this.petZone = this.getAttribute("pet-zone") || "Planeta Tierra";
-    this.petId = this.getAttribute("pet-id") || "2022";
+    this.petId = this.getAttribute("pet-id")
     this.status = this.getAttribute("pet-status") || "perdido";
   }
   render() {

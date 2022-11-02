@@ -148,15 +148,14 @@ app.get("/pets-around", async (req, res) => {
 });
 
 //reportar una mascota propia
-app.post("/report", async (req, res) => {
-  const report = await createReport(req.body);
-  res.json({ report });
-});
+// app.post("/report", async (req, res) => {
+//   const report = await createReport(req.body);
+//   res.json({ report });
+// });
 
 //reportar una mascota avistada
 app.post("/send-email", async (req, res) => {
   const { msg } = req.body;
-  console.log(msg);
   const avistamiento = await enviarEmail(msg);
   res.json({ avistamiento });
 });

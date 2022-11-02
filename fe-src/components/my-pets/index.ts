@@ -29,7 +29,7 @@ class MyPetsContainer extends HTMLElement {
           <div class="pet-cards-container">
             ${this.pets
               .map((pet) => {
-                return `<my-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}" pet-status="${pet.state}"></my-pet-card>`;
+                return `<my-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}" pet-status="${pet.state}" pet-id="${pet.id}"></my-pet-card>`;
               })
               .join("")}
           </div>
@@ -77,9 +77,12 @@ class MyPetsContainer extends HTMLElement {
     `;
     const container = this.shadow.querySelector(".container");
     const loading = this.shadow.querySelector("loading-comp");
-    container.addEventListener("report", (e: any) => {
+    container.addEventListener("report", async (e: any) => {
       loading.classList.toggle("despierto");
-      console.log(e.detail.petName);
+      console.log(e.detail.petId);
+      await state.deletePet(e.detail.petId);
+      location.reload()
+      loading.classList.toggle("despierto");
     });
 
     this.shadow.appendChild(style);
