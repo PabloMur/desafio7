@@ -5,7 +5,7 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { state } from "../state";
 
 const MAPBOX_API_KEY =
-  "sk.eyJ1IjoicG9sbXVyIiwiYSI6ImNsYTBhdzluaTA2cjUzc283NTV6aHFhNzIifQ.zuTgx3e6YfCt4_3Xb5PRHQ";
+  "pk.eyJ1IjoicG9sbXVyIiwiYSI6ImNsYTBidWh5dDAwNnUzcXBuN3lobHMwbW4ifQ.AAuOdzpJf6LiE7nV0JgWcw";
 
 mapboxgl.accessToken = MAPBOX_API_KEY;
 
