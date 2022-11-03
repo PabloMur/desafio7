@@ -18,7 +18,7 @@ class RegistrationForm extends HTMLElement {
 
     this.shadow.innerHTML = `
       <loading-comp class="dormido"></loading-comp>
-      <div class="registation-form-container">
+      <div class="registration-form-container">
       <form class="form">
         <label>
           <p>Email</p>
@@ -50,7 +50,7 @@ class RegistrationForm extends HTMLElement {
         display: inherit;
       }
       
-      .registation-form-container{
+      .registration-form-container{
         background: white;
         height: 70vh;
         width: 60%;
@@ -63,6 +63,13 @@ class RegistrationForm extends HTMLElement {
         backdrop-filter: blur(10px);
         box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
       }
+      @media(max-width:600px){
+        .registration-form-container{
+          height: 80vh;
+          width: 90%;
+          margin: 3vh auto; 
+        }
+      }
 
       .form{
         padding: 10px;
@@ -71,10 +78,16 @@ class RegistrationForm extends HTMLElement {
         justify-content: center;
         align-items: center;
       }
+      @media(max-width:600px){
+        .form{
+          max-width: 100%;
+          padding: 0;
+        }
+      }
 
       input{
         border: none;
-        width: 400px;
+        max-width: 400px;
         background: var(--purple);
         height: 50px;
         border-radius: 5px;
@@ -82,10 +95,15 @@ class RegistrationForm extends HTMLElement {
         padding: 5px;
         font-size: 20px;
       }
+      @media(max-width:600px){
+        input{
+          width: 100%;
+        }
+      }
 
       button{
         margin-top: 20px;
-        width: 400px;
+        max-width: 400px;
         height: 50px;
         border-radius: 5px;
         background: black;
@@ -93,6 +111,11 @@ class RegistrationForm extends HTMLElement {
         border: none;
         font-size: 20px;
         box-shadow: 5px 5px 2px #c7c7c7;
+      }
+      @media(max-width:600px){
+        button{
+          width: 100%;
+        }
       }
     `;
 

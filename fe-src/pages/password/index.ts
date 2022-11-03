@@ -25,6 +25,11 @@ class PasswordPage extends HTMLElement {
             justify-content: center;
             align-items: center;
           }
+          @media(max-width:600px){
+            .registation-form-container{
+              width: 90%; 
+            }
+          }
         `;
     this.shadow.appendChild(style);
   }

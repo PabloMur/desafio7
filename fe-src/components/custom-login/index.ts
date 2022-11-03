@@ -11,8 +11,8 @@ class LoginComp extends HTMLElement {
     const style = document.createElement("style");
 
     this.shadow.innerHTML = `
+      <loading-comp class="dormido"></loading-comp>
       <div class="form-container">
-        <loading-comp class="dormido"></loading-comp>
         <form class="form">
           <div class="input-container">
             <label class="label">Ingresa Tu Email</label>
@@ -40,36 +40,33 @@ class LoginComp extends HTMLElement {
 
     @media(max-width:600px){
       .form-container{
-        max-width: 90vw;
-        margin: 0 5vw;
-        overflow: hidden;
-        height: 50vh;
+        width: 90%;
       }
     }
 
     .form{
       height: 100%;
-      width: 400px;
+      max-width: 400px;
       margin: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items:center;
     } 
-    @media(max-width: 600px){
-      .form{
-        width: 90vw;
-      }
-    }
 
     .input-container{
       width: 100%;
       margin: 20px auto 0 auto;
       animation: lower .4s ease;
     }
+    @media(max-width: 600px){
+      .input-container{
+        width: 100%;  
+      }
+    }
 
     .input{
-      width: 99%;
+      width: 90%;
       height: 50px;
       color: white;
       font-size: 20px;
@@ -82,8 +79,8 @@ class LoginComp extends HTMLElement {
     }
 
     @media(max-width: 600px){
-      .input-container{
-        width: 90vw;
+      .input{
+        width: 99%;  
       }
     }
 
@@ -99,7 +96,7 @@ class LoginComp extends HTMLElement {
       padding: 17px 13px;
       background-color: black;
       color: #D8FCFC;
-      width: 400px;
+      max-width: 400px;
       border-radius: 4px;
       animation: lower .4s ease;
       margin: 20px auto 0 auto;
@@ -109,7 +106,7 @@ class LoginComp extends HTMLElement {
     
     @media(max-width: 600px) {
       button {
-        width: 90vw;
+        width: 100%;
       }
     }
     

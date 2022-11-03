@@ -33,7 +33,12 @@ const SECRET = process.env.SECRET;
 
 const DEV = process.env.NODE_ENV;
 
-let ruta = path.resolve(__dirname, "../../dist");
+let ruta;
+if (DEV === "development") {
+  ruta = path.resolve(__dirname, "../dist");
+} else if (DEV === "production") {
+  ruta = path.resolve(__dirname, "../../dist");
+}
 
 const app = express();
 

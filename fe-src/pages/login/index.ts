@@ -25,6 +25,13 @@ class Login extends HTMLElement {
           justify-content: center;
           align-items: center;
         }
+        @media(max-width:600px){
+          .registation-form-container{
+            height: 80vh;
+            width: 90%;
+            margin: 3vh auto; 
+          }
+        }
       `;
     this.shadow.appendChild(style);
   }
