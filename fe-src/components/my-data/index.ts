@@ -20,15 +20,17 @@ class MyData extends HTMLElement {
             <label class="label">Nombre</label>
             <input type="text" name="fullname" class="fullname" required="required" value="${this.fullname}">
           </div>
-          <div class="password-container">
-            <label>nueva contraseña</label>
-            <input type="password">
-            <label>repite la contraseña</label>
-            <input type="password">
-          </div>
+          
           <button class="button">Guardar Cap</button> 
         </form>
       </>`;
+
+    //   <div class="password-container">
+    //   <label>nueva contraseña</label>
+    //   <input type="password">
+    //   <label>repite la contraseña</label>
+    //   <input type="password">
+    // </div>
 
     style.innerHTML = `
     *{

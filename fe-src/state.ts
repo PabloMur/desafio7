@@ -133,9 +133,6 @@ const state = {
         }),
       });
       const res = await fetchingUser.json();
-
-      res ?? console.log(res);
-
       return res;
     } catch (error) {
       console.error(error);
