@@ -336,6 +336,7 @@ const state = {
         }),
       });
       const response = await emailFetch.json();
+      console.log(response);
       return response;
     } catch (error) {
       console.error(error);
