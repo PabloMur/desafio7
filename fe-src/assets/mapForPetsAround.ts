@@ -4,8 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { state } from "../state";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoicG9sbXVyIiwiYSI6ImNsYTBidWh5dDAwNnUzcXBuN3lobHMwbW4ifQ.AAuOdzpJf6LiE7nV0JgWcw";
+mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
 
 export const createMap = async (mapContainer) => {
   try {
