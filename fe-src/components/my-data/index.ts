@@ -21,7 +21,7 @@ class MyData extends HTMLElement {
             <input type="text" name="fullname" class="fullname" required="required" value="${this.fullname}">
           </div>
           
-          <button class="button">Guardar Cap</button> 
+          <button class="button">Guardar</button> 
         </form>
       </>`;
 
