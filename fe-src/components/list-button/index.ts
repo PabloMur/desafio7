@@ -5,6 +5,7 @@ class ListButton extends HTMLElement {
   shadow: ShadowRoot;
   variant: string;
   route: string;
+  action: string;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -15,10 +16,27 @@ class ListButton extends HTMLElement {
     const style = document.createElement("style");
     this.variant = this.getAttribute("variant") || "default";
     this.route = this.getAttribute("route");
+    this.action = this.getAttribute("action");
+
+    if (this.action && this.action == "login" && cs.logged) {
+      console.log(this.action);
+      this.variant = "escondido";
+    }
+
+    if (this.action && this.action == "signup" && cs.logged) {
+      console.log(this.action);
+      this.variant = "escondido";
+    }
+
+    if (this.action && this.action == "logout" && !cs.logged) {
+      console.log(this.action);
+      this.variant = "escondido";
+    }
+
     this.shadow.innerHTML = `
-        <button class="button ${this.variant}"></button>
+        <button class="${this.variant}"></button>
         `;
-    const button = this.shadow.querySelector(".button") as any;
+    const button = this.shadow.querySelector("button") as any;
     button.addEventListener("click", () => {
       //si esta logueado vamos a la ruta que tiene guardado el button
       if (cs.logged) {
@@ -34,7 +52,7 @@ class ListButton extends HTMLElement {
     button.textContent = this.textContent || "ups!";
 
     style.innerHTML = `
-          .button{
+          button{
             font-size: 18px;
             border-radius: 4px;
             padding: 7px;
@@ -45,6 +63,10 @@ class ListButton extends HTMLElement {
             border-radius: 8px;
             animation: lower .5s ease ;
             margin:5px;
+            cursor:pointer;
+          }
+          .escondido{
+            display: none;
           }
 
           .default{
@@ -58,6 +80,11 @@ class ListButton extends HTMLElement {
 
           .dark{
             background: black;
+            box-shadow: 5px 5px 2px #00000017;
+          }
+
+          .warning{
+            background: #ff4c4c;
             box-shadow: 5px 5px 2px #00000017;
           }
 

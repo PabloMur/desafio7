@@ -22,9 +22,9 @@ class CustomMenu extends HTMLElement {
                           <list-button route="/my-data">My Data</list-button>
                           <list-button route="/my-pets">My Pets</list-button>
                           <list-button route="/report">My Reports</list-button>
-                          <list-button variant="enfasis" route="/login">Login</list-button>
-                          <list-button variant="dark" route="/signup">Signup</list-button>
-                          <button class="logout">logOut</button>
+                          <list-button variant="enfasis" route="/login" action="login">Login</list-button>
+                          <list-button variant="dark" route="/signup" action="signup">Signup</list-button>
+                          <list-button variant="warning" action="logout" class="logout">logout</list-button>
                       </ul> 
                   </nav>
                   <div class="nav-burger-logo">
@@ -43,7 +43,6 @@ class CustomMenu extends HTMLElement {
           }
           .mostrado{
             display:inherit;
-            background: green;
           }
           .menu-container{
               height: 11vh;
@@ -159,18 +158,6 @@ class CustomMenu extends HTMLElement {
             }
           }
 
-          .emphasis{
-            background: black;
-            padding: 5px 8px;
-            border-radius: 5px;
-          }
-
-          .secondary{
-            background: var(--blue);
-            padding: 5px 8px;
-            border-radius: 5px;
-          }
-
           .mostrado{
             display:inherit;
             left: 0;
@@ -180,7 +167,9 @@ class CustomMenu extends HTMLElement {
     this.shadow.appendChild(style);
   }
   click() {
+    const cs = state.getState();
     this.render();
+
     let burger = this.shadow.querySelector(".nav-burger-logo") as any;
     let lista = this.shadow.querySelector(".menu-nav") as any;
     let salir = this.shadow.querySelector(".logout" as any);
