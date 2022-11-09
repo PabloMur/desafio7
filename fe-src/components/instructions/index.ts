@@ -1,6 +1,4 @@
-import { state } from "../../state";
-import { Router } from "@vaadin/router";
-class CustomPopupPermissionLocation extends HTMLElement {
+class CustomInstructions extends HTMLElement {
   shadow: ShadowRoot;
   constructor() {
     super();
@@ -12,9 +10,9 @@ class CustomPopupPermissionLocation extends HTMLElement {
     this.shadow.innerHTML = `
     <div class="permission-container">
         <div class="permission__card">
-          <p>Para continuar necesitamos que nos des tu consentimiento para obtener tu ubicacion</p>
+          <p>Para buscar mascotas cerca, puedes usar el Boton de geolocalizacion o sino escribir una ubicaion en la search bar :3</p>
           <div class="permission__button-container">
-            <custom-button>Aceptar y continuar!</custom-button>
+            <custom-button>Perfectirijillo!</custom-button>
           </div>
         </div>
     </div>
@@ -73,15 +71,12 @@ class CustomPopupPermissionLocation extends HTMLElement {
   }
   connectedCallback() {
     this.render();
-
+    const container = this.shadow.querySelector(".permission-container") as any;
     const buton = this.shadow.querySelector("custom-button") as any;
     buton.addEventListener("click", async () => {
-      await state.getUserPosition(() => Router.go("/mapbox"));
+      container.style.display = "none";
     });
   }
 }
 
-customElements.define(
-  "custom-popup-permission-location",
-  CustomPopupPermissionLocation
-);
+customElements.define("custom-instructions", CustomInstructions);

@@ -17,8 +17,9 @@ class MapboxComp extends HTMLElement {
   }
 
   async initMap() {
+    const cs = state.getState();
     const mapContainer = this.querySelector("#map") as any;
-    const map = await createMap(mapContainer);
+    const map = await createMap(mapContainer, cs.lat, cs.lng);
 
     const geocoder = await initGeocoder();
 
@@ -113,12 +114,15 @@ class MapboxComp extends HTMLElement {
     this.render();
     const container = this.querySelector(".container");
     container.addEventListener("report", async (e: any) => {
-      state.dataForReport(e.detail)
+      state.dataForReport(e.detail);
       Router.go("/sighting");
     });
   }
 
   connectedCallback() {
+    state.subscribe(() => {
+      this.addListeners();
+    });
     this.addListeners();
   }
 }

@@ -19,17 +19,14 @@ class ListButton extends HTMLElement {
     this.action = this.getAttribute("action");
 
     if (this.action && this.action == "login" && cs.logged) {
-      console.log(this.action);
       this.variant = "escondido";
     }
 
     if (this.action && this.action == "signup" && cs.logged) {
-      console.log(this.action);
       this.variant = "escondido";
     }
 
     if (this.action && this.action == "logout" && !cs.logged) {
-      console.log(this.action);
       this.variant = "escondido";
     }
 

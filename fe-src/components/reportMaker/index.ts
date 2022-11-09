@@ -17,7 +17,12 @@ class ReportMaker extends HTMLElement {
     this.map = null;
   }
   async initMap() {
-    this.map = await createMap(this.querySelector("#map" as any));
+    const cs = state.getState();
+    this.map = await createMap(
+      this.querySelector("#map" as any),
+      cs.lat,
+      cs.lng
+    );
     const geocoder = await initGeocoder();
     geocoder.on("result", async () => {
       try {

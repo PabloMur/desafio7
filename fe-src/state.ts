@@ -1,3 +1,5 @@
+import { Router } from "@vaadin/router";
+
 type msg = {
   to: any;
   from: string;
@@ -22,13 +24,10 @@ const state = {
     id: "",
     fullname: "",
     email: "",
-    registrated: false,
     logged: false,
     token: "",
-    userLocation: {
-      lat: 0,
-      lng: 0,
-    },
+    lat: 0,
+    lng: 0,
     pets: [],
     report: {},
   },
@@ -46,13 +45,10 @@ const state = {
       id: "",
       fullname: "",
       email: "",
-      registrated: false,
       logged: false,
       token: "",
-      userLocation: {
-        lat: 0,
-        lng: 0,
-      },
+      lat: 0,
+      lng: 0,
       pets: [],
       report: {},
     });
@@ -93,11 +89,6 @@ const state = {
   setUserName(fullname: string) {
     const cs = this.getState();
     this.setState({ ...cs, fullname });
-  },
-  //Esto creo que no lo estoy usando!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  userRegistrated() {
-    const cs = this.getState();
-    this.setState({ ...cs, registrated: true });
   },
 
   userLogged() {
@@ -335,6 +326,35 @@ const state = {
       const response = await emailFetch.json();
       console.log(response);
       return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async getUserPosition(cb?: any) {
+    try {
+      const cs = await this.getState();
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+
+      function success(pos) {
+        const crd = pos.coords;
+        state.setState({
+          ...cs,
+          lat: crd.latitude,
+          lng: crd.longitude,
+        });
+        if (cb) cb();
+      }
+
+      function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+
+      navigator.geolocation.getCurrentPosition(success, error, options);
     } catch (error) {
       console.error(error);
     }

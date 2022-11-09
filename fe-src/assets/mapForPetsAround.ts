@@ -6,12 +6,13 @@ import { state } from "../state";
 
 mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
 
-export const createMap = async (mapContainer) => {
+export const createMap = async (mapContainer, lat, lng) => {
   try {
     const map = new mapboxgl.Map({
       container: mapContainer, // container ID
       style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
-      center: [-57.549898, -38.0045147], // starting position [lng, lat]
+      //center: [-57.560829, -37.995224], // starting position [lng, lat]
+      center: [lng, lat], // starting position [lng, lat]
       zoom: 12, // starting zoom
       projection: "globe" as any, // display the map as a 3D globe
     });

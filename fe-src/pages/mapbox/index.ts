@@ -5,6 +5,7 @@ class Mapbox extends HTMLElement {
   render() {
     this.innerHTML = `
         <custom-header></custom-header>
+        <custom-instructions></custom-instructions>
         <mapbox-comp></mapbox-comp>
         <custom-footer></custom-footer>
       `;
