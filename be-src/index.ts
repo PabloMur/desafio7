@@ -118,6 +118,13 @@ app.put("/auth/me", authMiddleware, async (req, res) => {
   res.json(update);
 });
 
+app.put("/auth/password", authMiddleware, async (req, res) => {
+  const { password } = req.body;
+  const passwordHasheado = hashearPassword(password);
+  const update = await updatePassword(req._user.id, passwordHasheado);
+  res.json(update);
+});
+
 //crear una mascota
 app.post("/pet", authMiddleware, async (req, res) => {
   const pet = await createPet(req._user.id, req.body);

@@ -27,10 +27,11 @@ export async function authId(email, password) {
   }
 }
 
-export async function updatePassword(email, password) {
+export async function updatePassword(user_id, password) {
   try {
-    const update = Auth.update(password, { where: { email: email } });
-    return update;
+    const authUser = await Auth.findByPk(user_id);
+    await authUser.update({ password });
+    return authUser;
   } catch (error) {
     console.error(error);
   }

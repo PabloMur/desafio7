@@ -3,10 +3,12 @@ import { state } from "../../state";
 class MyData extends HTMLElement {
   shadow: ShadowRoot;
   fullname: string;
+  email: string;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
     this.fullname = "";
+    this.email = "";
   }
   render() {
     const style = document.createElement("style");
@@ -15,22 +17,24 @@ class MyData extends HTMLElement {
     <loading-comp class="dormido"></loading-comp>
     <div class="my-data-container">
         <custom-text variant="title">Mis Datos</custom-text>
+        <div class="fullname-container">
+          <label class="label">Tu email</label>
+          <p>${this.email}</p>
+        </div>
         <form class="form">
           <div class="fullname-container">
             <label class="label">Nombre</label>
             <input type="text" name="fullname" class="fullname" required="required" value="${this.fullname}">
           </div>
-          
+          <div class="password-container">
+          <label>nueva contraseña</label>
+          <input type="password">
+          <label>repite la contraseña</label>
+          <input type="password">
+          </div>
           <button class="button">Guardar</button> 
         </form>
       </>`;
-
-    //   <div class="password-container">
-    //   <label>nueva contraseña</label>
-    //   <input type="password">
-    //   <label>repite la contraseña</label>
-    //   <input type="password">
-    // </div>
 
     style.innerHTML = `
     *{
@@ -98,6 +102,7 @@ class MyData extends HTMLElement {
   listenState() {
     const cs = state.getState();
     this.fullname = cs.fullname;
+    this.email = cs.email;
     this.render();
     const form = this.shadow.querySelector(".form");
     const loading = this.shadow.querySelector("loading-comp");

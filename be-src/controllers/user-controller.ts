@@ -38,16 +38,11 @@ export async function checkProfile(email: string) {
   const emailExists = await User.findAll({
     where: { email: email },
   });
-
   const empty = emailExists.length === 0;
-
-  // return { type: typeof emailExists, emailExists, empty };
-
   return empty ? false : true;
 }
 
 export async function updateUserProfile(userId, data) {
-  console.log(data);
   const user = await User.findByPk(userId);
   await user.update(data);
   return user;
