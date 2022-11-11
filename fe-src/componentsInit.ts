@@ -21,3 +21,4 @@ import "./components/popup-pet-card/index ";
 import "./components/pet-info-sender/index";
 import "./components/my-pet-card/index";
 import "./components/instructions/index";
+import "./components/pet-editor/index";

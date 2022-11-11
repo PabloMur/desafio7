@@ -1,11 +1,13 @@
+import { Router } from "@vaadin/router";
 import { state } from "../../state";
 
 class MyPetsContainer extends HTMLElement {
   shadow: ShadowRoot;
-  pets;
+  pets: any;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
+    this.pets = [];
   }
   getPets() {
     const cs = state.getState();
@@ -82,14 +84,20 @@ class MyPetsContainer extends HTMLElement {
     }
     
     `;
-    const container = this.shadow.querySelector(".container");
+    const container = this.shadow.querySelector(".pet-cards-container");
+    const otroContainer = this.shadow.querySelector(".container");
     const loading = this.shadow.querySelector("loading-comp");
+
     container.addEventListener("report", async (e: any) => {
       loading.classList.toggle("despierto");
-      console.log(e.detail.petId);
       await state.deletePet(e.detail.petId);
       location.reload();
       loading.classList.toggle("despierto");
+    });
+
+    otroContainer.addEventListener("edit", async (e: any) => {
+      state.dataForEdit(e.detail);
+      Router.go("/edit-pet");
     });
 
     this.shadow.appendChild(style);

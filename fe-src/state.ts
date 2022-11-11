@@ -30,6 +30,7 @@ const state = {
     lng: 0,
     pets: [],
     report: {},
+    edit: {},
   },
   listeners: [],
 
@@ -51,6 +52,7 @@ const state = {
       lng: 0,
       pets: [],
       report: {},
+      edit: {},
     });
   },
 
@@ -96,12 +98,21 @@ const state = {
     this.setState({ ...cs, logged: true });
   },
 
-  // PARA SEGuir desarrollando, es buena idea pero a pulir
   dataForReport(value: any) {
     const cs = state.getState();
     this.setState({
       ...cs,
       report: {
+        value,
+      },
+    });
+  },
+
+  dataForEdit(value: any) {
+    const cs = state.getState();
+    this.setState({
+      ...cs,
+      edit: {
         value,
       },
     });

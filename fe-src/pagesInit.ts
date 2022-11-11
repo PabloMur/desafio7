@@ -7,3 +7,4 @@ import "./pages/my-data/index";
 import "./pages/password/index";
 import "./pages/mapbox/index";
 import "./pages/pet-info-sender/index";
+import "./pages/edit-pet/index";

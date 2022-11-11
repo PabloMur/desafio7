@@ -13,4 +13,5 @@ router.setRoutes([
   { path: "/password", component: "password-page" },
   { path: "/mapbox", component: "mapbox-page" },
   { path: "/sighting", component: "sighting-page" },
+  { path: "/edit-pet", component: "edit-pet-page" },
 ]);
