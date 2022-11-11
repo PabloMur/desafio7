@@ -1,45 +1,65 @@
-import { Router } from "@vaadin/router";
+import { createMap } from "../../assets/mapForPetsAround";
+import { initDropzone } from "../../assets/dropzone";
 import { state } from "../../state";
+import { Router } from "@vaadin/router";
 
 class PetEditor extends HTMLElement {
-  shadow: ShadowRoot;
-  petName: string;
+  file: any;
+  petLatitude: any;
+  petLongitude: any;
+  map: any;
   petZone: string;
+  petStatus: string;
+  petAge: number;
   constructor() {
     super();
-    const cs = state.getState();
-    this.shadow = this.attachShadow({ mode: "open" });
-    this.petName = "";
+    this.file = null;
+    this.map = null;
   }
+  async initMap() {
+    const cs = state.getState();
+    this.map = await createMap(this.querySelector("#edit-map"), cs.lat, cs.lng);
+  }
+
+  initDropzonefromAssets() {
+    const myDropzone = initDropzone(".image-container");
+    myDropzone.on("thumbnail", (file) => (this.file = file));
+  }
+
   render() {
     const style = document.createElement("style");
 
-    this.shadow.innerHTML = `
-        <div class="infosender-container">
-          <form class="form">
-              <label>
-                <p>Tu nombre</p>
-                <input type="text" name="informant-name" required>
-              </label>
-              <label>
-                <p>Tu telefono</p>
-                <input type="tel" required name="informant-phone-number">
-              </label>
-              <label>
-                <p>Donde lo viste?</p>
-                <textarea name="information"></textarea>
-              </label>
-              <button class="submit">Enviar</button>
-            </form>
-        </div>
-    
+    this.innerHTML = `
+      <div class="container">
+        <custom-text variant="title">Editar Informacion de Mascota</custom-text>
+
+        <form class="form">
+          <label>
+            <custom-text>Nombre de la mascota:</custom-text>
+            <input name="petname" type="text" requiere="require">
+          </label>
+          <label>
+            <custom-text>Imagen de tu mascota</custom-text>
+            <div class="image-container">
+              <div class="pet-image-container-text"> Haz click aqui o <br/>arrastra una imagen de tu mascota! </div>
+            </div>
+          </label>
+          <label class="last-pet-zone">
+            <custom-text>Zona en la que se perdió</custom-text>
+            <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
+            <div class="pet-zone-container" id="edit-map"></div>
+          </label>
+
+          <button>Reportar como perdido</button>
+          <button class="cancel-button">Cancelar Report</button>
+
+        </form>
+      </div>
     `;
 
     style.innerHTML = `
       *{
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
       }
 
       .dormido{
@@ -50,11 +70,12 @@ class PetEditor extends HTMLElement {
         display: inherit;
       }
 
-      .infosender-container{
+      .container{
         min-height: 80vh;
         width: 90%;
         background: #ffffff24;
         margin: 5vh auto;
+        padding: 50px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -62,75 +83,119 @@ class PetEditor extends HTMLElement {
         border-radius: 20px;
         backdrop-filter: blur(10px);
         box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: "Roboto", sans-serif;
       }
+
       .form{
-        height: 65vh;
-        width: 90%;
-        gap: 10px;
-        max-width: 400px;
+        min-height: 80vh;
+        padding: 10px;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #f5b849;
+        box-shadow: 5px 5px 2px #00000017;
         border-radius: 20px;
+        padding: 20px;
+      }
+      
+      @media (max-width: 600px){
+        .form{
+          min-width: 100%;
+        }
+      }
+
+      .pet-image-container-text{
+        border: 2px dashed #8f8f8f;
+        min-height: 44vh;
+        width: 90%;
+        display:flex;
+        justify-content: center;
+        align-items: center; 
+        border-radius: 4px;
+        position: relative;
+        color:#8f8f8f;
+      }
+
+      .pet-image-container,
+      .pet-zone-container{
+        min-height: 50vh;
+        width: 100%;
+        max-width: 400px;
         margin: 0 auto;
+        background: #ffe5b5;
+        border-radius: 5px;
+        border: 1px solid black;
+        box-shadow: 5px 5px 2px #00000017;
+      }
+
+      .pet-zone-container{
+        padding: 40px;
+      }
+
+      .pet-image-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .last-pet-zone{
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
       }
-      label{
-        width: 90%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
+
+      .label-pet-zone{
+        margin-top: 12px;
       }
+
       input{
-        border: none;
-        width: 100%;
-        margin: 0 auto;
+        border: 1px solid black;
+        max-width: 400px;
         height: 50px;
         border-radius: 5px;
         box-shadow: 5px 5px 2px #00000017;
         padding: 5px;
         font-size: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
       }
 
-      textarea{
-        width: 100%;
+      button{
+        margin-top: 20px;
+        max-width: 400px;
+        height: 50px;
         border-radius: 5px;
-        margin: 0 auto;
-        height: 100px;
-        box-shadow: 5px 5px 2px #00000017;
-      }
-
-      .submit{
         background: black;
         color: white;
-        width: 90%;
-        padding: 10px;
         border: none;
-        border-radius: 5px;
+        font-size: 20px;
+        box-shadow: 5px 5px 2px #00000017;
       }
-    `;
-
-    this.shadow.appendChild(style);
+      
+      .dz-size,.dz-filename,.dz-success-mark,.dz-error-mark{
+        display:none;
+      }
+      
+      .dz-preview dz-image-preview{
+        position: absolute;
+        top: 0;
+      }
+      
+      .cancel-button{
+        background: #c50000;
+      }
+      `;
+    this.initMap();
+    this.initDropzonefromAssets();
+    this.appendChild(style);
   }
 
-  addlisteners() {
+  addListeners() {
     this.render();
-    const form = this.shadow.querySelector(".form");
-    const loaderComp = this.shadow.querySelector("loading-comp");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      loaderComp.classList.toggle("despierto");
-
-      loaderComp.classList.toggle("despierto");
-
-      Router.go("/");
-    });
   }
+
   connectedCallback() {
-    this.addlisteners();
+    this.addListeners();
   }
 }
 

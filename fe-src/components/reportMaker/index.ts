@@ -39,7 +39,7 @@ class ReportMaker extends HTMLElement {
   }
 
   initDropzonefromAssets() {
-    const myDropzone = initDropzone();
+    const myDropzone = initDropzone(".pet-image-container-text");
     myDropzone.on("thumbnail", (file) => (this.file = file));
   }
 

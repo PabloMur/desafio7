@@ -1,7 +1,7 @@
 import { Dropzone } from "dropzone";
 
-export function initDropzone() {
-  const myDropzone = new Dropzone(".pet-image-container-text", {
+export function initDropzone(container) {
+  const myDropzone = new Dropzone(container, {
     url: "/falsa",
     autoProcessQueue: false,
     clickable: true,
