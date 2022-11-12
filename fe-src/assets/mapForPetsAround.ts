@@ -6,7 +6,7 @@ import { state } from "../state";
 
 mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
 
-export const createMap = async (mapContainer, lat, lng) => {
+export const createMap = async (mapContainer: any, lat, lng) => {
   try {
     const map = new mapboxgl.Map({
       container: mapContainer, // container ID

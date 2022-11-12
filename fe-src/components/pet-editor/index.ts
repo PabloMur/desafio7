@@ -1,7 +1,7 @@
-import { createMap } from "../../assets/mapForPetsAround";
-import { initDropzone } from "../../assets/dropzone";
+import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl";
+
 import { state } from "../../state";
-import { Router } from "@vaadin/router";
 
 class PetEditor extends HTMLElement {
   file: any;
@@ -11,19 +11,27 @@ class PetEditor extends HTMLElement {
   petZone: string;
   petStatus: string;
   petAge: number;
+
   constructor() {
     super();
     this.file = null;
-    this.map = null;
+    this.map = "";
   }
-  async initMap() {
-    const cs = state.getState();
-    this.map = await createMap(this.querySelector("#edit-map"), cs.lat, cs.lng);
-  }
+  initMap() {
+    this.render();
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoicG9sbXVyIiwiYSI6ImNsYTBidWh5dDAwNnUzcXBuN3lobHMwbW4ifQ.AAuOdzpJf6LiE7nV0JgWcw";
+    const mapContainer = this.querySelector("#map") as any;
+    this.map = new mapboxgl.Map({
+      container: mapContainer, // container ID
+      style: "mapbox://styles/mapbox/streets-v11", // style URL
+      center: [-74.5, 40], // starting position [lng, lat]
+      zoom: 9, // starting zoom
+    });
 
-  initDropzonefromAssets() {
-    const myDropzone = initDropzone(".image-container");
-    myDropzone.on("thumbnail", (file) => (this.file = file));
+    this.map.on("style.load", () => {
+      this.map.setFog({}); // Set the default atmosphere style
+    });
   }
 
   render() {
@@ -47,7 +55,7 @@ class PetEditor extends HTMLElement {
           <label class="last-pet-zone">
             <custom-text>Zona en la que se perdió</custom-text>
             <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
-            <div class="pet-zone-container" id="edit-map"></div>
+            <div class="pet-zone-container" id="map"></div>
           </label>
 
           <button>Reportar como perdido</button>
@@ -55,6 +63,9 @@ class PetEditor extends HTMLElement {
 
         </form>
       </div>
+      <script>
+        console.log("pollito pio")
+      </script>
     `;
 
     style.innerHTML = `
@@ -185,13 +196,12 @@ class PetEditor extends HTMLElement {
         background: #c50000;
       }
       `;
-    this.initMap();
-    this.initDropzonefromAssets();
+
     this.appendChild(style);
   }
 
   addListeners() {
-    this.render();
+    this.initMap();
   }
 
   connectedCallback() {

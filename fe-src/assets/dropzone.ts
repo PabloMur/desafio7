@@ -1,6 +1,6 @@
 import { Dropzone } from "dropzone";
 
-export function initDropzone(container) {
+export function initDropzone(container: any) {
   const myDropzone = new Dropzone(container, {
     url: "/falsa",
     autoProcessQueue: false,
