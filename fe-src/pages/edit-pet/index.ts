@@ -7,7 +7,7 @@ class EditPetPage extends HTMLElement {
   render() {
     this.shadow.innerHTML = `
                 <custom-header></custom-header>
-                <edit-pet></edit-pet>
+                <pet-editor></pet-editor>
                 <custom-footer></custom-footer>
             `;
   }

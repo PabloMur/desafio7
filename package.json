@@ -17,7 +17,9 @@
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
+    "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^2.10.0",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.18",
     "nominatim-client": "^3.2.1",
     "parcel": "^2.7.0",
@@ -37,7 +39,6 @@
     "start": "node ./be-dist/be-src/index.js"
   },
   "devDependencies": {
-    "@types/mapbox-gl": "^2.7.6",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "https-browserify": "^1.0.0",

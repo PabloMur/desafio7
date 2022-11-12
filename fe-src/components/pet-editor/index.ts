@@ -1,36 +1,23 @@
-import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
-
-import { state } from "../../state";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 class PetEditor extends HTMLElement {
-  file: any;
-  petLatitude: any;
-  petLongitude: any;
-  map: any;
-  petZone: string;
-  petStatus: string;
-  petAge: number;
-
   constructor() {
     super();
-    this.file = null;
-    this.map = "";
   }
-  initMap() {
+  async initMap() {
     this.render();
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoicG9sbXVyIiwiYSI6ImNsYTBidWh5dDAwNnUzcXBuN3lobHMwbW4ifQ.AAuOdzpJf6LiE7nV0JgWcw";
-    const mapContainer = this.querySelector("#map") as any;
-    this.map = new mapboxgl.Map({
-      container: mapContainer, // container ID
-      style: "mapbox://styles/mapbox/streets-v11", // style URL
-      center: [-74.5, 40], // starting position [lng, lat]
-      zoom: 9, // starting zoom
+    const container = this.querySelector("#map");
+    const map = new mapboxgl.Map({
+      container: container as any, // container ID
+      style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
+      center: [-57.560829, -37.995224], // starting position [lng, lat]
+      zoom: 12, // starting zoom
     });
-
-    this.map.on("style.load", () => {
-      this.map.setFog({}); // Set the default atmosphere style
+    map.on("style.load", () => {
+      map.setFog({}); // Set the default atmosphere style
     });
   }
 
@@ -40,32 +27,13 @@ class PetEditor extends HTMLElement {
     this.innerHTML = `
       <div class="container">
         <custom-text variant="title">Editar Informacion de Mascota</custom-text>
-
-        <form class="form">
-          <label>
-            <custom-text>Nombre de la mascota:</custom-text>
-            <input name="petname" type="text" requiere="require">
-          </label>
-          <label>
-            <custom-text>Imagen de tu mascota</custom-text>
-            <div class="image-container">
-              <div class="pet-image-container-text"> Haz click aqui o <br/>arrastra una imagen de tu mascota! </div>
-            </div>
-          </label>
           <label class="last-pet-zone">
             <custom-text>Zona en la que se perdió</custom-text>
             <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
             <div class="pet-zone-container" id="map"></div>
           </label>
-
-          <button>Reportar como perdido</button>
-          <button class="cancel-button">Cancelar Report</button>
-
-        </form>
       </div>
-      <script>
-        console.log("pollito pio")
-      </script>
+    
     `;
 
     style.innerHTML = `
@@ -196,17 +164,12 @@ class PetEditor extends HTMLElement {
         background: #c50000;
       }
       `;
-
     this.appendChild(style);
   }
 
-  addListeners() {
-    this.initMap();
-  }
-
   connectedCallback() {
-    this.addListeners();
+    this.initMap();
   }
 }
 
-customElements.define("edit-pet", PetEditor);
+customElements.define("pet-editor", PetEditor);
