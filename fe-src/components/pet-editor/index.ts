@@ -1,39 +1,85 @@
-import mapboxgl from "mapbox-gl";
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import { createMap, initGeocoder } from "../../assets/mapForPetsAround";
+import { initDropzone } from "../../assets/dropzone";
+import { state } from "../../state";
+import { Router } from "@vaadin/router";
 
 class PetEditor extends HTMLElement {
+  file: any;
+  petLatitude: any;
+  petLongitude: any;
+  map: any;
+  petZone: string;
+  petStatus: string;
+  petAge: number;
+  petName: string;
+  editing: boolean;
+
   constructor() {
     super();
+    this.file = null;
+    this.map = null;
+    this.editing = false;
+    this.petName = "";
   }
+
   async initMap() {
-    this.render();
-    const container = this.querySelector("#map");
-    const map = new mapboxgl.Map({
-      container: container as any, // container ID
-      style: "mapbox://styles/polmur/cl8w32dh4001514oxqd9l8aop", // style URL
-      center: [-57.560829, -37.995224], // starting position [lng, lat]
-      zoom: 12, // starting zoom
+    const cs = state.getState();
+
+    this.map = await createMap(
+      this.querySelector("#map" as any),
+      cs.lat,
+      cs.lng
+    );
+    const geocoder = await initGeocoder();
+    geocoder.on("result", async () => {
+      try {
+        const provider = await geocoder.mapMarker._lngLat;
+        this.petLatitude = provider.lat;
+        this.petLongitude = provider.lng;
+        this.petZone = JSON.parse(geocoder.lastSelected).text;
+        this.petStatus = "perdido";
+      } catch (error) {
+        console.error(error);
+      }
     });
-    map.on("style.load", () => {
-      map.setFog({}); // Set the default atmosphere style
-    });
+    this.map.addControl(geocoder);
+  }
+
+  initDropzonefromAssets() {
+    const myDropzone = initDropzone(".pet-image-container");
+    myDropzone.on("thumbnail", (file) => (this.file = file));
   }
 
   render() {
     const style = document.createElement("style");
 
     this.innerHTML = `
+      <loading-comp class="dormido"></loading-comp>
       <div class="container">
-        <custom-text variant="title">Editar Informacion de Mascota</custom-text>
+        <custom-text variant="title">Editar Informacion de: ${this.petName}</custom-text>
+
+        <form class="form">
+          <label>
+            <custom-text>Nuevo nombre:</custom-text>
+            <input name="petname" type="text" requiere="require" value="${this.petName}">
+          </label>
+          <label>
+            <custom-text>Nueva Imagen de tu mascota</custom-text>
+            <div class="pet-image-container">
+              <div class="pet-image-container-text"> Haz click aqui o <br/>arrastra una imagen de tu mascota! </div>
+            </div>
+          </label>
           <label class="last-pet-zone">
-            <custom-text>Zona en la que se perdió</custom-text>
+            <custom-text>Modifica la zona en la que se perdío</custom-text>
             <p>Buscá un punto de referencia para reportar a tu mascota.</br> Puede ser una dirección, un barrio o una ciudad.</p>
             <div class="pet-zone-container" id="map"></div>
           </label>
+
+          <button>Modificar Datos</button>
+          <button class="cancel-button">Cancelar Modificación</button>
+
+        </form>
       </div>
-    
     `;
 
     style.innerHTML = `
@@ -73,7 +119,7 @@ class PetEditor extends HTMLElement {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background: #f5b849;
+        background: #ffe5b5;
         box-shadow: 5px 5px 2px #00000017;
         border-radius: 20px;
         padding: 20px;
@@ -132,6 +178,7 @@ class PetEditor extends HTMLElement {
       input{
         border: 1px solid black;
         max-width: 400px;
+        width: 100%;
         height: 50px;
         border-radius: 5px;
         box-shadow: 5px 5px 2px #00000017;
@@ -164,11 +211,46 @@ class PetEditor extends HTMLElement {
         background: #c50000;
       }
       `;
+    this.initMap();
+    this.initDropzonefromAssets();
     this.appendChild(style);
   }
 
+  addListeners() {
+    this.render();
+    const form = this.querySelector(".form");
+    const clearButton = this.querySelector(".cancel-button");
+    const loader = this.querySelector("loading-comp");
+    const cs = state.getState();
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loader.classList.toggle("despierto");
+      const target = e.target as any;
+      const petName = target.petname.value;
+
+      const pet = {
+        fullname: petName,
+        ownerEmail: cs.email,
+        zone: this.petZone,
+        lat: this.petLatitude,
+        lng: this.petLongitude,
+        state: this.petStatus,
+        image: this.file.dataURL,
+      };
+      await state.reportUserPet(pet);
+      loader.classList.toggle("despierto");
+      Router.go("/my-pets");
+    });
+
+    clearButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      location.reload();
+    });
+  }
+
   connectedCallback() {
-    this.initMap();
+    this.addListeners();
   }
 }
 

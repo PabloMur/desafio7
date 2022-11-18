@@ -11,13 +11,20 @@ class ReportMaker extends HTMLElement {
   petZone: string;
   petStatus: string;
   petAge: number;
+  petName: string;
+  editing: boolean;
+
   constructor() {
     super();
     this.file = null;
     this.map = null;
+    this.editing = false;
+    this.petName = "";
   }
+
   async initMap() {
     const cs = state.getState();
+
     this.map = await createMap(
       this.querySelector("#map" as any),
       cs.lat,
@@ -54,7 +61,7 @@ class ReportMaker extends HTMLElement {
         <form class="form">
           <label>
             <custom-text>Nombre de la mascota:</custom-text>
-            <input name="petname" type="text" requiere="require">
+            <input name="petname" type="text" requiere="require" value="${this.petName}">
           </label>
           <label>
             <custom-text>Imagen de tu mascota</custom-text>

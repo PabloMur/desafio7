@@ -1,5 +1,3 @@
-import { Router } from "@vaadin/router";
-
 type msg = {
   to: any;
   from: string;
@@ -273,6 +271,24 @@ const state = {
     }
   },
 
+  async updatePetData(pet: pet) {
+    try {
+      const cs = state.getState();
+      const token = cs.token;
+      await fetch(`/me/pets/${cs.edit.value.petId}`, {
+        method: "put",
+        mode: "cors",
+        headers: {
+          Authorization: `bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pet),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   async deletePet(petID) {
     try {
       const cs = this.getState();
@@ -335,7 +351,6 @@ const state = {
         }),
       });
       const response = await emailFetch.json();
-      console.log(response);
       return response;
     } catch (error) {
       console.error(error);

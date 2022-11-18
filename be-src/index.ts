@@ -21,19 +21,17 @@ import {
 import {
   allPets,
   updatePetData,
-  specificPet,
   createPet,
   deletePet,
 } from "./controllers/pets-controller";
-import { createReport } from "./controllers/report-controller";
 import { enviarEmail } from "./lib/sendgrid";
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3000;
 const SECRET = process.env.SECRET;
-
 const DEV = process.env.NODE_ENV;
 
-let ruta;
+let ruta: any;
+
 if (DEV === "development") {
   ruta = path.resolve(__dirname, "../dist");
 } else if (DEV === "production") {
@@ -118,6 +116,7 @@ app.put("/auth/me", authMiddleware, async (req, res) => {
   res.json(update);
 });
 
+//Actualizar la contraseña del user
 app.put("/auth/password", authMiddleware, async (req, res) => {
   const { password } = req.body;
   const passwordHasheado = hashearPassword(password);

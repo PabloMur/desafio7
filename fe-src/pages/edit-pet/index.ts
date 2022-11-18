@@ -1,13 +1,12 @@
 class EditPetPage extends HTMLElement {
-  shadow: ShadowRoot;
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: "open" });
   }
   render() {
-    this.shadow.innerHTML = `
+    this.innerHTML = `
                 <custom-header></custom-header>
                 <pet-editor></pet-editor>
+                <report-maker></report-maker>
                 <custom-footer></custom-footer>
             `;
   }
