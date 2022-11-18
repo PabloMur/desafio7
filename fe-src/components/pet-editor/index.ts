@@ -12,14 +12,22 @@ class PetEditor extends HTMLElement {
   petStatus: string;
   petAge: number;
   petName: string;
-  editing: boolean;
+  petImage: string;
 
   constructor() {
     super();
     this.file = null;
     this.map = null;
-    this.editing = false;
     this.petName = "";
+    this.petImage = "";
+  }
+
+  syncWithState() {
+    const cs = state.getState();
+    this.petName = cs.edit.value.petName;
+    this.petZone = cs.edit.value.petZone;
+    this.petStatus = "perdido";
+    this.petImage = cs.edit.value.petImage;
   }
 
   async initMap() {
@@ -51,6 +59,7 @@ class PetEditor extends HTMLElement {
   }
 
   render() {
+    this.syncWithState();
     const style = document.createElement("style");
 
     this.innerHTML = `
@@ -61,7 +70,7 @@ class PetEditor extends HTMLElement {
         <form class="form">
           <label>
             <custom-text>Nuevo nombre:</custom-text>
-            <input name="petname" type="text" requiere="require" value="${this.petName}">
+            <input name="petname" type="text" requiere="require" placeholder="Ingresa en nuevo nombre">
           </label>
           <label>
             <custom-text>Nueva Imagen de tu mascota</custom-text>
@@ -132,7 +141,7 @@ class PetEditor extends HTMLElement {
       }
 
       .pet-image-container-text{
-        border: 2px dashed #8f8f8f;
+        border: 2px dashed #424242;
         min-height: 44vh;
         width: 90%;
         display:flex;
@@ -140,7 +149,7 @@ class PetEditor extends HTMLElement {
         align-items: center; 
         border-radius: 4px;
         position: relative;
-        color:#8f8f8f;
+        color:#424242;
       }
 
       .pet-image-container,
@@ -149,7 +158,7 @@ class PetEditor extends HTMLElement {
         width: 100%;
         max-width: 400px;
         margin: 0 auto;
-        background: #ffe5b5;
+        background: var(--purple);
         border-radius: 5px;
         border: 1px solid black;
         box-shadow: 5px 5px 2px #00000017;
@@ -183,7 +192,9 @@ class PetEditor extends HTMLElement {
         border-radius: 5px;
         box-shadow: 5px 5px 2px #00000017;
         padding: 5px;
+        padding-left: 8px;
         font-size: 20px;
+
       }
 
       button{
@@ -225,9 +236,10 @@ class PetEditor extends HTMLElement {
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      loader.classList.toggle("despierto");
+      //loader.classList.toggle("despierto");
       const target = e.target as any;
-      const petName = target.petname.value;
+      const petName =
+        target.petname.value == "" ? this.petName : target.petname.value;
 
       const pet = {
         fullname: petName,
@@ -236,11 +248,14 @@ class PetEditor extends HTMLElement {
         lat: this.petLatitude,
         lng: this.petLongitude,
         state: this.petStatus,
-        image: this.file.dataURL,
+        image: this.petImage,
       };
-      await state.reportUserPet(pet);
-      loader.classList.toggle("despierto");
-      Router.go("/my-pets");
+
+      console.log(pet);
+
+      //await state.updatePetData(pet);
+      //loader.classList.toggle("despierto");
+      //Router.go("/my-pets");
     });
 
     clearButton.addEventListener("click", (e) => {

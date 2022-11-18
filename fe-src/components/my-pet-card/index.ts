@@ -115,6 +115,7 @@ class MyPetCard extends HTMLElement {
             petId: this.petId,
             petName: this.petName,
             petZone: this.petZone,
+            petImage: this.profileImage,
           },
           bubbles: true,
         })

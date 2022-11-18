@@ -6,7 +6,6 @@ class EditPetPage extends HTMLElement {
     this.innerHTML = `
                 <custom-header></custom-header>
                 <pet-editor></pet-editor>
-                <report-maker></report-maker>
                 <custom-footer></custom-footer>
             `;
   }

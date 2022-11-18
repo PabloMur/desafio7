@@ -31,6 +31,7 @@ class MyPetsContainer extends HTMLElement {
           <div class="pet-cards-container">
             ${this.pets
               .map((pet) => {
+                console.log(pet);
                 return `<my-pet-card profile-image="${pet.image}" pet-name="${pet.fullname}" pet-zone="${pet.zone}" pet-status="${pet.state}" pet-id="${pet.id}"></my-pet-card>`;
               })
               .join("")}
