@@ -63,16 +63,35 @@ function bodyToIndex(body, id?) {
 }
 
 export async function updatePetData(dataForUpadate, petId) {
-  const [petUpdated] = await Pet.update(dataForUpadate, {
-    where: {
-      id: petId,
-    },
-  });
+  try {
+    if (dataForUpadate.image) {
+      const imageParseada = await cloudinary.uploader.upload(
+        dataForUpadate.image,
+        {
+          resource_type: "image",
+          discard_original_filename: true,
+          width: 1000,
+        }
+      );
 
-  const indexItem = bodyToIndex(dataForUpadate, petId);
-  await algoliaIndex.partialUpdateObject(indexItem);
+      const pet = {
+        ...dataForUpadate,
+        image: imageParseada.secure_url,
+      };
 
-  return petUpdated;
+      const petUpdated = await Pet.update(pet, {
+        where: {
+          id: petId,
+        },
+      });
+
+      const indexItem = bodyToIndex(dataForUpadate, petId);
+      await algoliaIndex.partialUpdateObject(indexItem);
+      return petUpdated;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function updateProfile(userId, updateData) {

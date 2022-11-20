@@ -28,6 +28,8 @@ class PetEditor extends HTMLElement {
     this.petZone = cs.edit.value.petZone;
     this.petStatus = "perdido";
     this.petImage = cs.edit.value.petImage;
+    this.petLatitude = Number(cs.edit.value.petLatitude);
+    this.petLongitude = Number(cs.edit.value.petLongitude);
   }
 
   async initMap() {
@@ -45,7 +47,6 @@ class PetEditor extends HTMLElement {
         this.petLatitude = provider.lat;
         this.petLongitude = provider.lng;
         this.petZone = JSON.parse(geocoder.lastSelected).text;
-        this.petStatus = "perdido";
       } catch (error) {
         console.error(error);
       }
@@ -54,7 +55,7 @@ class PetEditor extends HTMLElement {
   }
 
   initDropzonefromAssets() {
-    const myDropzone = initDropzone(".pet-image-container");
+    const myDropzone = initDropzone(".pet-image-container-text");
     myDropzone.on("thumbnail", (file) => (this.file = file));
   }
 
@@ -236,7 +237,7 @@ class PetEditor extends HTMLElement {
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      //loader.classList.toggle("despierto");
+      loader.classList.toggle("despierto");
       const target = e.target as any;
       const petName =
         target.petname.value == "" ? this.petName : target.petname.value;
@@ -248,14 +249,12 @@ class PetEditor extends HTMLElement {
         lat: this.petLatitude,
         lng: this.petLongitude,
         state: this.petStatus,
-        image: this.petImage,
+        image: this.file === null ? this.petImage : this.file.dataURL,
       };
 
-      console.log(pet);
-
-      //await state.updatePetData(pet);
-      //loader.classList.toggle("despierto");
-      //Router.go("/my-pets");
+      await state.updatePetData(pet);
+      loader.classList.toggle("despierto");
+      Router.go("/my-pets");
     });
 
     clearButton.addEventListener("click", (e) => {

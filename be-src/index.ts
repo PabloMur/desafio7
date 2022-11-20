@@ -139,6 +139,9 @@ app.get("/me/pets", authMiddleware, async (req, res) => {
 //actualizar la data de una mascota
 app.put("/me/pets/:petId", async (req, res) => {
   const { petId } = req.params;
+  if (req.body.image) {
+    console.log(true, "tiene image");
+  }
   const updatedPet = await updatePetData(req.body, petId);
   res.json({ updatedPet });
 });

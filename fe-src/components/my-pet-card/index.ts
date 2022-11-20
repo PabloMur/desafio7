@@ -4,6 +4,8 @@ class MyPetCard extends HTMLElement {
   petZone: any;
   petId: any;
   status: string;
+  petLatitude: any;
+  petLongitude: any;
   constructor() {
     super();
     this.profileImage =
@@ -13,6 +15,8 @@ class MyPetCard extends HTMLElement {
     this.petZone = this.getAttribute("pet-zone") || "Planeta Tierra";
     this.petId = this.getAttribute("pet-id");
     this.status = this.getAttribute("pet-status") || "perdido";
+    this.petLatitude = this.getAttribute("petlat");
+    this.petLongitude = this.getAttribute("petlng");
   }
   render() {
     const style = document.createElement("style");
@@ -116,6 +120,8 @@ class MyPetCard extends HTMLElement {
             petName: this.petName,
             petZone: this.petZone,
             petImage: this.profileImage,
+            petLatitude: this.petLatitude,
+            petLongitude: this.petLongitude,
           },
           bubbles: true,
         })
