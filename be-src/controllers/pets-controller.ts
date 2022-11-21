@@ -63,43 +63,11 @@ function bodyToIndex(body, id?) {
 }
 
 export async function updatePetData(dataForUpadate, petId) {
+  console.log(dataForUpadate);
+
   try {
-    if (dataForUpadate.image) {
-      const imageParseada = await cloudinary.uploader.upload(
-        dataForUpadate.image,
-        {
-          resource_type: "image",
-          discard_original_filename: true,
-          width: 1000,
-        }
-      );
-
-      const pet = {
-        ...dataForUpadate,
-        image: imageParseada.secure_url,
-      };
-
-      const petUpdated = await Pet.update(pet, {
-        where: {
-          id: petId,
-        },
-      });
-
-      const indexItem = bodyToIndex(dataForUpadate, petId);
-      await algoliaIndex.partialUpdateObject(indexItem);
-      return petUpdated;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export async function updateProfile(userId, updateData) {
-  if (!updateData) throw new Error("Se necesita data para actualizar");
-
-  if (updateData.imageDataUrl) {
-    const imageUpload = await cloudinary.uploader.upload(
-      updateData.imageDataUrl,
+    const imageParseada = await cloudinary.uploader.upload(
+      dataForUpadate.image,
       {
         resource_type: "image",
         discard_original_filename: true,
@@ -107,21 +75,23 @@ export async function updateProfile(userId, updateData) {
       }
     );
 
-    const updateDataComplete = {
-      fullname: updateData.fullname,
-      bio: updateData.bio,
-      imageDataUrl: imageUpload.secure_url,
+    const pet = {
+      ...dataForUpadate,
+      image: imageParseada.secure_url,
     };
 
-    console.log(imageUpload.secure_url);
-
-    await User.update(updateDataComplete, {
+    const petUpdated = await Pet.update(pet, {
       where: {
-        id: userId,
+        id: petId,
       },
     });
 
-    return updateDataComplete;
+    const indexItem = bodyToIndex(pet, petId);
+    const algoliaUpdate = await algoliaIndex.partialUpdateObject(indexItem);
+    console.log(algoliaUpdate);
+    return { petUpdated, algoliaUpdate };
+  } catch (error) {
+    console.error(error);
   }
 }
 
