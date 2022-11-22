@@ -17,22 +17,21 @@ class MyData extends HTMLElement {
     <loading-comp class="dormido"></loading-comp>
     <div class="my-data-container">
         <custom-text variant="title">Mis Datos</custom-text>
-        <div class="fullname-container">
-          <label class="label">Tu email</label>
-          <p>${this.email}</p>
-        </div>
         <form class="form">
           <div class="fullname-container">
             <label class="label">Nombre</label>
             <input type="text" name="fullname" class="fullname" required="required" value="${this.fullname}">
+            <button class="button">Guardar Nombre</button> 
           </div>
+        </form>
+        <form class="password-form">
           <div class="password-container">
-          <label>nueva contraseña</label>
-          <input type="password">
-          <label>repite la contraseña</label>
-          <input type="password">
+            <label>nueva contraseña</label>
+            <input type="password" name="passuno"/>
+            <label>repite la contraseña</label>
+            <input type="password" name="passdos"/>
           </div>
-          <button class="button">Guardar</button> 
+          <button class="password-button">Modificar Contraseña</button>
         </form>
       </>`;
 
@@ -77,7 +76,7 @@ class MyData extends HTMLElement {
       box-shadow: 5px 5px 2px #00000017;
     }
 
-    .button{
+    .button, .password-button{
       color: white;
       background: black;
       border: none;
@@ -105,6 +104,7 @@ class MyData extends HTMLElement {
     this.email = cs.email;
     this.render();
     const form = this.shadow.querySelector(".form");
+    const passwordForm = this.shadow.querySelector(".password-form");
     const loading = this.shadow.querySelector("loading-comp");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -112,9 +112,22 @@ class MyData extends HTMLElement {
       const target = e.target as any;
       const fullname = target.fullname.value;
       await state.UpdateUserName(fullname);
-      console.log(loading);
       loading.classList.toggle("despierto");
       state.setUserName(fullname);
+    });
+
+    passwordForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loading.classList.toggle("despierto");
+      const target = e.target as any;
+      if (target.passuno.value === target.passdos.value) {
+        await state.updateUserPassword(target.passuno.value);
+        target.passuno.value = "";
+        target.passdos.value = "";
+        loading.classList.toggle("despierto");
+      } else {
+        alert("Las contraseñas deben ser iguales");
+      }
     });
   }
 

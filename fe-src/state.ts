@@ -245,8 +245,29 @@ const state = {
       });
 
       const response = await fetchingUserName.json();
-      console.log(response);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 
+  async updateUserPassword(password: string) {
+    try {
+      const cs = this.getState();
+      const token = cs.token;
+      const fetchingUserName = await fetch("/auth/password", {
+        method: "put",
+        mode: "cors",
+        headers: {
+          Authorization: `bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password: password,
+        }),
+      });
+
+      const response = await fetchingUserName.json();
       return response;
     } catch (error) {
       console.error(error);
