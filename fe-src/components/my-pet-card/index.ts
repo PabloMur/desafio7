@@ -23,7 +23,8 @@ class MyPetCard extends HTMLElement {
 
     this.innerHTML = `
           <div class="card-container">
-            <div class="pet-profile-image">
+            <div class="image-container">
+              <img src="${this.profileImage}" class="pet-profile-image"/>
             </div>
             <div class="pet-data-container">
               <custom-text class="pet-name">${this.petName}</custom-text>
@@ -53,17 +54,17 @@ class MyPetCard extends HTMLElement {
           box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
           font-family: 'DM Serif Display', serif;
         }
-        img{
-          width: auto;
-          height: 40vh;
+
+        .image-container{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 20px;
         }
+       
         .pet-profile-image{
-          width: auto;
-          height: 30vh;
-          background-image: url(${this.profileImage});
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: center;
+          width: 100%;
+          height: auto;
           border-radius: 20px;
         }
         .pet-data-container{

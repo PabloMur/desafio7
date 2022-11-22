@@ -8,7 +8,6 @@ export async function createPet(userId, petData) {
   if (userId && petData.image) {
     try {
       const user = await User.findByPk(userId);
-      //const { image, fullname, age, zone, lat, lng, state } = petData;
       const imageParseada = await cloudinary.uploader.upload(petData.image, {
         resource_type: "image",
         discard_original_filename: true,
@@ -22,9 +21,12 @@ export async function createPet(userId, petData) {
       });
 
       const petInAlgolia = await algoliaIndex.saveObject({
-        pet,
         objectID: pet.get("id").toString(),
-        nombre: pet.get("fullname"),
+        fullname: pet.get("fullname"),
+        image: pet.get("image"),
+        zone: pet.get("zone"),
+        status: pet.get("state"),
+        userId: user.get("id"),
         _geoloc: {
           lat: pet.get("lat"),
           lng: pet.get("lng"),
@@ -53,7 +55,9 @@ function bodyToIndex(body, id?) {
   const respuesta: any = {};
 
   if (body.fullname) respuesta.fullname = body.fullname;
+  if (body.image) respuesta.image = body.image;
   if (body.ownerId) respuesta.ownerId = body.ownerId;
+  if (body.zone) respuesta.zone = body.zone;
   if (body.lat && body.lng)
     respuesta._geoloc = { lat: body.lat, lng: body.lng };
 
@@ -63,33 +67,44 @@ function bodyToIndex(body, id?) {
 }
 
 export async function updatePetData(dataForUpadate, petId) {
-  console.log(dataForUpadate);
-
   try {
-    const imageParseada = await cloudinary.uploader.upload(
-      dataForUpadate.image,
-      {
-        resource_type: "image",
-        discard_original_filename: true,
-        width: 1000,
-      }
-    );
+    let pet;
 
-    const pet = {
-      ...dataForUpadate,
-      image: imageParseada.secure_url,
-    };
+    if (dataForUpadate.image.includes("data")) {
+      console.log("tiene data");
+      const imageParseada = await cloudinary.uploader.upload(
+        dataForUpadate.image,
+        {
+          resource_type: "image",
+          discard_original_filename: true,
+          width: 1000,
+        }
+      );
+      pet = {
+        ...dataForUpadate,
+        image: imageParseada.secure_url,
+      };
 
-    const petUpdated = await Pet.update(pet, {
-      where: {
-        id: petId,
-      },
-    });
-
-    const indexItem = bodyToIndex(pet, petId);
-    const algoliaUpdate = await algoliaIndex.partialUpdateObject(indexItem);
-    console.log(algoliaUpdate);
-    return { petUpdated, algoliaUpdate };
+      const indexItem = await bodyToIndex(pet, petId);
+      await algoliaIndex.partialUpdateObject(indexItem);
+      await Pet.update(pet, {
+        where: {
+          id: petId,
+        },
+      });
+    } else {
+      pet = {
+        dataForUpadate,
+      };
+      const petUpdated = await Pet.update(pet, {
+        where: {
+          id: petId,
+        },
+      });
+      const indexItem = bodyToIndex(pet, petId);
+      const algoliaUpdate = await algoliaIndex.partialUpdateObject(indexItem);
+      return { petUpdated, algoliaUpdate };
+    }
   } catch (error) {
     console.error(error);
   }

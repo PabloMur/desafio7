@@ -50,9 +50,9 @@ export const initGeolocate = async () => {
 export const putMarkers = async (map: any, pets: any) => {
   try {
     for (const petItem in pets.response) {
-      const { image, lat, lng, fullname, zone, id, ownerEmail } =
-        pets.response[petItem].pet;
-
+      const { image, fullname, zone, id, ownerEmail } = pets.response[petItem];
+      const { lat, lng } = pets.response[petItem]._geoloc;
+      console.log(pets.response[petItem]);
       new mapboxgl.Marker({
         color: "#FF0000",
       })
