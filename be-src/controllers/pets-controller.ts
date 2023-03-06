@@ -27,6 +27,7 @@ export async function createPet(userId, petData) {
         zone: pet.get("zone"),
         status: pet.get("state"),
         userId: user.get("id"),
+        ownerEmail:user.get("email"),
         _geoloc: {
           lat: pet.get("lat"),
           lng: pet.get("lng"),
